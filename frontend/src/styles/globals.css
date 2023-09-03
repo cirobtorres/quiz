@@ -1,0 +1,56 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,900;1,900&family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Poppins:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=Roboto:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&display=swap");
+
+:root {
+  --max-width: 1440px;
+  --min-width: 1024px;
+  --border-radius: 12px;
+  --box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.3);
+  --color-A: rgb(255, 255, 255);
+  --color-B: hsl(39, 100%, 50%);
+  --color-C: rgb(146, 38, 83);
+  --color-D: rgb(0, 0, 0);
+  --color-E: rgb(182, 182, 182);
+  --backgroundColor-A: rgb(118, 165, 149);
+  --backgroundColor-B: rgb(97, 119, 179);
+  --backgroundColor-C: rgb(87, 66, 177);
+  --backgroundColor-D: rgb(206, 70, 127);
+  --backgroundColor-E: rgb(133, 81, 192);
+  --transformScale: scale(1.05);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", "Roboto", "Montserrat", sans-serif;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  color: var(--color-A);
+  background: linear-gradient(
+    90deg,
+    var(--backgroundColor-B) 0%,
+    var(--backgroundColor-E) 100%
+  );
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+li {
+  list-style: none;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+}

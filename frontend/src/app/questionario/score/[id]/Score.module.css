@@ -1,0 +1,50 @@
+.score {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.statistics {
+  display: flex;
+  flex-direction: row;
+}
+
+.scoreHeader {
+  font-size: 2.5rem;
+}
+
+.paragraph {
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+.linkBackToHome {
+  font-size: 1.5rem;
+}
+
+@media (min-height: 500px) and (max-height: 850px) {
+  .scoreHeader {
+    font-size: 1.75rem;
+  }
+
+  .paragraph {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .statistics {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .scoreHeader {
+    font-size: 1.25rem;
+  }
+
+  .paragraph {
+    font-size: 1rem;
+  }
+}

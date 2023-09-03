@@ -1,0 +1,37 @@
+.loginContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 350px;
+}
+
+.loginContainer h1 {
+  font-size: 3.5rem;
+}
+
+@media (max-width: 350px) {
+  .loginContainer h1 {
+    font-size: 3rem;
+  }
+}
+
+.hr {
+  width: 100%;
+}
+
+.loginContainer button {
+  width: 100%;
+  margin: 1rem 0;
+}
+
+.linkRegister {
+  font-weight: 700;
+  color: var(--color-B);
+}
+
+.linkRegister,
+.linkBackToHome {
+  font-size: 1.25rem;
+  margin-top: 0.5rem;
+}

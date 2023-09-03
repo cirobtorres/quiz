@@ -1,0 +1,660 @@
+{
+  "quiz": {
+    "subject": "História do Brasil",
+    "slug": "historia-do-brasil",
+    "description": ""
+  },
+  "questions": [
+    {
+      "question_text": "Quem foi o rei português que liberou as expedições que culminaram com o descobrimento do Brasil?",
+      "answers": [
+        {
+          "answer_text": "D. Manuel",
+          "is_correct": true
+        },
+        {
+          "answer_text": "D. Sebastião",
+          "is_correct": false
+        },
+        {
+          "answer_text": "D. Duarte",
+          "is_correct": false
+        },
+        {
+          "answer_text": "D. Henrique",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "Em qual data o Brasil foi descoberto?",
+      "answers": [
+        {
+          "answer_text": "22 de Abril de 1500",
+          "is_correct": true
+        },
+        {
+          "answer_text": "8 de Junho de 1498",
+          "is_correct": false
+        },
+        {
+          "answer_text": "12 de Abril de 1502",
+          "is_correct": false
+        },
+        {
+          "answer_text": "10 de Março de 1500",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "Como ficou conhecida as mobilizações militares que se estenderam até 1654 e que tiveram a participação de senhores de engenho, negros e indígenas, quando os holandeses atacaram o nordeste brasileiro a fim de se fixarem na região com interesse no comércio açucareiro?",
+      "answers": [
+        {
+          "answer_text": "Guerra Brasílica",
+          "is_correct": true
+        },
+        {
+          "answer_text": "Guerra de Iguape",
+          "is_correct": false
+        },
+        {
+          "answer_text": "Confederação dos Tamoios",
+          "is_correct": false
+        },
+        {
+          "answer_text": "Saque do Recife",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "No descobrimento do Brasil, quem escreveu a carta ao rei português a respeito das descobertas do Novo Mundo?",
+      "answers": [
+        {
+          "answer_text": "Pero Vaz de Caminha",
+          "is_correct": true
+        },
+        {
+          "answer_text": "Vicente Yánez Pinzón",
+          "is_correct": false
+        },
+        {
+          "answer_text": "André Gonçalves Alvarenga",
+          "is_correct": false
+        },
+        {
+          "answer_text": "Gaspar de Lemos",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "Quais foram as principais atividades econômicas no desenvolvimento do Brasil Colônia (1500 a 1822)?",
+      "answers": [
+        {
+          "answer_text": "Exploração de pau-brasil e cultivo de cana-de-açúcar.",
+          "is_correct": true
+        },
+        {
+          "answer_text": "Mineração e comércio de especiarias.",
+          "is_correct": false
+        },
+        {
+          "answer_text": "Pecuária e plantações de algodão.",
+          "is_correct": false
+        },
+        {
+          "answer_text": "Agricultura de subsistência e pesca.",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "A cidade de Brasília foi projetada pelo arquiteto Oscar Niemeyer e urbanista Lúcio Costa. Qual foi o presidente do Brasil que idealizou e liderou a construção da cidade?",
+      "answers": [
+        {
+          "answer_text": "Juscelino Kubitschek",
+          "is_correct": true
+        },
+        {
+          "answer_text": "Getúlio Vargas",
+          "is_correct": false
+        },
+        {
+          "answer_text": "Deodoro da Fonseca",
+          "is_correct": false
+        },
+        {
+          "answer_text": "Jânio Quadros",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "A respeito da Inconfidência Mineira:",
+      "answers": [
+        {
+          "answer_text": "É como ficou conhecida a revolta de caráter separatista organizada na capitania das Minas Gerais",
+          "is_correct": true
+        },
+        {
+          "answer_text": "Foi descoberta pela elite de Minas Gerais que acabou por entregar seus líderes para Coroa portuguesa",
+          "is_correct": false
+        },
+        {
+          "answer_text": "Se deu ao fato de Minas Gerais se tornar a capitania mais pobre como decorrência dos impostos exorbitantes",
+          "is_correct": false
+        },
+        {
+          "answer_text": "Marquês de Pombal reduziu a cobrança de impostos no Brasil como forma de apaziguar a relação com a Coroa",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "Por quem foi escrita a letra do Hino da Independência?",
+      "answers": [
+        {
+          "answer_text": "Evaristo da Veiga",
+          "is_correct": true
+        },
+        {
+          "answer_text": "Carlos Drummond de Andrade",
+          "is_correct": false
+        },
+        {
+          "answer_text": "Graciliano Ramos",
+          "is_correct": false
+        },
+        {
+          "answer_text": "Guimarães Rosa",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "Primeira tentativa de organizar a ocupação do Brasil. O sistema, que marca o fim pré-colonial (1530), consista em destinar a nobres aliados da Coroa portuguesa o direito de explorar uma de 14 porções de terras que subdividia o território. Esse sistema mostrou grandes falhas, pois sua administração, concentrada nos donatários, logo foi substituída pela do governador-geral.",
+      "answers": [
+        {
+          "answer_text": "Capitanias hereditárias",
+          "is_correct": true
+        },
+        {
+          "answer_text": "República Velha",
+          "is_correct": false
+        },
+        {
+          "answer_text": "Feitorias",
+          "is_correct": false
+        },
+        {
+          "answer_text": "Brasil Colônia",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "Fundada em 1531 por Martim Afonso de Souza a pedido da Coroa Portuguesa, qual a cidade mais antiga do Brasil, que completou 491 anos em 22 de janeiro de 2023?",
+      "answers": [
+        {
+          "answer_text": "São Vicente - SP",
+          "is_correct": true
+        },
+        {
+          "answer_text": "Porto Seguro - BA",
+          "is_correct": false
+        },
+        {
+          "answer_text": "Olinda - PE",
+          "is_correct": false
+        },
+        {
+          "answer_text": "Vila Velha - ES",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "Foi o último e mais duradouro presidente da Ditadura Militar (1964-1985). Encerrou o processo de abertura econômica iniciada por Ernesto Geisel.",
+      "answers": [
+        {
+          "answer_text": "João Baptista de Oliveira Figueiredo",
+          "is_correct": true
+        },
+        {
+          "answer_text": "Humberto de Alencar Castelo Branco",
+          "is_correct": false
+        },
+        {
+          "answer_text": "Artur da Costa e Silva",
+          "is_correct": false
+        },
+        {
+          "answer_text": "Emílio Garrastazu Médici",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "Em que consistia o Tratado de Tordesilhas, assinado em 1494 entre Portugal e Espanha?",
+      "answers": [
+        {
+          "answer_text": "Definir as fronteiras entre Portugal e Espanha na América, dividindo as terras recém-descobertas.",
+          "is_correct": true
+        },
+        {
+          "answer_text": "Estabelecer paz entre Portugal e Espanha.",
+          "is_correct": false
+        },
+        {
+          "answer_text": "Determinar as condições das rotas comerciais marítimas entre Portugal e Espanha.",
+          "is_correct": false
+        },
+        {
+          "answer_text": "Acordar a divisão do continente africano entre Portugal e Espanha, estipulando a linha de demarcação.",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "O que NÃO caracterizou o período que ficou conhecido como Política do Café com Leite, que vigorou durante a República Velha (1889-1930)?",
+      "answers": [
+        {
+          "answer_text": "Apenas presidentes tinham prerrogativa de destituir deputados e senadores eleitos",
+          "is_correct": true
+        },
+        {
+          "answer_text": "Sucedeu a República da Espada que teve como presidentes os Marechais Deodoro da Fonseca e Floriano Peixoto",
+          "is_correct": false
+        },
+        {
+          "answer_text": "Seu final foi determinado pela Revolução de 1930, com a ascensão de Getúlio Vargas ao poder",
+          "is_correct": false
+        },
+        {
+          "answer_text": "Consistia em acordos políticos entre as duas principais oligarquias da época: São Paulo e Minas Gerais",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "O que eram os quilombos?",
+      "answers": [
+        {
+          "answer_text": "Eram comunidades formadas por escravos fugitivos.",
+          "is_correct": true
+        },
+        {
+          "answer_text": "Eram comunidades formadas por escravos libertos.",
+          "is_correct": false
+        },
+        {
+          "answer_text": "Eram comunidades formadas por ex-escravos indígenas.",
+          "is_correct": false
+        },
+        {
+          "answer_text": "Eram comunidades formadas por mestiços africanos e portugueses.",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "Qual foi o primeiro presidente eleito pelo voto direto após a Ditadura Militar (1964-1985)?",
+      "answers": [
+        {
+          "answer_text": "Tancredo Neves",
+          "is_correct": true
+        },
+        {
+          "answer_text": "José Sarney",
+          "is_correct": false
+        },
+        {
+          "answer_text": "Fernando Collor de Mello",
+          "is_correct": false
+        },
+        {
+          "answer_text": "Itamar Franco",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "Qual tribo indígena recepcionou os portugueses quando esses embarcaram pela primeira vez ao Brasil no período do descobrimento?",
+      "answers": [
+        {
+          "answer_text": "Tupinambá",
+          "is_correct": true
+        },
+        {
+          "answer_text": "Arawetê",
+          "is_correct": false
+        },
+        {
+          "answer_text": "Enawenê-nawê",
+          "is_correct": false
+        },
+        {
+          "answer_text": "Kaiapó",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "Quem descobriu o Brasil?",
+      "answers": [
+        {
+          "answer_text": "Pedro Álvarez Cabral",
+          "is_correct": true
+        },
+        {
+          "answer_text": "Cristóvão Colombo",
+          "is_correct": false
+        },
+        {
+          "answer_text": "Fernão de Magalhães",
+          "is_correct": false
+        },
+        {
+          "answer_text": "Vasco da Gama",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "Achadas as primeiras jazidas de metais preciosos no Brasil Colônia, iniciou-se o chamado Ciclo do Ouro. Com relação aos impostos da Coroa Portuguesa:",
+      "answers": [
+        {
+          "answer_text": "Derrama era a cobrança forçada dos quintos atrasados por meio de confisco",
+          "is_correct": true
+        },
+        {
+          "answer_text": "Quinto era a cobrança de 5% da produção destinada à Coroa Portuguesa",
+          "is_correct": false
+        },
+        {
+          "answer_text": "Inconfidência Mineira foi motivada pela revolta de Portugal contra a desonestidade dos colonos",
+          "is_correct": false
+        },
+        {
+          "answer_text": "A economia de cana-de-açúcar ainda permaneceu mais rentável na Europa",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "Sobre o movimento tenentista:",
+      "answers": [
+        {
+          "answer_text": "Os tenentistas eram contrários às práticas políticas das oligarquias do período da Primeira República",
+          "is_correct": true
+        },
+        {
+          "answer_text": "Contribuiu para reestabilizar a ordem política vigente",
+          "is_correct": false
+        },
+        {
+          "answer_text": "A imagem de Artur Bernardes como político antimilitar estabeleceu-se após críticas feitas por ele",
+          "is_correct": false
+        },
+        {
+          "answer_text": "Os tenentes eram fortemente reprimidos pelo governo de Artur Bernardes",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "O que causou a Inconfidência Mineira?",
+      "answers": [
+        {
+          "answer_text": "O modelo absolutista português, especialmente pela exploração aurífera e pesada política tributária",
+          "is_correct": true
+        },
+        {
+          "answer_text": "A censura de imprensa e o cerceamento da liberdade de expressão mineira pelos portugueses",
+          "is_correct": false
+        },
+        {
+          "answer_text": "O monopólio do ouro por parte dos senhores de minas e os conflitos entre nativos e colonos",
+          "is_correct": false
+        },
+        {
+          "answer_text": "A criação, em Ouro Preto, da primeira universidade brasileira, que foi proibida de funcionar",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "A Guerra dos Mascates foi um conflito entre senhores de engenho de Olinda e comerciantes portugueses de Recife, na capitania de Pernambuco. Sua causa foi:",
+      "answers": [
+        {
+          "answer_text": "A crise do açúcar brasileiro, a expulsão dos Holandeses e a rivalidade entre Olinda e Recife",
+          "is_correct": true
+        },
+        {
+          "answer_text": "Os empréstimos não pagos dos comerciantes portugueses de Recife com os senhores de engenho de Olinda",
+          "is_correct": false
+        },
+        {
+          "answer_text": "O desenlance diplomático entre Portugal e Espanha e a autonomia de Recife, capital daquela capitania",
+          "is_correct": false
+        },
+        {
+          "answer_text": "A prisão de vários olindenses, a destruição da cidade de Olinda e de engenhos",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "A Guerra de Canudos aconteceu nos anos de 1896 a 1897 no sertão da Bahia, em um embate armado entre o exército brasileiro e os seguidores do beato Antônio Conselheiro. Sobre a Guerra de Canudos:",
+      "answers": [
+        {
+          "answer_text": "Teve caráter messiânico e envolvia a luta contra a miséria nordestina, região desassistida pelo governo federal",
+          "is_correct": true
+        },
+        {
+          "answer_text": "Teve apoio da Igreja, que foi duramente criticada na época, principalmente pelo governo da Bahia",
+          "is_correct": false
+        },
+        {
+          "answer_text": "A destruição de Canudos aconteceu em uma única tentativa, a mando de Prudente de Morais",
+          "is_correct": false
+        },
+        {
+          "answer_text": "A comunidade chegou a 5 mil pessoas e teve início após a invasão do latifúndio de Belo Monte",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "No que consistiu a crise das Antilhas?",
+      "answers": [
+        {
+          "answer_text": "Portugal não conseguiu fazer frente ao preço e à qualidade mais competitiva do açúcar antilhano",
+          "is_correct": true
+        },
+        {
+          "answer_text": "Decorreu do apogeu da produção de açúcar nas ilhas atlânticas de Madeira e Cabo Verde pela Inglaterra",
+          "is_correct": false
+        },
+        {
+          "answer_text": "Desencadeou as invasões Holandesas, estes motivados pela expansão de sua produção açucareira",
+          "is_correct": false
+        },
+        {
+          "answer_text": "Conflitos entre Portugal e Inglaterra, seu principal parceiro econômico na época",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "Qual era o objetivo dos sertanistas, denominados também bandeirantes, devido as expedições chamadas Entradas e Bandeiras?",
+      "answers": [
+        {
+          "answer_text": "A captura de índios para o trabalho escravo e a procura por metais preciosos logo após a crise do açúcar",
+          "is_correct": true
+        },
+        {
+          "answer_text": "A expansão do território português pela marcha avante às terras espanhóis, notadamente mais vastas e ricas",
+          "is_correct": false
+        },
+        {
+          "answer_text": "Revestidas marítimas portuguesas contra a invasão Holandesa para retomada de Pernambuco, em 1630",
+          "is_correct": false
+        },
+        {
+          "answer_text": "Conter a investida dos Paraguaios na Guerra do Paraguai, de 1864 a 1870, por mais de cinco anos de conflito",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "Sobre Vila Rica de Ouro Preto, é INCORRETO que:",
+      "answers": [
+        {
+          "answer_text": "Salvador foi capital até perder o posto para Ouro Preto em 1763 com a descoberta de ouro",
+          "is_correct": true
+        },
+        {
+          "answer_text": "Galanga, ou Chico Rei, é um personagem lendário presente na tradição oral mineira desde o século XVIII",
+          "is_correct": false
+        },
+        {
+          "answer_text": "Foi fundada em 1698 e declarada capital de Minas Gerais em 1823",
+          "is_correct": false
+        },
+        {
+          "answer_text": "Surgiu quando diversos aventureiros partiram para aquelas terras levados pela descoberta do ouro nas Minas Gerais",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "O que foi o Período Joanino?",
+      "answers": [
+        {
+          "answer_text": "Refere-se ao momento da história da colonização brasileira marcado pela presença da família real no Brasil, de 1808 a 1821",
+          "is_correct": true
+        },
+        {
+          "answer_text": "Foi o período que sucedeu a independência, em 1822, proclamada por D. Pedro I, filho de D. João VI",
+          "is_correct": false
+        },
+        {
+          "answer_text": "Foi o período de governo de D. Pedro II, cognominado 'o Magnânimo', último monarca brasileiro, de 1831 a 1889",
+          "is_correct": false
+        },
+        {
+          "answer_text": "Foi o período que sucedeu a retirada das tropas bonapartistas de Portugal e o retorno de D. João VI para Europa",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "Sobre a Revolução Pernambucana:",
+      "answers": [
+        {
+          "answer_text": "Foi o último movimento separatista de caráter republicano do Brasil Colônia",
+          "is_correct": true
+        },
+        {
+          "answer_text": "Teve apoio apenas popular, que precisou operar às escondidas da elite pernambucana",
+          "is_correct": false
+        },
+        {
+          "answer_text": "Defendia a república, o fim da escravidão e a oficialização da religião cristã",
+          "is_correct": false
+        },
+        {
+          "answer_text": "Os rebeldes foram descobertos antes que pudessem instalar um governo provisório",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "As Batalhas dos Guararapes foram as principais ações bélicas ocorridas no Nordeste brasileiro contra a presença dos holandeses na região. Sobre a batalha:",
+      "answers": [
+        {
+          "answer_text": "As principais batalhas de enfrentamento aos holandeses ocorreram no Morro dos Guararapes, onde hoje se localiza Jaboatão dos Guararapes",
+          "is_correct": true
+        },
+        {
+          "answer_text": "A relação com holandeses se deteriorou após a concorrência no mercado açucareiro dos colonos portugueses com a Companhia das Índias Ocidentais",
+          "is_correct": false
+        },
+        {
+          "answer_text": "As Batalhas trouxeram dois novos elementos para a história brasileira: as táticas de guerrilha e a atuação conjunta entre coroa e nativos brasileiros",
+          "is_correct": false
+        },
+        {
+          "answer_text": "A ação contra os holandeses contou com a união das três etnias que compõem a população brasileira: portugueses, brasileiros e africanos",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "Quem foi o primeiro português a chegar em solo brasileiro?",
+      "answers": [
+        {
+          "answer_text": "Duarte Pacheco, em 1498",
+          "is_correct": true
+        },
+        {
+          "answer_text": "Pedro Álvarez Cabral, em 1500",
+          "is_correct": false
+        },
+        {
+          "answer_text": "Vasco da Gama, em 1499",
+          "is_correct": false
+        },
+        {
+          "answer_text": "Cristóvão Colombo, em 1492",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "Em que consistia o sistema de Plantation?",
+      "answers": [
+        {
+          "answer_text": "Latifúndio, monocultura, mão de obra escrava e exportação",
+          "is_correct": true
+        },
+        {
+          "answer_text": "Latifúndio, policultura sustentável, mão de obra remunerada e cultura de subsistência",
+          "is_correct": false
+        },
+        {
+          "answer_text": "Minifúndio, policultura sustentável, mão de obra escrava e cultura de subsistência",
+          "is_correct": false
+        },
+        {
+          "answer_text": "Minifúndio, monocultura, mão de obra remunerada e exportação",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "Quem foi o primeiro presidente do Brasil?",
+      "answers": [
+        {
+          "answer_text": "Deodoro da Fonseca",
+          "is_correct": true
+        },
+        {
+          "answer_text": "Prudente de Moraes",
+          "is_correct": false
+        },
+        {
+          "answer_text": "Nilo Peçanha",
+          "is_correct": false
+        },
+        {
+          "answer_text": "Tomé de Sousa",
+          "is_correct": false
+        }
+      ]
+    }
+  ]
+}

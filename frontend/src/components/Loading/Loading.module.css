@@ -1,0 +1,110 @@
+.container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container h1 {
+  position: absolute;
+}
+
+.loader {
+  display: flex;
+  align-items: center;
+  width: 300px;
+}
+
+.circular {
+  position: absolute;
+  animation: rotate 2s linear infinite;
+  transform-origin: center center;
+}
+
+.path {
+  stroke-dasharray: 1, 200;
+  stroke-dashoffset: 0;
+  animation: dash 1.5s ease-in-out infinite;
+  stroke-linecap: round;
+}
+
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes dash {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+    stroke: #ffa700;
+  }
+  50% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -35px;
+    stroke: #ffa700;
+  }
+  100% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -124px;
+    stroke: #ffa700;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+  .container h1 {
+    position: relative;
+    top: 70px;
+    font-size: 1.5rem;
+  }
+  .circular {
+    animation: rotate 1.5s linear infinite;
+  }
+  .path {
+    animation: dash 2s ease-in-out infinite;
+  }
+  @keyframes dash {
+    0% {
+      stroke-dasharray: 1, 200;
+      stroke-dashoffset: 0;
+      stroke: #ffa700;
+    }
+    50% {
+      stroke-dasharray: 89, 200;
+      stroke-dashoffset: -25px;
+      stroke: #ffa700;
+    }
+    100% {
+      stroke-dasharray: 89, 200;
+      stroke-dashoffset: -43px;
+      stroke: #ffa700;
+    }
+  }
+
+  .loading:after {
+    position: fixed;
+    overflow: hidden;
+    display: inline-block;
+    vertical-align: bottom;
+    -webkit-animation: ellipsis steps(5, end) 900ms infinite;
+    animation: ellipsis steps(5, end) 900ms infinite;
+    content: "\2026"; /* ascii code for the ellipsis character */
+    width: 0px;
+  }
+
+  @keyframes ellipsis {
+    to {
+      width: 1.25em;
+    }
+  }
+
+  @-webkit-keyframes ellipsis {
+    to {
+      width: 1.25em;
+    }
+  }
+}

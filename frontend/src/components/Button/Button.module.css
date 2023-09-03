@@ -1,0 +1,32 @@
+.button {
+  color: #ffffff;
+  border-radius: 8px;
+  font-weight: 200;
+  font-size: 1.4rem;
+  border: none;
+  padding: 10px 25px;
+  background-color: #9885f0;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.button:hover {
+  transform: var(--transformScale);
+}
+
+@media (min-height: 450px) and (max-height: 850px) {
+  .button {
+    padding: 6px 18px;
+    font-size: 1.1rem;
+    margin-top: 5px;
+  }
+}
+
+@media (max-height: 450px) {
+  .button {
+    padding: 6px 18px;
+    font-size: 1rem;
+    margin-top: 5px;
+  }
+}

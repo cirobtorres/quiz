@@ -1,0 +1,40 @@
+.buttonsContainer {
+  display: flex;
+  gap: 10px;
+  padding: 0.5rem;
+  border-radius: 2rem 2rem 2rem 2rem;
+  background-color: var(--backgroundColor-D);
+}
+
+.buttonsContainer button {
+  border: none;
+  cursor: pointer;
+  color: var(--color-A);
+  background-color: transparent;
+  font-size: 1rem;
+}
+
+.buttonsContainer button:hover {
+  color: var(--color-B);
+}
+
+.buttonsContainer .buttons {
+  width: 30px;
+}
+
+.buttonsContainer .buttonCurrent {
+  color: var(--color-B);
+  font-weight: bold;
+}
+
+.buttonPreviousStyle,
+.buttonNextStyle {
+  text-align: center;
+  width: 80px;
+}
+
+.buttonPreviousDisabled,
+.buttonNextDisabled {
+  color: var(--color-C);
+  font-weight: bold;
+}

@@ -1,0 +1,46 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.confirmationWrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensure its on top */
+  opacity: 0;
+  pointer-events: none; /* Block user interaction */
+}
+
+.confirmationWrapper.confirmationBoxOpen {
+  opacity: 1;
+  pointer-events: auto; /* Allow interaction with the confirmation box */
+}
+
+.confirmationBoxContainer {
+  padding: 1rem;
+  border-radius: var(--border-radius);
+  background-color: var(--backgroundColor-C);
+}
+
+.confirmationBoxContainer p {
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+.buttonsContainer {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: space-around;
+}
+
+.cancelButton {
+  background-color: var(--backgroundColor-D);
+}

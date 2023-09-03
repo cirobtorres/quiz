@@ -1,0 +1,17 @@
+.questionary {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.questionSpan {
+  margin-right: 10px;
+}
+
+.link {
+  margin-top: 10px;
+  font-size: 1.25rem;
+  transition: 0.3s;
+}

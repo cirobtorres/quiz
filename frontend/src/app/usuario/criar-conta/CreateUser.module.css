@@ -1,0 +1,41 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 350px;
+}
+
+.container h1 {
+  font-size: 3.5rem;
+}
+
+.container button {
+  width: 100%;
+}
+
+.container button {
+  margin: 1rem 0;
+  font-size: 1.25rem;
+}
+
+.linkLogIn {
+  font-weight: 700;
+  color: var(--color-B);
+}
+
+.linkLogIn,
+.linkBackToHome {
+  margin-top: 0.5rem;
+  font-size: 1.25rem;
+}
+
+.hr {
+  width: 100%;
+}
+
+@media (max-width: 350px) {
+  .container h1 {
+    font-size: 3rem;
+  }
+}

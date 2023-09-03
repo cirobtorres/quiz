@@ -1,0 +1,12 @@
+.container {
+  text-align: center;
+}
+
+.linkBackToHome {
+  font-size: 1.25rem;
+  margin-top: 0.5rem;
+}
+
+.inputWidth {
+  width: 4rem;
+}

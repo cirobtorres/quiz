@@ -1,0 +1,22 @@
+.navOuterContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.navInnerContainer {
+  display: flex;
+}
+
+.navItem {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 2rem;
+  height: 2rem;
+}
+
+.navItem:not(:first-child) {
+  margin-left: 10px;
+}

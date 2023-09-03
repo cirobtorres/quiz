@@ -1,0 +1,91 @@
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  width: 300px;
+}
+
+.header {
+  font-size: 3rem;
+}
+
+.formContainer button {
+  width: 100%;
+}
+
+.passwordContainer {
+  text-align: center;
+  border: 2px solid var(--backgroundColor-A);
+  padding: 1rem;
+  margin-top: 1rem;
+  border-radius: var(--border-radius);
+  width: 100%;
+}
+
+.passwordHeader {
+  color: var(--color-B);
+}
+
+.datetimeContainer {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  width: 100%;
+}
+
+.link {
+  display: flex;
+  justify-content: center;
+  font-size: 1.25rem;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.buttonsContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+@media (min-width: 300px) and (max-width: 500px) {
+  .formContainer {
+    width: 300px;
+  }
+  .header {
+    font-size: 2.5rem;
+  }
+  .datetimeContainer {
+    font-size: 0.9rem;
+  }
+  .avatarContainer {
+    margin-bottom: 0;
+  }
+
+  .link {
+    font-size: 1.1rem;
+    text-align: center;
+    margin-top: 5px;
+  }
+}
+
+@media (max-width: 300px) {
+  .formContainer {
+    width: 250px;
+  }
+  .header {
+    font-size: 2rem;
+  }
+  .datetimeContainer {
+    font-size: 0.8rem;
+  }
+  .avatarContainer {
+    margin-bottom: 0;
+  }
+
+  .link {
+    font-size: 1rem;
+    text-align: center;
+    margin-top: 5px;
+  }
+}
