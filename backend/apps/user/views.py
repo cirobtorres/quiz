@@ -15,12 +15,11 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 
-import jwt
 from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
+from .models import QuizUser
 from .serializers import QuizUserSerializer
-from .types import QuizUser
 
 
 class QuizUserRegisterView(APIView):

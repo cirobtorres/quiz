@@ -5,8 +5,8 @@ from unittest.mock import patch, mock_open
 
 from django.test import TestCase
 
-from quiz.models import QuizModel, QuestionModel, AnswerModel
-from quiz.questions.populate_db import (
+from apps.quiz.models import QuizModel, QuestionModel, AnswerModel
+from apps.quiz.questions.populate_db import (
     get_list_of_paths,
     save_dict_to_database,
     convert_list_of_json_to_dict,
@@ -103,7 +103,7 @@ class PopulateDBTestCase(TestCase):
         save_dict_to_database([self.dict_obj])
 
         self.assertEqual(
-            QuestionModel.objects.first().quiz,
+            QuestionModel.objects.first().question_quiz,
             QuizModel.objects.first()
         )
 
@@ -112,7 +112,7 @@ class PopulateDBTestCase(TestCase):
         save_dict_to_database([self.dict_obj])
 
         answers = AnswerModel.objects.filter(
-            question=QuestionModel.objects.first())
+            answer_question=QuestionModel.objects.first())
 
         self.assertTrue(
             answers.first().is_correct
@@ -156,7 +156,7 @@ class PopulateDBTestCase(TestCase):
         save_dict_to_database([self.dict_obj])
 
         self.assertEqual(
-            QuestionModel.objects.first().quiz,
+            QuestionModel.objects.first().question_quiz,
             QuizModel.objects.last()
         )
 
@@ -191,9 +191,9 @@ class PopulateDBTestCase(TestCase):
             len(self.not_json_files)
         )
 
-    @patch("quiz.questions.populate_db.convert_list_of_json_to_dict")
-    @patch("quiz.questions.populate_db.save_dict_to_database")
-    @patch("quiz.questions.populate_db.get_list_of_paths")
+    @patch("apps.quiz.questions.populate_db.convert_list_of_json_to_dict")
+    @patch("apps.quiz.questions.populate_db.save_dict_to_database")
+    @patch("apps.quiz.questions.populate_db.get_list_of_paths")
     def test_populate_database(self, mock_get_list_of_paths, mock_save_dict_to_database, mock_convert_list_of_json_to_dict) -> None:
 
         mock_get_list_of_paths.return_value = self.json_files

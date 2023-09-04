@@ -9,8 +9,8 @@ from rest_framework.status import (
 from rest_framework.reverse import reverse as api_reverse
 from rest_framework.test import APITestCase
 
-from quiz.models import QuestionModel, AnswerModel, QuizModel, ScoreModel
-from quiz.serializers import QuestionSerializer, AnswerSerializer, QuizSerializer, ScoreSerializer
+from apps.quiz.models import QuestionModel, AnswerModel, QuizModel, ScoreModel
+from apps.quiz.serializers import QuestionSerializer, AnswerSerializer, QuizSerializer, ScoreSerializer
 
 
 class QuizAPIViewsTestCase(APITestCase):
@@ -26,9 +26,9 @@ class QuizAPIViewsTestCase(APITestCase):
         quiz: QuizModel = QuizModel.objects.create(**quiz_dict).save()
 
         questions_dict: dict[str, str] = [
-            {'quiz': quiz, 'question_text': 'What is 2 + 2?', },
-            {'quiz': quiz, 'question_text': 'What is 1 + 1?', },
-            {'quiz': quiz, 'question_text': 'What is 2 + 1?', },
+            {'question_quiz': quiz, 'question_text': 'What is 2 + 2?', },
+            {'question_quiz': quiz, 'question_text': 'What is 1 + 1?', },
+            {'question_quiz': quiz, 'question_text': 'What is 2 + 1?', },
         ]
 
         for question in questions_dict:
@@ -58,7 +58,7 @@ class QuizAPIViewsTestCase(APITestCase):
         for question_id, answer_obj in enumerate(answers_dict, start=1):
             for answer_dict in answer_obj:
                 AnswerModel.objects.create(
-                    question=QuestionModel.objects.get(id=question_id),
+                    answer_question=QuestionModel.objects.get(id=question_id),
                     **answer_dict
                 ).save()
 
@@ -152,8 +152,8 @@ class QuizAPIViewsTestCase(APITestCase):
         )
 
         score: ScoreModel = ScoreModel.objects.create(
-            quiz_user=quiz_user,
-            quiz=quiz,
+            score_user=quiz_user,
+            score_quiz=quiz,
             total_questions=1,
             total_correct_answers=1,
         )
@@ -172,8 +172,8 @@ class QuizAPIViewsTestCase(APITestCase):
         )
 
         score_serializer_data_invalid: dict[str, str] = {
-            'quiz_user': 1,
-            'quiz': 0,
+            'score_user': 1,
+            'score_quiz': 0,
             'total_questions': 1,
             'total_correct_answers': 1,
         }

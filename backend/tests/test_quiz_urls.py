@@ -6,7 +6,8 @@ from rest_framework.test import APITestCase
 from rest_framework.reverse import reverse as reverse_api
 from rest_framework.status import HTTP_200_OK
 
-from quiz.models import QuizModel, QuestionModel, ScoreModel
+from apps.quiz.models import QuizModel, QuestionModel, ScoreModel
+from apps.user.models import QuizUser
 
 
 class UrlsTestCase(APITestCase):
@@ -62,9 +63,14 @@ class UrlsTestCase(APITestCase):
             }
         )
 
+        quiz_user: QuizUser = QuizUser.objects.create(
+            username='testuser',
+        )
+
         score: ScoreModel = ScoreModel.objects.create(
             **{
-                'quiz': quiz,
+                'score_user': quiz_user,
+                'score_quiz': quiz,
                 'total_questions': 10,
                 'total_correct_answers': 6,
             }

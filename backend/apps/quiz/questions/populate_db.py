@@ -1,12 +1,12 @@
 import os
 import json
 from random import shuffle, seed
-from typing import TypedDict, List, Dict
+from typing import List, Dict, Union, TypedDict
 
 from django.utils.text import slugify
 from django.db.models import QuerySet
 
-from ..models import QuestionModel, AnswerModel, QuizModel
+from apps.quiz.models import QuestionModel, AnswerModel, QuizModel
 
 
 __doc__ = """This module contains functions to start an empty database with questions and answers."""
@@ -18,21 +18,26 @@ __all__ = [
 ]
 
 
+class Quiz(TypedDict):
+    subject: str
+    slug: str
+    description: str
+
+
 class Answer(TypedDict):
-    text: str
-    correct: bool
+    answer_text: str
+    is_correct: bool
 
 
 class Question(TypedDict):
-    question: str
+    question_text: str
     answers: List[Answer]
 
 
-class JSON(TypedDict):
-    JSON: Dict[str, Question]
+JSON = Union[Quiz, Question]
 
 
-def get_list_of_paths(**kwargs: str|tuple[str]) -> list[str]:
+def get_list_of_paths(**kwargs: str | tuple[str]) -> list[str]:
     """Returns a list of path files. "file_paths" only works only from backend root directory.
 
     Keyword arguments:
@@ -40,9 +45,9 @@ def get_list_of_paths(**kwargs: str|tuple[str]) -> list[str]:
     - file_paths: str = 'quiz/questions/'
     """
 
-    file_type: str|tuple[str] = kwargs.get('file_type', '.json')
+    file_type: str | tuple[str] = kwargs.get('file_type', '.json')
     file_paths: str = kwargs.get(
-        'file_paths', 
+        'file_paths',
         os.path.join(os.path.dirname(__file__), 'json')
     )
 
@@ -73,22 +78,17 @@ def convert_list_of_json_to_dict(json_path) -> dict[str]:
     return list_from_json
 
 
-def save_dict_to_database(dict_obj:JSON, **kwargs) -> None:
-    """
-    Saves questions and answers from a "JSON" format file to database.
-    
-    - "ANY" means that the key string content doesn't matter (normally a counter).
-    - "answers" is a list of four "answer" dictionaries.
-    """
+def save_dict_to_database(dict_obj: JSON, **kwargs) -> None:
+    """Saves questions and answers from a "JSON" format file to database."""
 
     for item in dict_obj:
         quiz_dict: dict[str] = item.pop('quiz')
         quiz_slug: str = quiz_dict.get(
-            'slug', 
+            'slug',
             slugify(quiz_dict.get('subject'))
         )
 
-        quiz: QuerySet[QuizModel]|QuerySet[None] = \
+        quiz: QuerySet[QuizModel] | QuerySet[None] = \
             QuizModel.objects.filter(slug=quiz_slug)
 
         if not quiz.exists():
@@ -99,33 +99,33 @@ def save_dict_to_database(dict_obj:JSON, **kwargs) -> None:
 
         for question in item.get('questions'):
             question_text: str = question.get('question_text')
-            question_answers: list[dict[str|bool]] = question.get('answers')
-        
+            question_answers: list[dict[str | bool]] = question.get('answers')
+
             question_object: QuestionModel = QuestionModel.objects.\
-                create(question_text=question_text, quiz=quiz_object)
+                create(question_text=question_text, question_quiz=quiz_object)
             question_object.save()
 
             if kwargs.get('shuffle_answers', False):
                 seed(kwargs.get('seed_number', None))
                 shuffle(question_answers)
-            
+
             for answer in question_answers:
                 answer_object: AnswerModel = AnswerModel.objects.\
-                    create(question=question_object, **answer)
+                    create(answer_question=question_object, **answer)
                 answer_object.save()
 
 
 def populate_database(**kwargs) -> None:
     """
     Populates database with questions and answers from a "JSON" file.
-    "JSON" files have a specific format. See "quiz/questions/template.json" for a template json file.
+    See "apps/quiz/questions/template.json" for a template of a "JSON" file.
 
     kwargs:
-        - shuffle_answers: bool; Shuffles answers order before saving it to database
+        - shuffle_answers: bool; Shuffles answers before saving it to database
     """
-    
+
     save_dict_to_database(
-            convert_list_of_json_to_dict(
-                json_path=get_list_of_paths(**kwargs)
-            ), **kwargs
-        )
+        convert_list_of_json_to_dict(
+            json_path=get_list_of_paths(**kwargs)
+        ), **kwargs
+    )

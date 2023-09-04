@@ -5,7 +5,7 @@ from rest_framework import serializers
 
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
-from .types import QuizUser
+from .models import QuizUser
 
 
 class QuizUserSerializer(serializers.ModelSerializer):
@@ -57,7 +57,7 @@ class QuizUserSerializer(serializers.ModelSerializer):
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
-    """Customize the token response data"""
+    """Customization of the token response data"""
     @classmethod
     def get_token(cls, user):
 

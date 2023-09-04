@@ -1,0 +1,30 @@
+{
+  "quiz": {
+    "subject": "",
+    "slug": "",
+    "description": ""
+  },
+  "questions": [
+    {
+      "question_text": "",
+      "answers": [
+        {
+          "answer_text": "",
+          "is_correct": true
+        },
+        {
+          "answer_text": "",
+          "is_correct": false
+        },
+        {
+          "answer_text": "",
+          "is_correct": false
+        },
+        {
+          "answer_text": "",
+          "is_correct": false
+        }
+      ]
+    }
+  ]
+}

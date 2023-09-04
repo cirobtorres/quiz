@@ -5,8 +5,6 @@ if settings.DEBUG:
 
     from rest_framework import serializers
 
-    from quiz.serializers import ScoreSerializer
-
     class QuizUserAdminSerializer(serializers.ModelSerializer):
         class Meta:
             model = get_user_model()
@@ -16,8 +14,7 @@ if settings.DEBUG:
                 'username',
                 'password',
                 'avatar',
-                # 'score_user',
-                # 'get_highest_score',
+                'get_total_correct_answers',
                 'score',
                 'is_active',
                 'is_staff',
@@ -35,15 +32,9 @@ if settings.DEBUG:
             }
             read_only_fields = (
                 'id',
-                # 'score_user',
-                # 'get_highest_score',
+                'get_total_correct_answers',
                 'score',
                 'last_login',
                 'created_at',
                 'updated_at',
             )
-
-        # score_user = ScoreSerializer(many=True)
-
-        # def get_highest_score(self, instance):
-        #     return instance.get_highest_score()

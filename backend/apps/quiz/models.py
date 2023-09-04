@@ -4,7 +4,7 @@ from datetime import datetime
 from django.db import models
 from django.contrib.auth import get_user_model
 
-from user.models import QuizUser
+from apps.user.models import QuizUser
 
 
 class QuizModel(models.Model):
@@ -16,12 +16,11 @@ class QuizModel(models.Model):
     def __str__(self) -> str:
         return self.subject
 
-    def get_questions(self) -> list['QuestionModel']:
-        return self.question.all()
-
 
 class QuestionModel(models.Model):
-    quiz: QuizModel = models.ForeignKey(
+    # question: name of the current model
+    # quiz: name of the related model
+    question_quiz: QuizModel = models.ForeignKey(
         to=QuizModel,
         related_name='question',
         on_delete=models.CASCADE,
@@ -34,8 +33,6 @@ class QuestionModel(models.Model):
         return self.question_text
 
     def get_shuffled_answers(self, seed_number: int | None = None) -> list['AnswerModel']:
-        """Get all answers related to a question instance and shuffle their order"""
-
         answers_list: list[AnswerModel] = list(self.answer.all())
         seed(seed_number)
         shuffle(answers_list)
@@ -58,7 +55,9 @@ class QuestionModel(models.Model):
 
 
 class AnswerModel(models.Model):
-    question = models.ForeignKey(
+    # answer: name of the current model
+    # question: name of the related model
+    answer_question = models.ForeignKey(
         to=QuestionModel,
         related_name='answer',
         on_delete=models.CASCADE,
@@ -73,13 +72,17 @@ class AnswerModel(models.Model):
 
 
 class ScoreModel(models.Model):
-    quiz_user: QuizUser = models.ForeignKey(
+    # score: name of the current model
+    # user: name of the related model
+    score_user: QuizUser = models.ForeignKey(
         to=get_user_model(),
         related_name='score_user',
         on_delete=models.CASCADE,
         null=True,
     )
-    quiz: QuizModel = models.ForeignKey(
+    # score: name of the current model
+    # quiz: name of the related model
+    score_quiz: QuizModel = models.ForeignKey(
         to=QuizModel,
         related_name='score_quiz',
         on_delete=models.CASCADE,
@@ -90,7 +93,7 @@ class ScoreModel(models.Model):
     created_at: datetime = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
-        return f'Corrects: {self.get_score_percentage()} Quiz: {self.quiz}'
+        return f'Corrects: {self.get_score_percentage()} Quiz: {self.score_quiz}'
 
     def get_score_percentage(self) -> float:
         return float(round(self.total_correct_answers / self.total_questions * 100))

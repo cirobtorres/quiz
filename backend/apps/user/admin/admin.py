@@ -4,7 +4,7 @@ if settings.DEBUG:
     from django.contrib import admin
     from django.contrib.auth import get_user_model
 
-    from user.types import QuizUser
+    from ..models import QuizUser
 
     @admin.register(get_user_model())
     class QuizUserAdmin(admin.ModelAdmin):

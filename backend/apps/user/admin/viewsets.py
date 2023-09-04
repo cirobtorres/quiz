@@ -17,8 +17,8 @@ if settings.DEBUG:
         HTTP_404_NOT_FOUND,
     )
 
+    from ..models import QuizUser
     from .admin_serializers import QuizUserAdminSerializer
-    from user.types import QuizUser
 
     class QuizUserModelViewSet(ModelViewSet):
         """

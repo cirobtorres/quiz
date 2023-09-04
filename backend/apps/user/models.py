@@ -7,11 +7,10 @@ from django.contrib.auth.models import (
 )
 from django.db import models
 from django.db.models import Sum
-from .types import QuizUser
 
 
 class QuizUserManager(BaseUserManager):
-    def create_user(self, username, password=None, **extra_fields) -> QuizUser:
+    def create_user(self, username, password=None, **extra_fields) -> 'QuizUser':
 
         if not username:
             raise ValueError('Users must have a username')
@@ -24,7 +23,7 @@ class QuizUserManager(BaseUserManager):
 
         return user
 
-    def create_superuser(self, username, password, **extra_fields) -> QuizUser:
+    def create_superuser(self, username, password, **extra_fields) -> 'QuizUser':
 
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
@@ -58,8 +57,6 @@ class QuizUser(AbstractBaseUser, PermissionsMixin):
     created_at: datetime = models.DateTimeField(auto_now_add=True)
     updated_at: datetime = models.DateTimeField(auto_now=True)
     score: float = models.FloatField(default=0)
-    total_correct_answers: int = models.PositiveIntegerField(
-        default=0)  # TODO: remove this field
 
     def __str__(self) -> str:
         return self.username
@@ -67,16 +64,3 @@ class QuizUser(AbstractBaseUser, PermissionsMixin):
     def get_total_correct_answers(self) -> int:
         return self.score_user.aggregate(Sum('total_correct_answers'))\
             .get('total_correct_answers__sum') if self.score_user.exists() else 0
-
-    # def get_how_many_scores(self) -> int:
-    #     return self.score_user.count() if self.score_user.exists() else 0
-
-    # def get_highest_score(self) -> float:
-    #     return self.score_user.aggregate(Sum('total_correct_answers'))\
-    #         .get('total_correct_answers__sum') / self.get_how_many_scores() \
-    #         if self.score_user.exists() else 0
-
-    # def save(self, *args, **kwargs) -> None:
-    #     if self.score_user.exists():
-    #         self.score = self.get_highest_score()
-    #     super().save(*args, **kwargs)

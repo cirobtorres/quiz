@@ -1,11 +1,12 @@
 from django.test import TestCase
 
-from quiz.models import (
+from apps.quiz.models import (
     QuizModel,
     QuestionModel,
     AnswerModel,
     ScoreModel
 )
+from apps.user.models import QuizUser
 
 
 class QuizModelsTestCase(TestCase):
@@ -22,7 +23,7 @@ class QuizModelsTestCase(TestCase):
             **self.quiz_object)
 
         self.question_object: dict[str] = {
-            'quiz': self.quiz_model,
+            'question_quiz': self.quiz_model,
             'question_text': 'Test Question',
         }
 
@@ -31,7 +32,7 @@ class QuizModelsTestCase(TestCase):
 
         self.answer_object: list[dict[str]] = [
             {
-                'question': self.question_model,
+                'answer_question': self.question_model,
                 'answer_text': f'Answer Option {i}',
                 'is_correct': True if i == 0 else False,
             }
@@ -48,14 +49,19 @@ class QuizModelsTestCase(TestCase):
             'total_correct_answers': 5,
         }
 
-        self.get_score_percentage: float = round(
+        self.get_score_percentage: float = (
             self.score_percentage['total_correct_answers']
             / self.score_percentage['total_questions']
             * 100
         )
 
+        self.quiz_user: QuizUser = QuizUser.objects.create(
+            username='testuser',
+        )
+
         self.score_object: dict[str] = {
-            'quiz': self.quiz_model,
+            'score_user': self.quiz_user,
+            'score_quiz': self.quiz_model,
             **self.score_percentage,
         }
 
@@ -112,7 +118,7 @@ class QuizModelsTestCase(TestCase):
 
         self.assertEqual(
             str(self.score_model),
-            f"Corrects: {self.get_score_percentage}% " +
+            f"Corrects: {self.get_score_percentage} " +
             f"Quiz: {self.quiz_object['subject']}",
         )
 
@@ -120,5 +126,5 @@ class QuizModelsTestCase(TestCase):
 
         self.assertEqual(
             self.score_model.get_score_percentage(),
-            f"{round(self.get_score_percentage)}%",
+            self.get_score_percentage,
         )

@@ -30,19 +30,27 @@ class QuestionAdmin(admin.ModelAdmin):
     inlines = [AnswerInline]
 
     def has_add_permission(self, request, obj=None):
-        # Disable the ability to add new questions from the admin
+        # Disable new questions
         return False
 
     def has_delete_permission(self, request, obj=None):
-        # Disable the ability to delete questions from the admin
+        # Disable delete questions
         return False
 
 
 @admin.register(ScoreModel)
 class ScoreAdmin(admin.ModelAdmin):
     model = ScoreModel
-    list_display = ['id', '__str__', 'total_correct_answers',
-                    'total_questions', 'get_score_percentage', 'created_at']
+    list_display = [
+        'id',
+        '__str__',
+        'score_user',
+        'score_quiz',
+        'total_questions',
+        'total_correct_answers',
+        'get_score_percentage',
+        'created_at',
+    ]
     list_display_links = ['__str__']
 
     def get_score_percentage(self, obj):

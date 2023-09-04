@@ -9,7 +9,7 @@ from rest_framework.status import (
 from rest_framework.reverse import reverse as api_reverse
 from rest_framework.test import APITestCase
 
-from user.models import QuizUser
+from apps.user.models import QuizUser
 
 
 class RegisterUserAPIViewsTestCase(APITestCase):
@@ -18,7 +18,8 @@ class RegisterUserAPIViewsTestCase(APITestCase):
         ...
 
     def test_views_user_register_missing_data(self) -> None:
-        """Test if register view prevents to save a user instance with empty username or password"""
+        # Test if register view prevents to save a user instance
+        # with empty username or password
         request_1: dict[str] = {
             'username': 'testuser',
         }

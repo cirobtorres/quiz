@@ -45,12 +45,6 @@ type AnswerModel = {
   is_correct: boolean;
 };
 
-type QuestionModel = {
-  id: number;
-  question_text: string;
-  get_shuffled_answers: AnswerModel[];
-};
-
 type QuizModel = {
   id: number;
   subject: string;
@@ -58,13 +52,19 @@ type QuizModel = {
   description: string;
   duration: number;
   created_at: string;
-  get_questions: QuestionModel[];
+};
+
+type QuestionModel = {
+  id: number;
+  question_quiz: QuizModel;
+  question_text: string;
+  get_shuffled_answers: AnswerModel[];
 };
 
 type ScoreModel = {
   id: number;
-  quiz: QuizModel;
-  quiz_user: QuizUser;
+  score_quiz: QuizModel;
+  score_user: QuizUser;
   total_questions: number;
   total_correct_answers: number;
   get_score_percentage: number;

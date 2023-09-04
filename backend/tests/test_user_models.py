@@ -1,7 +1,8 @@
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 
-from user.models import QuizUser
+from apps.quiz.models import QuizModel, ScoreModel
+from apps.user.models import QuizUser
 
 
 class UserModelsTestCase(TestCase):
@@ -75,3 +76,45 @@ class UserModelsTestCase(TestCase):
             )
         except ValueError:
             pass
+
+    def test_models_get_total_correct_answers(self) -> None:
+        user_data: dict[str] = {
+            'username': 'testuser',
+            'password': 'testpassword',
+        }
+        user = self.model.objects.create_user(**user_data)
+        self.assertEqual(user.get_total_correct_answers(), 0)
+
+        # Test again, but now with scores
+
+        quiz_data: dict[str] = {
+            'subject': 'Test Subject',
+            'slug': 'test-subject',
+            'description': 'Test description',
+        }
+
+        quiz = QuizModel.objects.create(**quiz_data)
+
+        score_data_1: dict[str] = {
+            'score_user': user,
+            'score_quiz': quiz,
+            'total_correct_answers': 7,
+            'total_questions': 10,
+        }
+
+        score = ScoreModel.objects.create(**score_data_1)
+
+        self.assertEqual(user.get_total_correct_answers(), score_data_1.get(
+            'total_correct_answers'))
+
+        score_data_2: dict[str] = {
+            'score_user': user,
+            'score_quiz': quiz,
+            'total_correct_answers': 4,
+            'total_questions': 10,
+        }
+
+        score = ScoreModel.objects.create(**score_data_2)
+
+        self.assertEqual(user.get_total_correct_answers(), score_data_1.get(
+            'total_correct_answers') + score_data_2.get('total_correct_answers'))

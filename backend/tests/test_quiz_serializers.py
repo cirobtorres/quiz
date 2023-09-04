@@ -1,10 +1,10 @@
 from rest_framework.test import APITestCase
 
-from quiz.models import (
+from apps.quiz.models import (
     QuestionModel,
     AnswerModel,
 )
-from quiz.serializers import (
+from apps.quiz.serializers import (
     QuestionSerializer,
 )
 
@@ -22,7 +22,7 @@ class QuizSerializersAPITestCase(APITestCase):
 
         self.answer_object: list[dict[str]] = [
             {
-                'question': self.question_model,
+                'answer_question': self.question_model,
                 'answer_text': f'Answer Option {i}',
                 'is_correct': True if i == 0 else False,
             }
@@ -38,23 +38,24 @@ class QuizSerializersAPITestCase(APITestCase):
 
     def test_serializers_question_get_shuffled_answers(self) -> None:
 
-        # Checks if answer array related to that question instance is in the correct order as they were created
+        # Checks if answer array related to that question instance
+        # is in the correct order as they were created
         self.assertEqual(
             list(self.question_model.answer.all()),
             self.answer_model,
         )
 
-        # Checks if the answers are being shuffled by get_shuffled_answers()'s serializer method
+        # Checks if the answers are being shuffled by
+        # get_shuffled_answers()'s serializer method
         self.assertNotEqual(
             self.question_serializer.
             get_shuffled_answers(instance=self.question_model),
             self.answer_model,
         )
 
-    # --------------------========== TESTS FOR get_correct_answer() ==========--------------------
-    # This is a test for a method that is no longer being used in QuestionSerializer, but its still present in the QuestionModel
     # def test_serializers_question_get_correct_answer(self) -> None:
-
+    #     # This is a test for a method that is no longer being used in
+    #     # QuestionSerializer, but its still present in the QuestionModel
     #     self.assertEqual(
     #         self.question_serializer.\
     #             get_correct_answer(instance=self.question_model),
