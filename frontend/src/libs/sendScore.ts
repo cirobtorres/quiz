@@ -1,7 +1,7 @@
 export default async function sendScore(
   url: string,
-  quiz: number,
-  quiz_user: number,
+  score_quiz: number,
+  score_user: number,
   total_correct_answers: number,
   total_questions: number
 ) {
@@ -11,8 +11,8 @@ export default async function sendScore(
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      quiz,
-      quiz_user,
+      score_quiz,
+      score_user,
       total_questions,
       total_correct_answers,
     }),

@@ -87,7 +87,7 @@ SIMPLE_JWT = {
 
     "USER_ID_FIELD": "id",
     "USER_ID_CLAIM": "user_id",
-    "TOKEN_OBTAIN_SERIALIZER": "user.serializers.MyTokenObtainPairSerializer",
+    "TOKEN_OBTAIN_SERIALIZER": "apps.user.serializers.MyTokenObtainPairSerializer",
 }
 
 ROOT_URLCONF = 'core.urls'

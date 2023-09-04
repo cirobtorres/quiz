@@ -83,7 +83,7 @@ export default function Questions(): JSX.Element {
   const sendScoreData = async (
     url: string,
     id: number,
-    quiz_user: number,
+    score_user: number,
     correctAnswers: number,
     totalQuestions: number
   ) => {
@@ -92,7 +92,7 @@ export default function Questions(): JSX.Element {
       const scoreData = await sendScore(
         url,
         id,
-        quiz_user,
+        score_user,
         correctAnswers,
         totalQuestions
       );

@@ -96,4 +96,4 @@ class ScoreModel(models.Model):
         return f'Corrects: {self.get_score_percentage()} Quiz: {self.score_quiz}'
 
     def get_score_percentage(self) -> float:
-        return float(round(self.total_correct_answers / self.total_questions * 100))
+        return self.total_correct_answers / self.total_questions * 100

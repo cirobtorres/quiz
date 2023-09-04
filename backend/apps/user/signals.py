@@ -24,5 +24,5 @@ def calculate_average_score(sender, instance, created, **kwargs) -> None:
         else:
             average_score: int = 0
 
-        user.score: float | int = average_score
+        user.score: float = average_score
         user.save()
