@@ -26,7 +26,8 @@ interface QuizUserContextProps {
     password: string,
     confirmPassword: string
   ) => Promise<void>;
-  updateUser?: (userData: userDataProps) => Promise<void>;
+  // updateUser?: (userData: userDataProps) => Promise<void>;
+  updateUser?: (userData: FormData) => Promise<void>;
 }
 
 const QuizUserContext = createContext<QuizUserContextProps>(
@@ -142,23 +143,29 @@ export function QuizUserProvider(props: any): JSX.Element {
     }
   }
 
-  async function updateUser(userData: userDataProps): Promise<void> {
-    const response = await fetch(`${configs.urls.user.UPDATE}/${userData.id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": userData.avatar
-          ? "multipart/form-data"
-          : "application/json",
-        // Accept: "application/json",
-        authorization: `Bearer ${Cookies.get("accessToken")}`,
-      },
-      body: JSON.stringify({ ...userData }),
-    });
+  async function updateUser(userData: FormData): Promise<void> {
+    // async function updateUser(userData: userDataProps): Promise<void> {
+    console.log("userData", userData);
+    const response: Response = await fetch(
+      `${configs.urls.user.UPDATE}/${userData.get("id")}`,
+      // `${configs.urls.user.UPDATE}/${userData.id}`,
+      {
+        method: "PUT",
+        body: userData,
+        // body: JSON.stringify(userData),
+        headers: {
+          // "fetch" will automatically set Content-Type header to multipart/form-data
+          // Passing the header manually will cause an error
+          // "Content-Type": "multipart/form-data",
+          authorization: `Bearer ${Cookies.get("accessToken")}`,
+        },
+      }
+    );
     if (!response.ok) {
       throw new Error(`${response.status} (${response.statusText})`);
     }
     if (response.ok) {
-      const data = await response.json();
+      const data: encodedToken = await response.json();
       await sessionConfigure(data);
     } else {
       throw new Error(
@@ -170,7 +177,7 @@ export function QuizUserProvider(props: any): JSX.Element {
   async function updateToken(): Promise<encodedToken | void> {
     setLoading(true);
 
-    const response = await fetch(configs.urls.token.REFRESH, {
+    const response: Response = await fetch(configs.urls.token.REFRESH, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -62,5 +62,7 @@ class QuizUser(AbstractBaseUser, PermissionsMixin):
         return self.username
 
     def get_total_correct_answers(self) -> int:
-        return self.score_user.aggregate(Sum('total_correct_answers'))\
-            .get('total_correct_answers__sum') if self.score_user.exists() else 0
+        return self.score_user \
+            .aggregate(Sum('total_correct_answers')) \
+            .get('total_correct_answers__sum') \
+            if self.score_user.exists() else 0

@@ -68,12 +68,7 @@ class QuizUserUpdateView(APIView):
     permission_classes = [IsAuthenticated]
     serializer_class = QuizUserSerializer
     model: QuizUser = get_user_model()
-    # parser_classes = [
-    #     FileUploadParser,
-    #     MultiPartParser,
-    #     JSONParser,
-    #     FormParser
-    # ]
+    parser_classes = (MultiPartParser,)
     http_method_names = ['put']
 
     def get_object(self, pk: int, *args, **kwargs) -> QuizUser:
@@ -95,11 +90,17 @@ class QuizUserUpdateView(APIView):
                 status=status.HTTP_401_UNAUTHORIZED
             )
 
-        data = request.data.copy()
+        try:
+            data = request.data.copy()
 
-        for field in request.data:
-            if data[field] == "":
-                del data[field]
+            for field in request.data:
+                if data[field] == "":
+                    del data[field]
+        except Exception as e:
+            return Response(
+                data={'message': 'invalid fetch data'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
         user_serializer: QuizUserSerializer = self.serializer_class(
             instance=user, data=data, partial=True
@@ -148,7 +149,6 @@ class QuizUserUpdateView(APIView):
                 status=status.HTTP_200_OK
             )
 
-        print(user_serializer.errors)
         return Response(
             data=user_serializer.errors,
             status=status.HTTP_400_BAD_REQUEST

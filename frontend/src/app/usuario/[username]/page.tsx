@@ -10,10 +10,6 @@ import Link from "next/link";
 import ConfirmationBox from "@/components/ConfirmationBox";
 import AvatarHandler from "@/components/AvatarHandler";
 
-interface Params {
-  params: { username: number };
-}
-
 interface userDataProps {
   id: number;
   username?: string | null;
@@ -45,6 +41,7 @@ export default function UserProfile(): JSX.Element {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  const [passwordError, setPasswordError] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const router = useRouter();
@@ -56,7 +53,9 @@ export default function UserProfile(): JSX.Element {
       throw new Error("User not found");
     }
     if (password !== passwordConfirmation) {
-      throw new Error("Pasword and password confirmation must be equal");
+      handlePasswordError("As senhas devem ser iguais");
+      return;
+      // throw new Error("Pasword and password confirmation must be equal");
     }
     const userData = new FormData();
     userData.append("id", quizUser.id.toString());
@@ -66,9 +65,17 @@ export default function UserProfile(): JSX.Element {
     if (!userData) {
       throw new Error("No data to update");
     }
-    const updateUserData: Object = Object.fromEntries(userData);
-    await updateUser?.(updateUserData as userDataProps);
+    // const updateUserData: Object = Object.fromEntries(userData);
+    // await updateUser?.(updateUserData as userDataProps);
+    await updateUser?.(userData);
     router.push("/");
+  }
+
+  function handlePasswordError(error: string) {
+    setTimeout(() => {
+      setPasswordError("");
+    }, 5000);
+    setPasswordError(error);
   }
 
   return (
@@ -94,6 +101,7 @@ export default function UserProfile(): JSX.Element {
                 name="password"
                 label="Senha"
                 value={password}
+                error={passwordError}
                 htmlFor="password"
                 onChange={(value) => setPassword(value)}
               />
@@ -102,6 +110,7 @@ export default function UserProfile(): JSX.Element {
                 name="passwordConfirmation"
                 label="Confirmar Senha"
                 value={passwordConfirmation}
+                error={passwordError}
                 htmlFor="confirmPassword"
                 onChange={(value) => setPasswordConfirmation(value)}
               />
