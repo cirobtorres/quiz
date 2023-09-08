@@ -2,13 +2,14 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import Select from "react-select";
-import makeAnimated from "react-select/animated";
 
 import { configs } from "@/configs";
 import styles from "./Settings.module.css";
 import QuizInput from "@/components/QuizInput";
 import Loading from "@/components/Loading";
+import QuizInputSelect from "@/components/QuizInputSelect";
+import Button from "@/components/Button";
+import cannotExceedRange from "@/functions/cannotExceedRange";
 
 export default function QuizSettings(): JSX.Element {
   const [loading, setLoading] = useState<boolean>(true);
@@ -18,33 +19,6 @@ export default function QuizSettings(): JSX.Element {
   const [subjects, setSubjects] = useState<string[] | null>(null);
   const [questionNumber, setQuestionNumber] = useState<number>(10);
   const [timeToResponse, setTimeToResponse] = useState<number>(30);
-
-  // https://react-select.com/home
-
-  const options = quizes.map((quiz) => ({
-    value: quiz.id,
-    label: quiz.subject,
-  }));
-
-  const CustomSelectComponent = () => (
-    <Select
-      closeMenuOnSelect={true}
-      components={makeAnimated()}
-      defaultValue={[options[1]]}
-      isMulti
-      options={options}
-    />
-  );
-
-  function cannotExceedRange(value: number, min: number, max: number): number {
-    if (value < min) {
-      return min;
-    }
-    if (value > max) {
-      return max;
-    }
-    return value;
-  }
 
   async function getAllQuizes() {
     const response = await fetch(configs.urls.QUIZ, {
@@ -82,39 +56,64 @@ export default function QuizSettings(): JSX.Element {
       ) : (
         <>
           <h1>Configurar Quiz</h1>
-          <div>
-            <QuizInput
-              name="questionNumber"
-              label="Número de Questões"
-              type="number"
-              max={maxQuestions}
-              min={minQuestions}
-              value={questionNumber}
-              width={styles.inputWidth}
-              onChange={(value) =>
-                setQuestionNumber(
-                  cannotExceedRange(value, minQuestions, maxQuestions)
-                )
-              }
+          <form className={styles.formContainer}>
+            <div className={styles.quizInputs}>
+              <QuizInput
+                name="questionNumber"
+                label="Número de Questões"
+                type="number"
+                max={maxQuestions}
+                min={minQuestions}
+                value={questionNumber}
+                className={styles.inputStyle}
+                container={styles.inputContainer}
+                onChange={(value) =>
+                  setQuestionNumber(
+                    cannotExceedRange(
+                      value,
+                      maxQuestions,
+                      minQuestions
+                    ) as number
+                  )
+                }
+              />
+              <QuizInput
+                name="timeToResponse"
+                label="Tempo para resposta"
+                type="number"
+                max={maxTime}
+                min={minTime}
+                value={timeToResponse}
+                className={styles.inputStyle}
+                container={styles.inputContainer}
+                onChange={(value) =>
+                  setTimeToResponse(
+                    cannotExceedRange(value, maxTime, minTime) as number
+                  )
+                }
+              />
+            </div>
+            <QuizInputSelect label="Disciplinas" quizes={quizes} />
+            <span>
+              *O quiz fará uma seleção de questões apenas das disciplinas que
+              estiverem salvas
+            </span>
+            <Button
+              text="Salvar"
+              onClick={() => console.log("Salvar Settings")}
             />
-            <QuizInput
-              name="timeToResponse"
-              label="Tempo para resposta"
-              type="number"
-              max={maxTime}
-              min={minTime}
-              value={timeToResponse}
-              width={styles.inputWidth}
-              onChange={(value) =>
-                setTimeToResponse(cannotExceedRange(value, minTime, maxTime))
-              }
-            />
+          </form>
+          <div className={styles.links}>
+            <Link
+              href={configs.routers.configQuiz.CREATE_QUIZ}
+              className={styles.saveNewQuestions}
+            >
+              Cadastrar Perguntas
+            </Link>
+            <Link href={configs.routers.HOME} className={styles.linkBackToHome}>
+              Voltar
+            </Link>
           </div>
-          <span>Disciplinas:</span>
-          {CustomSelectComponent()}
-          <Link href={configs.routers.HOME} className={styles.linkBackToHome}>
-            Voltar
-          </Link>
         </>
       )}
     </main>

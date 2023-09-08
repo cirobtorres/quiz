@@ -15,7 +15,7 @@ from .serializers import QuizSerializer, QuestionSerializer, ScoreSerializer
 from .questions.populate_db import populate_database
 
 
-class Questions(APIView):
+class LoadQuestions(APIView):
     model = QuestionModel
     serializer_class = QuestionSerializer
     lookup_field = 'pk'
@@ -41,7 +41,7 @@ class Questions(APIView):
         return Response(data=serializer.data, status=HTTP_200_OK)
 
 
-class Score(APIView):
+class LoadScore(APIView):
     model = ScoreModel
     serializer_class = ScoreSerializer
     lookup_field = 'pk'
@@ -72,7 +72,7 @@ class Score(APIView):
         return Response(data={'error': 'not saved'}, status=HTTP_400_BAD_REQUEST)
 
 
-class Quizes(APIView):
+class ListQuizes(APIView):
     serializer_class = QuizSerializer
     model = QuizModel
 

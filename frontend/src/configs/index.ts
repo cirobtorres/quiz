@@ -24,7 +24,10 @@ export const configs = {
       ROOT: "/questionario" as string,
       SCORE: "/questionario/score" as string,
     },
-    CONFIG_QUIZ: "/configurar-quiz" as string,
+    configQuiz: {
+      ROOT: "/configurar-quiz" as string,
+      CREATE_QUIZ: "/configurar-quiz/criar-quiz" as string,
+    },
     RANKING: "/ranking" as string,
     user: {
       ROOT: "/usuario" as string,

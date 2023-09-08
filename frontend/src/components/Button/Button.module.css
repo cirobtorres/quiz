@@ -5,10 +5,13 @@
   font-size: 1.4rem;
   border: none;
   padding: 10px 25px;
-  background-color: #9885f0;
   margin-top: 10px;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
+}
+
+.backgroundColor {
+  background-color: var(--backgroundColor-A);
 }
 
 .button:hover {

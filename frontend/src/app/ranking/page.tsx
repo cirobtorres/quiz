@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 
 import styles from "./Ranking.module.css";
 import Paginator from "@/components/Paginator";
+import UserProfile from "@/components/UserProfile";
 
 export default function Ranking(): JSX.Element {
   const [loading, setLoading] = useState<boolean>(true);

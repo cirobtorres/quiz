@@ -13,7 +13,9 @@ export default function Button(props: BotaoPropts) {
   function renderButton() {
     return (
       <button
-        className={`${props.backgroundColor ?? ""} ${styles.button}`}
+        className={`${
+          props.backgroundColor ? props.backgroundColor : styles.backgroundColor
+        } ${styles.button}`}
         onClick={props.onClick}
       >
         {props.text}

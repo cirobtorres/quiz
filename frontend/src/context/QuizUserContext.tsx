@@ -144,19 +144,12 @@ export function QuizUserProvider(props: any): JSX.Element {
   }
 
   async function updateUser(userData: FormData): Promise<void> {
-    // async function updateUser(userData: userDataProps): Promise<void> {
-    console.log("userData", userData);
     const response: Response = await fetch(
       `${configs.urls.user.UPDATE}/${userData.get("id")}`,
-      // `${configs.urls.user.UPDATE}/${userData.id}`,
       {
         method: "PUT",
         body: userData,
-        // body: JSON.stringify(userData),
         headers: {
-          // "fetch" will automatically set Content-Type header to multipart/form-data
-          // Passing the header manually will cause an error
-          // "Content-Type": "multipart/form-data",
           authorization: `Bearer ${Cookies.get("accessToken")}`,
         },
       }

@@ -30,7 +30,7 @@ py .\manage.py createsuperuser
 py .\manage.py createsuperuser --noinput
 ```
 
-## 5. In case you prefer your error logs as a text file, you may set environment variable `ERROR_LOG` to True. Change `ERROR_LOG_FILE` to any name file if you wish it to be different than the default one.
+## 5. In case you prefer your error logs as a text file, you may set environment variable `ERROR_LOG` to True. Change `ERROR_LOG_FILE` to any name file of your liking.
 
 ## 6. Run backend server:
 

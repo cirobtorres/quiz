@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { QuizUserProvider } from "@/context/QuizUserContext";
+import { QuizSettingsProvider } from "@/context/QuizSettings";
 import "@styles/globals.css";
 
 export const metadata: Metadata = {
@@ -16,7 +17,9 @@ export default function RootLayout({
   return (
     <html lang="pt">
       <body className="main">
-        <QuizUserProvider>{children}</QuizUserProvider>
+        <QuizUserProvider>
+          <QuizSettingsProvider>{children}</QuizSettingsProvider>
+        </QuizUserProvider>
       </body>
     </html>
   );

@@ -16,6 +16,19 @@
   --backgroundColor-D: rgb(206, 70, 127);
   --backgroundColor-E: rgb(133, 81, 192);
   --transformScale: scale(1.05);
+  /*Create a darken brightness attribute*/
+  --brightness: brightness(0.8);
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
 }
 
 * {
