@@ -8,6 +8,7 @@ import loginUser from "@/libs/loginUser";
 import { configs } from "@/configs";
 import { createContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { updateUser } from "@/libs/updateUser";
 
 interface userDataProps {
   id: number;
@@ -26,8 +27,7 @@ interface QuizUserContextProps {
     password: string,
     confirmPassword: string
   ) => Promise<void>;
-  // updateUser?: (userData: userDataProps) => Promise<void>;
-  updateUser?: (userData: FormData) => Promise<void>;
+  update?: (userData: FormData) => Promise<void>;
 }
 
 const QuizUserContext = createContext<QuizUserContextProps>(
@@ -143,28 +143,9 @@ export function QuizUserProvider(props: any): JSX.Element {
     }
   }
 
-  async function updateUser(userData: FormData): Promise<void> {
-    const response: Response = await fetch(
-      `${configs.urls.user.UPDATE}/${userData.get("id")}`,
-      {
-        method: "PUT",
-        body: userData,
-        headers: {
-          authorization: `Bearer ${Cookies.get("accessToken")}`,
-        },
-      }
-    );
-    if (!response.ok) {
-      throw new Error(`${response.status} (${response.statusText})`);
-    }
-    if (response.ok) {
-      const data: encodedToken = await response.json();
-      await sessionConfigure(data);
-    } else {
-      throw new Error(
-        `Error awaiting updateUser method: ${response.status} (${response.statusText}`
-      );
-    }
+  async function update(userData: FormData): Promise<any> {
+    const data: encodedToken = await updateUser(userData);
+    await sessionConfigure(data);
   }
 
   async function updateToken(): Promise<encodedToken | void> {
@@ -206,7 +187,7 @@ export function QuizUserProvider(props: any): JSX.Element {
         login,
         logout,
         register,
-        updateUser,
+        update,
       }}
     >
       {props.children}

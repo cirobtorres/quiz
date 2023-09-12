@@ -1,6 +1,7 @@
 .container {
   width: 680px;
   font-size: 1.3rem;
+  overflow-y: auto;
 }
 
 .container h1 {
@@ -9,26 +10,13 @@
   margin-bottom: 1rem;
 }
 
-.container .inputContainer:first-child {
-  margin-top: 1rem;
-}
-
-.inputContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.quizFieldsContainer > * {
   margin-bottom: 1rem;
 }
 
-.inputContainer label {
+.quizFieldsContainer label {
   width: 100%;
   text-align: start;
-}
-
-.formBackground {
-  padding: 1rem;
-  border-radius: var(--border-radius);
-  background-color: var(--backgroundColor-C);
 }
 
 .buttons {
@@ -55,11 +43,7 @@
   margin-top: 1rem;
   text-align: center;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-around;
   align-items: center;
-}
-
-.links a {
-  width: 100%;
 }

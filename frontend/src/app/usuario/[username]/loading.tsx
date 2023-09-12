@@ -1,5 +1,5 @@
 import Loading from "@/components/Loading";
-import styles from "@styles/Home.module.css";
+import styles from "../../Home.module.css";
 
 export default function HomeLoading(): JSX.Element {
   return (

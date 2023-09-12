@@ -75,6 +75,13 @@ REST_FRAMEWORK = {
     # )
 }
 
+# DATA_UPLOAD_MAX_MEMORY_SIZE = 52428800  # 50MB
+
+# FILE_UPLOAD_HANDLERS = [
+#     "django.core.files.uploadhandler.MemoryFileUploadHandler",
+#     "django.core.files.uploadhandler.TemporaryFileUploadHandler",
+# ]
+
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
@@ -147,7 +154,7 @@ USE_I18N = True
 USE_TZ = True
 
 MEDIA_URL = 'media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static', 'media')
 
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [

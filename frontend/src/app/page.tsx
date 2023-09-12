@@ -6,11 +6,21 @@ import useQuizUser from "@/hooks/useQuizUser";
 import Loading from "@/components/Loading";
 import UserProfile from "@/components/UserProfile";
 import { configs } from "@/configs";
-import styles from "@styles/Home.module.css";
+import styles from "./Home.module.css";
 
 export default function Home(): JSX.Element {
   const { quizUser, loading, logout } = useQuizUser();
   const router = useRouter();
+
+  function startQuiz() {
+    if (!quizUser) return;
+    router.push(configs.routers.questionary.ROOT);
+  }
+
+  function configQuiz() {
+    if (!quizUser) return;
+    router.push(configs.routers.configQuiz.ROOT);
+  }
 
   return (
     <main className={styles.container}>
@@ -20,16 +30,15 @@ export default function Home(): JSX.Element {
           <div className={styles.header}>
             <h1>Quiz!</h1>
           </div>
-          <p className={styles.description}>
-            Teste seus conhecimentos em campos básicos como ciências,
-            matemática, direito, geografia e história brasileira e muito mais!
-          </p>
           <hr />
           <nav className={styles.navContainers}>
-            <li onClick={() => router.push(configs.routers.questionary.ROOT)}>
+            <li
+              onClick={startQuiz}
+              style={!quizUser ? { color: "#ccc", fontWeight: 400 } : {}}
+            >
               Começar
             </li>
-            <li onClick={() => router.push(configs.routers.configQuiz.ROOT)}>
+            <li onClick={configQuiz} style={!quizUser ? { color: "#ccc" } : {}}>
               Configurar Quiz
             </li>
             <li onClick={() => router.push(configs.routers.RANKING)}>

@@ -37,7 +37,7 @@ function formatDateTime(date: string, formatDate: string | null = null) {
 }
 
 export default function UserProfile(): JSX.Element {
-  const { quizUser, loading, updateUser } = useQuizUser();
+  const { quizUser, loading, update } = useQuizUser();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
@@ -57,6 +57,11 @@ export default function UserProfile(): JSX.Element {
       return;
       // throw new Error("Pasword and password confirmation must be equal");
     }
+    if (selectedImage && selectedImage.size > 2.0 * 1024 * 1024) {
+      // handleImageError("A imagem deve ter no máximo 2MB"); // TODO: handle image error
+      console.log("Image must be less than 2MB");
+      return;
+    }
     const userData = new FormData();
     userData.append("id", quizUser.id.toString());
     userData.append("username", username ? username : "");
@@ -65,9 +70,7 @@ export default function UserProfile(): JSX.Element {
     if (!userData) {
       throw new Error("No data to update");
     }
-    // const updateUserData: Object = Object.fromEntries(userData);
-    // await updateUser?.(updateUserData as userDataProps);
-    await updateUser?.(userData);
+    await update?.(userData);
     router.push("/");
   }
 

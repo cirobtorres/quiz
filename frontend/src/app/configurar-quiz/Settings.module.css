@@ -28,18 +28,23 @@
   flex-direction: column;
 }
 
-.inputContainer {
+.quizInputs > div {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   margin-top: 0.5rem;
 }
 
-.inputStyle {
+.quizInputs > div > input {
+  text-align: center;
+  font-size: 1.3rem;
   width: 4rem;
-  height: 2rem;
   border-radius: 4px;
-  border: 1px solid rgb(0, 0, 0, 0.2);
+  outline: 1px solid #ccc;
+}
+
+.inputStyle:focus {
+  outline: 2px solid #2684ff;
 }
 
 .reactSelectContainer {

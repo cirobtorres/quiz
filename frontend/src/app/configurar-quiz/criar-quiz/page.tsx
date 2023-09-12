@@ -8,7 +8,7 @@ import QuizInputSelect from "@/components/QuizInputSelect";
 import Button from "@/components/Button";
 import styles from "./CreateQuiz.module.css";
 import { configs } from "@/configs";
-import cannotExceedRange from "@/functions/cannotExceedRange";
+// import cannotExceedRange from "@/functions/cannotExceedRange";
 
 export default function CreateQuiz(): JSX.Element {
   const [loading, setLoading] = useState<boolean>(true);
@@ -58,24 +58,17 @@ export default function CreateQuiz(): JSX.Element {
           questões novas ou crie uma disciplina completamente do zero escrevendo
           o nome da disciplina no campo suspenso abaixo.
         </p>
-        <div className={styles.formBackground}>
+        <div className={styles.quizFieldsContainer}>
           <QuizInputSelect label="Disciplina" creatable quizes={quizes} />
-          <div>
-            <QuizInput
-              type="text"
-              name="Enunciado"
-              value={questionText}
-              placeholder="Ex.: Qual a capital do Brasil?"
-              label="Enunciado"
-              required
-              container={styles.inputContainer}
-              onChange={(value) =>
-                setQuestionText(
-                  cannotExceedRange(value, maxQuestTxtChars) as string
-                )
-              }
-            />
-          </div>
+          <QuizInput
+            type="text"
+            name="Enunciado"
+            value={questionText}
+            placeholder="Ex.: Qual a capital do Brasil?"
+            label="Enunciado"
+            required
+            onChange={(value) => setQuestionText(value)}
+          />
           <QuizInput
             type="text"
             name="Alternativa Correta"
@@ -83,58 +76,36 @@ export default function CreateQuiz(): JSX.Element {
             label="Alternativa Correta"
             placeholder="Ex.: Brasília"
             required
-            container={styles.inputContainer}
-            onChange={(value) =>
-              setCorrectAnswerText(
-                cannotExceedRange(value, maxAnsTxtChars) as string
-              )
-            }
+            onChange={(value) => setCorrectAnswerText(value)}
           />
-          <div>
-            <label>Alternativas Incorretas</label>
-            <QuizInput
-              type="text"
-              value={answerText1}
-              placeholder="Ex.: São Paulo"
-              required
-              container={styles.inputContainer}
-              onChange={(value) =>
-                setAnswerText1(
-                  cannotExceedRange(value, maxAnsTxtChars) as string
-                )
-              }
-            />
-            <QuizInput
-              type="text"
-              value={answerText2}
-              placeholder="Ex.: Rio de Janeiro"
-              required
-              container={styles.inputContainer}
-              onChange={(value) =>
-                setAnswerText2(
-                  cannotExceedRange(value, maxAnsTxtChars) as string
-                )
-              }
-            />
-            <QuizInput
-              type="text"
-              value={answerText3}
-              placeholder="Ex.: Belo Horizonte"
-              required
-              container={styles.inputContainer}
-              onChange={(value) =>
-                setAnswerText3(
-                  cannotExceedRange(value, maxAnsTxtChars) as string
-                )
-              }
-            />
-          </div>
-          <hr />
-          <span className={styles.note}>
-            OBS: máximo de {maxQuestTxtChars} caracteres para o enunciado e{" "}
-            {maxAnsTxtChars} caracteres para as respostas
-          </span>
+          <label>Alternativas Incorretas</label>
+          <QuizInput
+            type="text"
+            value={answerText1}
+            placeholder="Ex.: São Paulo"
+            required
+            onChange={(value) => setAnswerText1(value)}
+          />
+          <QuizInput
+            type="text"
+            value={answerText2}
+            placeholder="Ex.: Rio de Janeiro"
+            required
+            onChange={(value) => setAnswerText2(value)}
+          />
+          <QuizInput
+            type="text"
+            value={answerText3}
+            placeholder="Ex.: Belo Horizonte"
+            required
+            onChange={(value) => setAnswerText3(value)}
+          />
         </div>
+        <hr />
+        <span className={styles.note}>
+          OBS: máximo de {maxQuestTxtChars} caracteres para o enunciado e{" "}
+          {maxAnsTxtChars} caracteres para as respostas
+        </span>
         <div className={styles.buttons}>
           <Button text="Salvar" onClick={() => console.log("Salvar")} />
           <Button

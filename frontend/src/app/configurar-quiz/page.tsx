@@ -9,7 +9,7 @@ import QuizInput from "@/components/QuizInput";
 import Loading from "@/components/Loading";
 import QuizInputSelect from "@/components/QuizInputSelect";
 import Button from "@/components/Button";
-import cannotExceedRange from "@/functions/cannotExceedRange";
+// import cannotExceedRange from "@/functions/cannotExceedRange";
 
 export default function QuizSettings(): JSX.Element {
   const [loading, setLoading] = useState<boolean>(true);
@@ -45,6 +45,20 @@ export default function QuizSettings(): JSX.Element {
     }
   }
 
+  function handleOnBlur(
+    value: number,
+    func: Function,
+    min: number,
+    max: number
+  ): void {
+    if (value < min) {
+      func(min);
+    }
+    if (value > max) {
+      func(max);
+    }
+  }
+
   useEffect(() => {
     loadQuizes();
   }, []);
@@ -65,17 +79,8 @@ export default function QuizSettings(): JSX.Element {
                 max={maxQuestions}
                 min={minQuestions}
                 value={questionNumber}
-                className={styles.inputStyle}
-                container={styles.inputContainer}
-                onChange={(value) =>
-                  setQuestionNumber(
-                    cannotExceedRange(
-                      value,
-                      maxQuestions,
-                      minQuestions
-                    ) as number
-                  )
-                }
+                onChange={(value) => setQuestionNumber(value)}
+                onBlur={handleOnBlur}
               />
               <QuizInput
                 name="timeToResponse"
@@ -84,13 +89,10 @@ export default function QuizSettings(): JSX.Element {
                 max={maxTime}
                 min={minTime}
                 value={timeToResponse}
-                className={styles.inputStyle}
-                container={styles.inputContainer}
-                onChange={(value) =>
-                  setTimeToResponse(
-                    cannotExceedRange(value, maxTime, minTime) as number
-                  )
-                }
+                onChange={(value) => {
+                  setTimeToResponse(value);
+                }}
+                onBlur={handleOnBlur}
               />
             </div>
             <QuizInputSelect label="Disciplinas" quizes={quizes} />
