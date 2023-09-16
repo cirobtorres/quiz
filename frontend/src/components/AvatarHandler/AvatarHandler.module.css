@@ -1,40 +1,37 @@
 .container {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 1rem;
   width: 100%;
+  margin-bottom: 0.5rem;
 }
 
-.avatarContainer {
+.avatar {
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  /* width: max-content; */
   width: 100%;
-  object-fit: cover;
   height: 200px;
-  color: var(--color-D);
-  border-radius: var(--border-radius);
   background-color: var(--color-A);
+  border-radius: var(--border-radius);
 }
 
-.avatarContainer input[type="file"] {
+.avatar input[type="file"] {
   position: absolute;
   height: 100%;
   opacity: 0;
   cursor: pointer;
 }
 
-.avatarContainer input[type="file"]:focus {
-  opacity: 1;
+.selectedImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--border-radius);
 }
-
-/* .avatarContainer > span:first-child {
-  font-size: 3rem;
-} */
 
 .addAvatar {
   display: flex;
@@ -42,18 +39,25 @@
   align-items: center;
   justify-content: center;
   font-size: 1.25rem;
-  width: 100%;
-  height: 100%;
   pointer-events: none;
   user-select: none;
+  color: var(--color-D);
 }
 
-.addAvatar > span:first-child {
-  font-size: 2rem;
-  font-weight: bold;
+.errorBorder {
+  border: 2px solid rgb(255, 100, 100);
 }
 
-.selectedImage {
-  width: 100%;
-  height: 100%;
+.errorText {
+  color: rgb(255, 100, 100);
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.remove {
+  color: var(--color-B);
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
 }

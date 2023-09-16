@@ -14,6 +14,7 @@ if settings.DEBUG:
                 'username',
                 'password',
                 'avatar',
+                'preferences_user',
                 'get_total_correct_answers',
                 'score',
                 'is_active',
@@ -32,6 +33,7 @@ if settings.DEBUG:
             }
             read_only_fields = (
                 'id',
+                'preferences_user',
                 'get_total_correct_answers',
                 'score',
                 'last_login',

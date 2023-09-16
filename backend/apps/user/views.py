@@ -118,6 +118,7 @@ class QuizUserUpdateView(APIView):
                 'id': new_user.id,
                 'username': new_user.username,
                 'avatar': new_user.avatar.url if new_user.avatar else None,
+                'preferences_user': new_user.preferences_user.id,
                 'get_total_correct_answers': new_user.get_total_correct_answers(),
                 'score': new_user.score,
                 'is_active': new_user.is_active,
@@ -142,7 +143,6 @@ class QuizUserUpdateView(APIView):
 
             return Response(
                 data={
-                    # 'message': 'user updated successfully',
                     'access': str(access),
                     'refresh': str(refresh),
                 },

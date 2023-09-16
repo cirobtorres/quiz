@@ -1,7 +1,6 @@
 .container {
   width: 680px;
   font-size: 1.3rem;
-  overflow-y: auto;
 }
 
 .container h1 {
@@ -17,6 +16,15 @@
 .quizFieldsContainer label {
   width: 100%;
   text-align: start;
+}
+
+.quizFieldsContainer input {
+  border-radius: 4px;
+  outline: 1px solid #ccc;
+}
+
+.quizFieldsContainer input:focus {
+  outline: 2px solid #2684ff;
 }
 
 .buttons {

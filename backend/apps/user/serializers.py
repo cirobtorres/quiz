@@ -16,6 +16,7 @@ class QuizUserSerializer(serializers.ModelSerializer):
             'username',
             'password',
             'avatar',
+            'preferences_user',
             'get_total_correct_answers',
             'score',
             'is_active',
@@ -26,6 +27,7 @@ class QuizUserSerializer(serializers.ModelSerializer):
         )
         read_only_fields = (
             'id',
+            'preferences_user',
             'get_total_correct_answers',
             'score',
             'is_active',
@@ -67,8 +69,11 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
             'id': user.id,
             'username': user.username,
             'avatar': user.avatar.url if user.avatar else None,
+            'preferences_user': user.preferences_user.id,
             'is_active': user.is_active,
             'is_staff': user.is_staff,
+            'get_total_correct_answers': user.get_total_correct_answers(),
+            'score': user.score,
             'last_login': (
                 timezone.localtime(user.last_login)
                 .strftime("%d-%m-%Y %H:%M:%S")
@@ -76,6 +81,10 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
             ),
             'created_at': (
                 timezone.localtime(user.created_at)
+                .strftime("%d-%m-%Y %H:%M:%S")
+            ),
+            'updated_at': (
+                timezone.localtime(user.updated_at)
                 .strftime("%d-%m-%Y %H:%M:%S")
             ),
         }

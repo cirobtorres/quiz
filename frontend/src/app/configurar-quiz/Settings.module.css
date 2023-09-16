@@ -43,7 +43,7 @@
   outline: 1px solid #ccc;
 }
 
-.inputStyle:focus {
+.quizInputs input:focus {
   outline: 2px solid #2684ff;
 }
 

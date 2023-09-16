@@ -18,8 +18,6 @@ class QuizModel(models.Model):
 
 
 class QuestionModel(models.Model):
-    # question: name of the current model
-    # quiz: name of the related model
     question_quiz: QuizModel = models.ForeignKey(
         to=QuizModel,
         related_name='question',
@@ -55,8 +53,6 @@ class QuestionModel(models.Model):
 
 
 class AnswerModel(models.Model):
-    # answer: name of the current model
-    # question: name of the related model
     answer_question = models.ForeignKey(
         to=QuestionModel,
         related_name='answer',
@@ -72,16 +68,12 @@ class AnswerModel(models.Model):
 
 
 class ScoreModel(models.Model):
-    # score: name of the current model
-    # user: name of the related model
     score_user: QuizUser = models.ForeignKey(
         to=get_user_model(),
         related_name='score_user',
         on_delete=models.CASCADE,
         null=True,
     )
-    # score: name of the current model
-    # quiz: name of the related model
     score_quiz: QuizModel = models.ForeignKey(
         to=QuizModel,
         related_name='score_quiz',
@@ -97,3 +89,21 @@ class ScoreModel(models.Model):
 
     def get_score_percentage(self) -> float:
         return self.total_correct_answers / self.total_questions * 100
+
+
+class PreferencesModel(models.Model):
+    preferences_user: QuizUser = models.OneToOneField(
+        to=get_user_model(),
+        related_name='preferences_user',
+        on_delete=models.CASCADE,
+        null=True,
+    )
+    preferences_quiz: QuizModel = models.ManyToManyField(
+        to=QuizModel,
+    )
+    question_number: int = models.PositiveIntegerField(default=10)
+    time_to_answer: int = models.PositiveIntegerField(default=30)
+    updated_at: datetime = models.DateTimeField(auto_now=True)
+
+    def __str__(self) -> str:
+        return f'User: {self.preferences_user}'

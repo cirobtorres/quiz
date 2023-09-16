@@ -42,6 +42,7 @@ export default function UserProfile(): JSX.Element {
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [imageError, setImageError] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const router = useRouter();
@@ -55,11 +56,9 @@ export default function UserProfile(): JSX.Element {
     if (password !== passwordConfirmation) {
       handlePasswordError("As senhas devem ser iguais");
       return;
-      // throw new Error("Pasword and password confirmation must be equal");
     }
     if (selectedImage && selectedImage.size > 2.0 * 1024 * 1024) {
-      // handleImageError("A imagem deve ter no máximo 2MB"); // TODO: handle image error
-      console.log("Image must be less than 2MB");
+      handleImageError("Imagem deve ter menos de 2MB");
       return;
     }
     const userData = new FormData();
@@ -72,6 +71,13 @@ export default function UserProfile(): JSX.Element {
     }
     await update?.(userData);
     router.push("/");
+  }
+
+  function handleImageError(error: string) {
+    setTimeout(() => {
+      setImageError("");
+    }, 5000);
+    setImageError(error);
   }
 
   function handlePasswordError(error: string) {
@@ -123,6 +129,7 @@ export default function UserProfile(): JSX.Element {
               avatar={quizUser.avatar}
               selectedImage={selectedImage}
               setSelectedImage={setSelectedImage}
+              error={imageError}
             />
             <div className={styles.datetimeContainer}>
               <span>

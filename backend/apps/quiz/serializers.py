@@ -4,7 +4,8 @@ from apps.quiz.models import (
     QuestionModel,
     AnswerModel,
     QuizModel,
-    ScoreModel
+    ScoreModel,
+    PreferencesModel,
 )
 
 
@@ -58,3 +59,9 @@ class ScoreSerializer(serializers.ModelSerializer):
             'get_score_percentage',
             'created_at',
         ]
+
+
+class PreferencesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PreferencesModel
+        fields = '__all__'

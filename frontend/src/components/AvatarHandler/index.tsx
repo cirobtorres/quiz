@@ -1,10 +1,9 @@
-import { useState } from "react";
-
 import styles from "./AvatarHandler.module.css";
 
 interface UserParams {
   username: string;
   avatar: string | null;
+  error: string;
   selectedImage: File | null;
   setSelectedImage: React.Dispatch<React.SetStateAction<File | null>>;
 }
@@ -12,6 +11,7 @@ interface UserParams {
 export default function AvatarHandler({
   username,
   avatar,
+  error,
   selectedImage,
   setSelectedImage,
 }: UserParams): JSX.Element {
@@ -21,28 +21,21 @@ export default function AvatarHandler({
     }
   };
 
-  const removeSelectedImage = () => {
-    // Not being used
-    setSelectedImage(null);
-  };
-
   return (
     <div className={styles.container}>
       <h2>Avatar</h2>
-      <div className={styles.avatarContainer}>
+      <div className={`${styles.avatar} ${error ? styles.errorBorder : ""}`}>
         <input type="file" onChange={imageHasChanged} />
         {avatar && !selectedImage ? (
           <img
             src={avatar}
             alt={`Avatar de ${username}`}
-            onClick={() => console.log(avatar)}
+            title={`Avatar de ${username}`}
             className={styles.selectedImage}
           />
         ) : selectedImage ? (
           <img
             src={URL.createObjectURL(selectedImage)}
-            alt={`Avatar de ${username}`}
-            title={`Avatar de ${username}`}
             className={styles.selectedImage}
           />
         ) : (
@@ -52,6 +45,7 @@ export default function AvatarHandler({
           </div>
         )}
       </div>
+      {error && <span className={styles.errorText}>{error}</span>}
     </div>
   );
 }

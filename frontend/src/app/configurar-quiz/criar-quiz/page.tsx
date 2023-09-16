@@ -59,7 +59,13 @@ export default function CreateQuiz(): JSX.Element {
           o nome da disciplina no campo suspenso abaixo.
         </p>
         <div className={styles.quizFieldsContainer}>
-          <QuizInputSelect label="Disciplina" creatable quizes={quizes} />
+          <QuizInputSelect
+            label="Disciplina"
+            creatable
+            quizes={quizes}
+            default={[1]} // TODO: I'M INCOMPLETE
+            setValues={(values) => console.log(values)} // TODO: I'M INCOMPLETE
+          />
           <QuizInput
             type="text"
             name="Enunciado"

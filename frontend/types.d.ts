@@ -11,10 +11,20 @@ type Token = {
   userData: QuizUser;
 };
 
+type PreferencesModel = {
+  id: number;
+  preferences_user: QuizUser;
+  preferences_quiz: QuizModel[];
+  question_number: number;
+  time_to_answer: number;
+  updated_at: string;
+};
+
 type QuizUser = {
   id: number;
   username: string;
   avatar: string;
+  preferences_user: number;
   get_total_correct_answers: number;
   score: number;
   is_active: boolean;

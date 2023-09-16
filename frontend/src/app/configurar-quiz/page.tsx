@@ -9,16 +9,28 @@ import QuizInput from "@/components/QuizInput";
 import Loading from "@/components/Loading";
 import QuizInputSelect from "@/components/QuizInputSelect";
 import Button from "@/components/Button";
-// import cannotExceedRange from "@/functions/cannotExceedRange";
+import useQuizSettings from "@/hooks/useQuizSettings";
+import useQuizUser from "@/hooks/useQuizUser";
+import { useRouter } from "next/navigation";
 
 export default function QuizSettings(): JSX.Element {
+  const {
+    settingsId,
+    questionNumber,
+    timeToAnswer,
+    subjects,
+    setQuestionNumber,
+    setTimeToAnswer,
+    setSubjects,
+    updatePreferencies,
+    savingToContextPreferenciesData,
+  } = useQuizSettings();
+  const { quizUser } = useQuizUser();
   const [loading, setLoading] = useState<boolean>(true);
   const [minQuestions, maxQuestions]: number[] = [5, 30];
   const [minTime, maxTime]: number[] = [25, 90];
   const [quizes, setQuizes] = useState<QuizModel[]>([]);
-  const [subjects, setSubjects] = useState<string[] | null>(null);
-  const [questionNumber, setQuestionNumber] = useState<number>(10);
-  const [timeToResponse, setTimeToResponse] = useState<number>(30);
+  const router = useRouter();
 
   async function getAllQuizes() {
     const response = await fetch(configs.urls.QUIZ, {
@@ -45,6 +57,27 @@ export default function QuizSettings(): JSX.Element {
     }
   }
 
+  async function handleSubmit(
+    event: React.FormEvent<HTMLFormElement>
+  ): Promise<void> {
+    event.preventDefault();
+    setLoading(true);
+    const userData = new FormData();
+    userData.append("id", String(settingsId));
+    userData.append("question_number", String(questionNumber));
+    userData.append("time_to_answer", String(timeToAnswer));
+    userData.append("preferences_quiz", JSON.stringify(subjects));
+    if (!subjects) {
+      throw new Error("No subjects to update");
+    }
+    if (!userData) {
+      throw new Error("No data to update");
+    }
+    await updatePreferencies(userData);
+    setLoading(false);
+    router.refresh();
+  }
+
   function handleOnBlur(
     value: number,
     func: Function,
@@ -61,6 +94,7 @@ export default function QuizSettings(): JSX.Element {
 
   useEffect(() => {
     loadQuizes();
+    quizUser && savingToContextPreferenciesData(quizUser.preferences_user);
   }, []);
 
   return (
@@ -88,22 +122,22 @@ export default function QuizSettings(): JSX.Element {
                 type="number"
                 max={maxTime}
                 min={minTime}
-                value={timeToResponse}
-                onChange={(value) => {
-                  setTimeToResponse(value);
-                }}
+                value={timeToAnswer}
+                onChange={(value) => setTimeToAnswer(value)}
                 onBlur={handleOnBlur}
               />
             </div>
-            <QuizInputSelect label="Disciplinas" quizes={quizes} />
+            <QuizInputSelect
+              label="Disciplinas"
+              quizes={quizes}
+              default={subjects}
+              setValues={setSubjects}
+            />
             <span>
               *O quiz fará uma seleção de questões apenas das disciplinas que
               estiverem salvas
             </span>
-            <Button
-              text="Salvar"
-              onClick={() => console.log("Salvar Settings")}
-            />
+            <Button text="Salvar" onClick={handleSubmit} />
           </form>
           <div className={styles.links}>
             <Link

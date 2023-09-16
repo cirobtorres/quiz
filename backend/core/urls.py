@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.http import HttpRequest
-from django.urls import path, include, reverse
+from django.urls import path, include
 
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
@@ -17,15 +17,16 @@ urlpatterns = [
 if settings.DEBUG:
     from django.contrib import admin
     from django.conf.urls.static import static
+    from rest_framework.reverse import reverse as api_reverse
     from rest_framework.views import APIView
     from rest_framework.response import Response
 
     class RedirectAPI(APIView):
         def get(self, request: HttpRequest, format=None):
             redirect_urls = {
-                "users": f"http://127.0.0.1:8000{reverse(viewname='user:api-users-list')}?page=1",
-                "questions": f"http://127.0.0.1:8000{reverse(viewname='quiz:questions')}",
-                "score": f"http://127.0.0.1:8000{reverse(viewname='quiz:score')}",
+                "users": f"http://127.0.0.1:8000{api_reverse(viewname='user:api-users-list')}?page=1",
+                "questions": f"http://127.0.0.1:8000{api_reverse(viewname='quiz:quiz_viewsets')}",
+                "score": f"http://127.0.0.1:8000{api_reverse(viewname='quiz:score')}",
             }
             return Response(data=redirect_urls)
 

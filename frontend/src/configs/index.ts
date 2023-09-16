@@ -12,6 +12,9 @@ export const configs = {
       LOGOUT: "http://127.0.0.1:8000/api/user/logout" as string,
       REGISTER: "http://127.0.0.1:8000/api/user/register" as string,
       UPDATE: "http://127.0.0.1:8000/api/user/update" as string,
+      PREFERENCES: "http://127.0.0.1:8000/api/quiz/preferences" as string,
+      PREFERENCES_UPDATE:
+        "http://127.0.0.1:8000/api/quiz/preferences/update" as string,
     },
     token: {
       ACCESS: "http://127.0.0.1:8000/api/token/access" as string,

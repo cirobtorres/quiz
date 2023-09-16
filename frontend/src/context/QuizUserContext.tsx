@@ -9,13 +9,7 @@ import { configs } from "@/configs";
 import { createContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { updateUser } from "@/libs/updateUser";
-
-interface userDataProps {
-  id: number;
-  username?: string | null;
-  password?: string | null;
-  avatar?: File | null;
-}
+import { updateToken } from "@/libs/updateToken";
 
 interface QuizUserContextProps {
   quizUser?: QuizUser | null;
@@ -52,6 +46,7 @@ export function QuizUserProvider(props: any): JSX.Element {
         id,
         username,
         avatar,
+        preferences_user,
         get_total_correct_answers,
         score,
         is_active,
@@ -65,6 +60,7 @@ export function QuizUserProvider(props: any): JSX.Element {
       id,
       username,
       avatar,
+      preferences_user,
       get_total_correct_answers,
       score,
       is_active,
@@ -143,26 +139,15 @@ export function QuizUserProvider(props: any): JSX.Element {
     }
   }
 
-  async function update(userData: FormData): Promise<any> {
+  async function update(userData: FormData): Promise<void> {
     const data: encodedToken = await updateUser(userData);
     await sessionConfigure(data);
   }
 
-  async function updateToken(): Promise<encodedToken | void> {
+  async function refreshingValidToken(): Promise<void> {
     setLoading(true);
-
-    const response: Response = await fetch(configs.urls.token.REFRESH, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        refresh: Cookies.get("refreshToken"),
-      }),
-    });
-
+    const response: Response = await updateToken();
     const token: encodedToken = await response.json();
-
     if (response.ok) {
       await sessionConfigure(token);
     } else {
@@ -173,7 +158,7 @@ export function QuizUserProvider(props: any): JSX.Element {
 
   useEffect(() => {
     if (Cookies.get("refreshToken")) {
-      updateToken();
+      refreshingValidToken();
     } else {
       setLoading(false);
     }

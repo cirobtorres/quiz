@@ -23,15 +23,21 @@ if settings.DEBUG:
     class QuizUserModelViewSet(ModelViewSet):
         """
         Friendly API navigation view for django rest framework browsable API users
-        Do not build around this modelvieset nor build functionalities with this in production
         """
         authentication_classes = [SessionAuthentication]
         permission_classes = [IsAuthenticatedOrReadOnly]
         pagination_class = PageNumberPagination
         serializer_class = QuizUserAdminSerializer
         model: QuizUser = get_user_model()
-        http_method_names = ['get', 'post', 'put',
-                             'patch', 'delete', 'head', 'options']
+        http_method_names = [
+            'get',
+            'post',
+            'put',
+            'patch',
+            'delete',
+            'head',
+            'options'
+        ]
 
         def get_object(self, pk: str, **kwargs) -> QuizUser | None:
             try:
@@ -53,9 +59,13 @@ if settings.DEBUG:
                 paginator = self.pagination_class()
                 page = paginator.paginate_queryset(users, request)
                 users_serializer: QuizUserAdminSerializer = self.serializer_class(
-                    instance=page, many=True, context={'request': request})
+                    instance=page,
+                    many=True,
+                    context={
+                        'request': request
+                    }
+                )
                 return paginator.get_paginated_response(users_serializer.data)
-            print('-' * 50, users)
             return Response(data={'message': 'not found'}, status=HTTP_404_NOT_FOUND)
 
         def retrieve(self, request: HttpRequest, pk: str = None, **kwargs) -> Response:
@@ -63,12 +73,17 @@ if settings.DEBUG:
             if user is None:
                 return Response(data={'message': 'not found'}, status=HTTP_404_NOT_FOUND)
             user_serializer: QuizUserAdminSerializer = self.serializer_class(
-                instance=user, context={'request': request})
+                instance=user,
+                context={
+                    'request': request
+                }
+            )
             return Response(data=user_serializer.data, status=HTTP_200_OK)
 
         def create(self, request: HttpRequest, **kwargs) -> Response:
             user_serializer: QuizUserAdminSerializer = self.serializer_class(
-                data=request.data)
+                data=request.data
+            )
             if user_serializer.is_valid():
                 user_serializer.save()
                 return Response(data=user_serializer.data, status=HTTP_201_CREATED)
@@ -79,7 +94,13 @@ if settings.DEBUG:
             if user is None:
                 return Response(data={'message': 'not found'}, status=HTTP_404_NOT_FOUND)
             user_serializer: QuizUserAdminSerializer = self.serializer_class(
-                instance=user, data=request.data, partial=True, context={'request': request})
+                instance=user,
+                data=request.data,
+                partial=True,
+                context={
+                    'request': request
+                }
+            )
             if user_serializer.is_valid():
                 user_serializer.save()
                 return Response(data=user_serializer.data, status=HTTP_200_OK)
@@ -98,7 +119,10 @@ if settings.DEBUG:
             if user is None:
                 return Response(data={'message': 'not found'}, status=HTTP_404_NOT_FOUND)
             user_serializer: QuizUserAdminSerializer = self.serializer_class(
-                instance=user, data=request.data, partial=True)
+                instance=user,
+                data=request.data,
+                partial=True
+            )
             if user_serializer.is_valid():
                 user_serializer.save()
                 return Response(data=user_serializer.data, status=HTTP_200_OK)
