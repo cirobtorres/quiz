@@ -2,17 +2,20 @@ import AnswerModelFrontend from "./Response";
 
 export default class QuestionModelFrontend {
   #id: number;
+  #question_quiz: number;
   #questionText: string;
   #arrayAnswers: AnswerModelFrontend[];
   #correctAnswer: boolean;
 
   constructor(
     id: number,
+    question_quiz: number,
     questionText: string,
     arrayAnswers: AnswerModelFrontend[],
     correctAnswer: boolean = false
   ) {
     this.#id = id;
+    this.#question_quiz = question_quiz;
     this.#questionText = questionText;
     this.#arrayAnswers = arrayAnswers;
     this.#correctAnswer = correctAnswer;
@@ -20,6 +23,10 @@ export default class QuestionModelFrontend {
 
   get id() {
     return this.#id;
+  }
+
+  get question_quiz() {
+    return this.#question_quiz;
   }
 
   get questionText() {
@@ -70,6 +77,7 @@ export default class QuestionModelFrontend {
     });
     return new QuestionModelFrontend(
       this.id,
+      this.question_quiz,
       this.questionText,
       newAnswers,
       isTheCorrectAnswer
@@ -80,6 +88,12 @@ export default class QuestionModelFrontend {
     const answers = obj.get_shuffled_answers.map((answer) =>
       AnswerModelFrontend.createAsAnObject(answer)
     );
-    return new QuestionModelFrontend(obj.id, obj.question_text, answers, false);
+    return new QuestionModelFrontend(
+      obj.id,
+      obj.question_quiz,
+      obj.question_text,
+      answers,
+      false
+    );
   }
 }

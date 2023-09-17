@@ -1,17 +1,21 @@
-.loginContainer {
+.container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  max-width: 350px;
+  width: 420px;
 }
 
-.loginContainer h1 {
+.container h1 {
   font-size: 3.5rem;
 }
 
+.container form {
+  width: 100%;
+}
+
 @media (max-width: 350px) {
-  .loginContainer h1 {
+  .container h1 {
     font-size: 3rem;
   }
 }
@@ -20,7 +24,7 @@
   width: 100%;
 }
 
-.loginContainer button {
+.container button {
   width: 100%;
   margin: 1rem 0;
 }

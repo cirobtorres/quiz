@@ -1,3 +1,5 @@
+import json
+
 from django.conf import settings
 from django.http import HttpRequest
 from django.db.models import QuerySet, Sum, Subquery, OuterRef
@@ -20,6 +22,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from .models import QuizUser
 from .serializers import QuizUserSerializer
+from .validators import QuizUserValidator
 
 
 class QuizUserRegisterView(APIView):
@@ -28,6 +31,7 @@ class QuizUserRegisterView(APIView):
     serializer_class = QuizUserSerializer
     model: QuizUser = get_user_model()
     http_method_names = ['post']
+    validator = QuizUserValidator
 
     def post(self, request: HttpRequest, *args, **kwargs) -> Response:
         username: str = request.data.get('username')
@@ -39,14 +43,23 @@ class QuizUserRegisterView(APIView):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-        user_serializer: QuizUserSerializer = \
-            self.serializer_class(data=request.data)
+        try:
+            self.validator(request.data)
+        except Exception as e:
+            print(e)
+            return Response(
+                data={'message': 'invalid data'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
         if self.model.objects.filter(username=username).exists():
             return Response(
                 data={'message': 'user already exists'},
                 status=status.HTTP_400_BAD_REQUEST
             )
+
+        user_serializer: QuizUserSerializer = \
+            self.serializer_class(data=request.data)
 
         if user_serializer.is_valid():
             user_serializer.save()
@@ -56,9 +69,10 @@ class QuizUserRegisterView(APIView):
             )
 
         return Response(
-            # when username or password has not passed validation - NOT IMPLEMENTED YET!
-            # TODO: implement validation for username and password
-            data={'message': 'invalid data'},
+            data={
+                'message': 'invalid serializer',
+                'errors': user_serializer.errors
+            },
             status=status.HTTP_400_BAD_REQUEST
         )
 
@@ -166,7 +180,8 @@ class QuizUserListView(APIView):
     def get_queryset(self, *args, **kwargs) -> QuerySet[QuizUser | None]:
         """
         If you wanna sort by multiple fields, you must pass a tuple of strings through the 'order_by' parameter.
-        'order_by' must be a 'str' or a 'tuple' of strings - IT DOES NOT WORK FOR LISTS! (FieldError).
+        'order_by' must either be a single 'str' that represents a field or a 'tuple' of 'str' fields in it.
+        IT DOES NOT WORK FOR LISTS! (FieldError).
         """
         queryset: QuerySet[QuizUser | None] = self.model.objects.all()
         if kwargs.get('order_by'):

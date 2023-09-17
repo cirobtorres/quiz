@@ -20,13 +20,6 @@ interface Params {
   quiz: string;
 }
 
-interface ScoreData {
-  quizId: number;
-  quizUser: number;
-  correctAnswers: number;
-  totalQuestions: number;
-}
-
 export async function generateMetadata(params: Params): Promise<Metadata> {
   return {
     title: "Pontuação",
@@ -46,9 +39,10 @@ export default function Questions(): JSX.Element {
   const { quizUser } = useQuizUser();
   const [question, setQuestion] = useState<QuestionModelFrontend | null>(null);
   const [questions, setQuestions] = useState<number[]>([]);
-  const [score, setScore] = useState<number>(0);
+  const [quizIds, setQuizIds] = useState<QuizIdsProps[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const router = useRouter();
+
   const buttonProps = {
     lastQuestion: idNextQuestion() === undefined,
     onClickNavNextQuestion: () => nextStep(),
@@ -57,8 +51,10 @@ export default function Questions(): JSX.Element {
   const fetchQuestions = async () => {
     try {
       setLoading(true);
-      const questionsData = await getQuestions(configs.urls.QUESTIONS);
-      setQuestions(questionsData.map((question) => question.id));
+      const questionsData = await getQuestions(
+        quizUser?.preferences_user as number
+      );
+      setQuestions(questionsData.questionsList.map((question) => question.id));
     } catch (error: any) {
       throw new Error(`${error}`);
     } finally {
@@ -80,23 +76,17 @@ export default function Questions(): JSX.Element {
     }
   };
 
-  const sendScoreData = async (
-    url: string,
-    id: number,
-    score_user: number,
-    correctAnswers: number,
-    totalQuestions: number
-  ) => {
+  const sendScoreData = async (scoreData: ScoreDataProps) => {
     try {
       setLoading(true);
-      const scoreData = await sendScore(
-        url,
-        id,
-        score_user,
-        correctAnswers,
-        totalQuestions
+      const responseScoreData = await sendScore(scoreData);
+      router.push(
+        `${configs.routers.questionary.SCORE}/` +
+          `${quizUser?.username}/` +
+          `${responseScoreData.score.scorePercentage}/` +
+          `${responseScoreData.score.totalQuestions}/` +
+          `${responseScoreData.score.totalCorrectAnswers}`
       );
-      router.push(`${configs.routers.questionary.SCORE}/${scoreData.id}`);
     } catch (error: any) {
       throw new Error(`${error}`);
     } finally {
@@ -112,11 +102,28 @@ export default function Questions(): JSX.Element {
     questions.length > 0 && loadQuestion(questions[0]);
   }, [questions]);
 
-  function answerResponse(question: QuestionModelFrontend): void {
+  function answerResponse(
+    question: QuestionModelFrontend,
+    quizId: number
+  ): void {
     setQuestion(question);
-    setScore((prevScore) =>
-      question.correctAnswer ? prevScore + 1 : prevScore
-    );
+    setQuizIds((prevQuestionId) => {
+      const newQuestionId = [...prevQuestionId];
+      const index = newQuestionId.findIndex((item) => item.quizId === quizId);
+      if (index === -1) {
+        newQuestionId.push({
+          quizId: question.question_quiz,
+          totalQuestions: 1,
+          totalCorrectAnswers: question.correctAnswer ? 1 : 0,
+        });
+      } else {
+        newQuestionId[index].totalQuestions += 1;
+        newQuestionId[index].totalCorrectAnswers += question.correctAnswer
+          ? 1
+          : 0;
+      }
+      return newQuestionId;
+    });
   }
 
   function idNextQuestion(): number | undefined {
@@ -131,20 +138,11 @@ export default function Questions(): JSX.Element {
   }
 
   function navToScore() {
-    const scoreData: ScoreData = {
-      quizId: 1, // TODO: quizId comes from url
-      quizUser: quizUser?.id as number,
-      correctAnswers: score,
-      totalQuestions: questions.length,
+    const scoreData: ScoreDataProps = {
+      quizUserId: quizUser?.id as number,
+      quizIds,
     };
-
-    sendScoreData(
-      configs.urls.SCORE,
-      scoreData.quizId,
-      scoreData.quizUser,
-      scoreData.correctAnswers,
-      scoreData.totalQuestions
-    );
+    sendScoreData({ ...scoreData });
   }
 
   function nextStep(): void {
@@ -161,6 +159,7 @@ export default function Questions(): JSX.Element {
           question={question}
           questions={questions}
           buttonProps={buttonProps}
+          duration={quizUser?.preferences.instance.time_to_answer as number}
           nextStep={nextStep}
           answerResponse={answerResponse}
         />

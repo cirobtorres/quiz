@@ -40,7 +40,18 @@ if settings.DEBUG:
     class ScoreAdminSerializer(serializers.ModelSerializer):
         class Meta:
             model = ScoreModel
-            fields = '__all__'
+            fields = [
+                'id',
+                'score_user',
+                'score_quiz',
+                'total_questions',
+                'total_correct_answers',
+                'get_score_percentage',
+                'created_at',
+            ]
+
+        def get_score_percentage(self, instance):
+            return instance.get_score_percentage()
 
     class PreferencesAdminSerializer(serializers.ModelSerializer):
         class Meta:

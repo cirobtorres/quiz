@@ -37,7 +37,7 @@ export default function Login(): JSX.Element | void {
   }
 
   return (
-    <main className={styles.loginContainer}>
+    <main className={styles.container}>
       <h1>Fazer Login</h1>
       <form>
         <QuizInput

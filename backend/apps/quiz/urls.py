@@ -5,8 +5,7 @@ from .views import (
     LoadQuestions,
     LoadScore,
     ListQuizes,
-    ListPreferences,
-    UpdatePreferences,
+    LoadPreferences,
 )
 
 
@@ -30,12 +29,12 @@ urlpatterns = [
     ),
     re_path(
         route=r'^preferences(?:/(?P<pk>\d+))?/?$',
-        view=ListPreferences.as_view(),
+        view=LoadPreferences.as_view(),
         name='preferences',
     ),
     re_path(
         route=r'^preferences/update(?:/(?P<pk>\d+))?/?$',
-        view=UpdatePreferences.as_view(),
+        view=LoadPreferences.as_view(),
         name='preferences_update',
     ),
 ]

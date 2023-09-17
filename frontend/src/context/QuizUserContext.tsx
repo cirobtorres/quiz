@@ -9,19 +9,18 @@ import { configs } from "@/configs";
 import { createContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { updateUser } from "@/libs/updateUser";
+import uploadPref from "@/libs/updatePreferences";
 import { updateToken } from "@/libs/updateToken";
+import getPreferences from "@/libs/getPreferences";
 
 interface QuizUserContextProps {
-  quizUser?: QuizUser | null;
+  quizUser?: QuizUserPreferences | null;
   loading?: boolean;
   login?: (username: string, password: string) => Promise<void>;
   logout?: () => Promise<void>;
-  register?: (
-    username: string,
-    password: string,
-    confirmPassword: string
-  ) => Promise<void>;
-  update?: (userData: FormData) => Promise<void>;
+  register?: (username: string, password: string) => Promise<void>;
+  updateQuizUser?: (userData: FormData) => Promise<void>;
+  updatePreferences: (userData: FormData) => Promise<void>;
 }
 
 const QuizUserContext = createContext<QuizUserContextProps>(
@@ -29,7 +28,7 @@ const QuizUserContext = createContext<QuizUserContextProps>(
 );
 
 export function QuizUserProvider(props: any): JSX.Element {
-  const [quizUser, setQuizUser] = useState<QuizUser | null>(null);
+  const [quizUser, setQuizUser] = useState<QuizUserPreferences | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const router = useRouter();
 
@@ -79,7 +78,12 @@ export function QuizUserProvider(props: any): JSX.Element {
       if (userData.avatar) {
         userData.avatar = `http://127.0.0.1:8000/${userData.avatar}`;
       }
-      setQuizUser(userData);
+      const preferences = await getPreferences(userData.id);
+      const newUserData: QuizUserPreferences = {
+        ...userData,
+        preferences: preferences,
+      };
+      setQuizUser(newUserData);
       setLoading(false);
       return userData.username;
     } else {
@@ -120,16 +124,9 @@ export function QuizUserProvider(props: any): JSX.Element {
     }
   }
 
-  async function register(
-    username: string,
-    password: string,
-    confirmPassword: string
-  ): Promise<void> {
+  async function register(username: string, password: string): Promise<void> {
     try {
       setLoading(true);
-      if (password !== confirmPassword) {
-        throw new Error("As senhas não conferem");
-      }
       await registerUser(username, password);
       await login(username, password);
     } catch (error) {
@@ -139,9 +136,21 @@ export function QuizUserProvider(props: any): JSX.Element {
     }
   }
 
-  async function update(userData: FormData): Promise<void> {
+  async function updateQuizUser(userData: FormData): Promise<void> {
     const data: encodedToken = await updateUser(userData);
     await sessionConfigure(data);
+  }
+
+  async function updatePreferences(userData: FormData): Promise<void> {
+    try {
+      setLoading(true);
+      await uploadPref(userData);
+      await refreshingValidToken();
+    } catch (error: any) {
+      throw new Error(`Error at QuizSettingsProvider during update: ${error}`);
+    } finally {
+      setLoading(false);
+    }
   }
 
   async function refreshingValidToken(): Promise<void> {
@@ -172,7 +181,8 @@ export function QuizUserProvider(props: any): JSX.Element {
         login,
         logout,
         register,
-        update,
+        updateQuizUser,
+        updatePreferences,
       }}
     >
       {props.children}

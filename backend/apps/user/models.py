@@ -48,7 +48,7 @@ class QuizUser(AbstractBaseUser, PermissionsMixin):
         verbose_name: str = 'QuizUser'
         verbose_name_plural: str = 'QuizUsers'
 
-    username: str = models.CharField(max_length=65, unique=True)
+    username: str = models.CharField(max_length=32, unique=True)
     avatar: str = models.ImageField(
         upload_to='images/', blank=True, null=True)
     is_active: bool = models.BooleanField(default=True)

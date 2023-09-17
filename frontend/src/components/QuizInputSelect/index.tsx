@@ -1,5 +1,4 @@
 import Select from "react-select";
-import AsyncSelect from "react-select/async";
 import CreatableSelect from "react-select/creatable";
 import makeAnimated from "react-select/animated";
 
@@ -7,18 +6,18 @@ import styles from "./QuizInputSelect.module.css";
 import { useEffect, useState } from "react";
 
 interface Dictionary {
-  [key: string]: string;
+  value: number;
+  label: string;
 }
 
 export default function QuizInputSelect(props: {
   quizes: QuizModel[];
-  default: number[];
-  setValues: (values: number[]) => void;
+  default: Dictionary[];
+  setValues: (values: Dictionary[]) => void;
+  isMulti?: boolean;
   label?: string;
   creatable?: boolean;
 }): JSX.Element {
-  // https://react-select.com/home
-
   function handleOnChange(values: any) {
     if (values) {
       props.setValues(values.map((value: Dictionary) => value.value));
@@ -27,16 +26,6 @@ export default function QuizInputSelect(props: {
     }
   }
 
-  const options = props.quizes.map((quiz) => ({
-    value: quiz.id,
-    label: quiz.subject,
-  }));
-
-  const defaultValues = props.default.map((value) => ({
-    value: value,
-    label: options.find((option) => option.value === value)?.label,
-  }));
-
   return (
     <div className={styles.reactSelectContainer}>
       {props.label && <label>{props.label}:</label>}
@@ -44,18 +33,24 @@ export default function QuizInputSelect(props: {
         <CreatableSelect
           closeMenuOnSelect={false}
           components={makeAnimated()}
-          defaultValue={[...defaultValues]}
-          isMulti
-          options={options}
+          defaultValue={props.isMulti ? [...props.default] : props.default[0]}
+          isMulti={props.isMulti}
+          options={props.quizes.map((quiz) => ({
+            value: quiz.id,
+            label: quiz.subject,
+          }))}
           onChange={handleOnChange}
         />
       ) : (
         <Select
           closeMenuOnSelect={false}
           components={makeAnimated()}
-          defaultValue={[...defaultValues]}
-          isMulti
-          options={options}
+          defaultValue={[...props.default]}
+          isMulti={props.isMulti}
+          options={props.quizes.map((quiz) => ({
+            value: quiz.id,
+            label: quiz.subject,
+          }))}
           onChange={handleOnChange}
         />
       )}

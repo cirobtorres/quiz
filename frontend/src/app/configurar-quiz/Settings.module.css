@@ -53,6 +53,10 @@
   margin-top: 0.5rem;
 }
 
+.infoText {
+  text-align: left;
+}
+
 .linkBackToHome,
 .saveNewQuestions {
   font-size: 1.25rem;

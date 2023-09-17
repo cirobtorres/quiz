@@ -5,6 +5,7 @@ from rest_framework import serializers
 
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
+from apps.quiz.serializers import PreferencesSerializer
 from .models import QuizUser
 
 
@@ -40,6 +41,9 @@ class QuizUserSerializer(serializers.ModelSerializer):
             'password': {'write_only': True},
         }
 
+    # preferences_user = PreferencesSerializer(
+    #     many=False, read_only=True)
+
     def create(self, validated_data):
         password: str = validated_data.pop('password', None)
         instance: QuizUser = self.Meta.model(**validated_data)
@@ -70,6 +74,11 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
             'username': user.username,
             'avatar': user.avatar.url if user.avatar else None,
             'preferences_user': user.preferences_user.id,
+            # 'preferences_user': {
+            #     str(k): str(v)
+            #     for k, v in user.preferences_user.__dict__.items()
+            #     if k != '_state'
+            # },
             'is_active': user.is_active,
             'is_staff': user.is_staff,
             'get_total_correct_answers': user.get_total_correct_answers(),

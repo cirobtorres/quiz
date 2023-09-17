@@ -59,9 +59,20 @@ class ScoreSerializer(serializers.ModelSerializer):
             'get_score_percentage',
             'created_at',
         ]
+        read_only_fields = ['get_score_percentage', 'created_at']
 
 
 class PreferencesSerializer(serializers.ModelSerializer):
     class Meta:
         model = PreferencesModel
-        fields = '__all__'
+        # fields = '__all__'
+        fields = [
+            'id',
+            # 'preferences_user',
+            'preferences_quiz',
+            'question_number',
+            'time_to_answer',
+            'updated_at',
+        ]
+
+    # preferences_quiz = QuizSerializer(many=True)

@@ -5,7 +5,7 @@
 __pycache__
 db.sqlite3
 media
-**/migrations/**
+**/migrations/*.py
 !**/migrations/__init__.py
 
 # Backup files

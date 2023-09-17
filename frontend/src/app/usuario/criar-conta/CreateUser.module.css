@@ -3,11 +3,15 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  max-width: 350px;
+  width: 420px;
 }
 
 .container h1 {
   font-size: 3.5rem;
+}
+
+.container form {
+  width: 100%;
 }
 
 .container button {

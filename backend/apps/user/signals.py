@@ -13,11 +13,8 @@ from apps.quiz.questions.populate_db import populate_database
 def calculate_average_score(sender, instance, created, **kwargs) -> None:
     if created:
         user: QuizUser = instance.score_user
-        quiz: QuizModel = instance.score_quiz
-        scores: ScoreModel = ScoreModel.objects.filter(
-            score_user=user,
-            score_quiz=quiz,
-        )
+        # quiz: QuizModel = instance.score_quiz
+        scores: ScoreModel = ScoreModel.objects.filter(score_user=user)
         sum_scores: float = sum(
             score.get_score_percentage() for score in scores
         )

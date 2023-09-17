@@ -7,6 +7,7 @@ import QuestionModelFrontend from "@models/Question";
 
 interface QuestionProps {
   question: QuestionModelFrontend;
+  duration: number;
   nextStep: () => void;
   handleResponse: (id: number) => void;
 }
@@ -20,13 +21,14 @@ const responseOptions = [
 
 export default function Question({
   question,
+  duration,
   nextStep,
   handleResponse,
 }: QuestionProps): JSX.Element {
   const answers: AnswerModelFrontend[] = question.arrayAnswers;
   const countdownProps = {
     key: question.id,
-    duration: 30,
+    duration: duration || 30,
     nextStep: () => nextStep(),
   };
 

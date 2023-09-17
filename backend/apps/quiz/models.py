@@ -87,8 +87,11 @@ class ScoreModel(models.Model):
     def __str__(self) -> str:
         return f'Corrects: {self.get_score_percentage()} Quiz: {self.score_quiz}'
 
-    def get_score_percentage(self) -> float:
-        return self.total_correct_answers / self.total_questions * 100
+    def get_score_percentage(self) -> float | None:
+        return (
+            self.total_correct_answers /
+            self.total_questions * 100
+        ) if self.total_questions > 0 else None
 
 
 class PreferencesModel(models.Model):

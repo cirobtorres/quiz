@@ -8,9 +8,16 @@ import QuizInputSelect from "@/components/QuizInputSelect";
 import Button from "@/components/Button";
 import styles from "./CreateQuiz.module.css";
 import { configs } from "@/configs";
+import useQuizSettings from "@/hooks/useQuizSettings";
 // import cannotExceedRange from "@/functions/cannotExceedRange";
 
+interface Dictionary {
+  value: number;
+  label: string;
+}
+
 export default function CreateQuiz(): JSX.Element {
+  const { quizList } = useQuizSettings();
   const [loading, setLoading] = useState<boolean>(true);
   const [quizes, setQuizes] = useState<QuizModel[]>([]);
   const [questionText, setQuestionText] = useState<string>("");
@@ -19,6 +26,7 @@ export default function CreateQuiz(): JSX.Element {
   const [answerText2, setAnswerText2] = useState<string>("");
   const [answerText3, setAnswerText3] = useState<string>("");
   const [maxQuestTxtChars, maxAnsTxtChars] = [135, 65];
+  const [subjects, setSubjects] = useState<Dictionary[]>([]);
 
   async function getAllQuizes() {
     const response = await fetch(configs.urls.QUIZ, {
@@ -63,8 +71,8 @@ export default function CreateQuiz(): JSX.Element {
             label="Disciplina"
             creatable
             quizes={quizes}
-            default={[1]} // TODO: I'M INCOMPLETE
-            setValues={(values) => console.log(values)} // TODO: I'M INCOMPLETE
+            default={quizList}
+            setValues={(values) => setSubjects(values)}
           />
           <QuizInput
             type="text"

@@ -5,6 +5,8 @@ if settings.DEBUG:
 
     from rest_framework import serializers
 
+    from apps.quiz.serializers import PreferencesSerializer
+
     class QuizUserAdminSerializer(serializers.ModelSerializer):
         class Meta:
             model = get_user_model()
@@ -40,3 +42,5 @@ if settings.DEBUG:
                 'created_at',
                 'updated_at',
             )
+
+        preferences_user = PreferencesSerializer(many=False, read_only=True)

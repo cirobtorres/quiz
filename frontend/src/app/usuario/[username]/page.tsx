@@ -37,7 +37,7 @@ function formatDateTime(date: string, formatDate: string | null = null) {
 }
 
 export default function UserProfile(): JSX.Element {
-  const { quizUser, loading, update } = useQuizUser();
+  const { quizUser, loading, updateQuizUser } = useQuizUser();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
@@ -69,7 +69,7 @@ export default function UserProfile(): JSX.Element {
     if (!userData) {
       throw new Error("No data to update");
     }
-    await update?.(userData);
+    await updateQuizUser?.(userData);
     router.push("/");
   }
 

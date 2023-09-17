@@ -1,19 +1,18 @@
 "use client";
 
 import { createContext, useEffect, useState } from "react";
-import Cookies from "js-cookie";
-import { configs } from "@/configs";
+import getPreferences from "@/libs/getPreferences";
+import updatePreferences from "@/libs/updatePreferences";
 
 interface QuizSettingsContextProps {
-  settingsId: number | null;
-  questionNumber: number;
-  timeToAnswer: number;
-  subjects: number[];
-  setQuestionNumber: (value: number) => void;
-  setTimeToAnswer: (value: number) => void;
-  setSubjects: (value: number[]) => void;
-  updatePreferencies: (userData: FormData) => Promise<void>;
-  savingToContextPreferenciesData: (userId: number) => Promise<void>;
+  loading: boolean;
+  preferences: PreferencesModel;
+  quizList: { value: number; label: string }[];
+  questions: QuestionModel[];
+  update: (userData: FormData) => Promise<void>;
+  questionNumberChange: (value: number) => void;
+  timeToAnswerChange: (value: number) => void;
+  savingToContextPreferencesData: (userId: number) => Promise<void>;
 }
 
 const QuizSettingsContext = createContext<QuizSettingsContextProps>(
@@ -22,70 +21,66 @@ const QuizSettingsContext = createContext<QuizSettingsContextProps>(
 
 export const QuizSettingsProvider = ({ children }: any) => {
   const [loading, setLoading] = useState<boolean>(true);
-  const [settingsId, setSettingsId] = useState<number | null>(null);
-  const [questionNumber, setQuestionNumber] = useState<number>(10);
-  const [timeToAnswer, setTimeToAnswer] = useState<number>(30);
-  const [subjects, setSubjects] = useState<number[]>([]);
+  const [preferences, setPreferences] = useState<PreferencesModel>(
+    {} as PreferencesModel
+  );
+  const [quizList, setQuizList] = useState<{ value: number; label: string }[]>(
+    []
+  );
+  const [questions, setQuestions] = useState<QuestionModel[]>([]);
 
-  async function savingToContextPreferenciesData(
-    userId: number
-  ): Promise<void> {
-    const preferences = await getPreferencies(userId);
-    const instance = preferences.instance;
-    const questions = preferences.questions;
-    // settingsId is not the same as quizUser.id!!
-    // settingsId is the id of the preferences instance
-    // which makes one-to-one relation with quizUser
-    setSettingsId(instance.id);
-    setQuestionNumber(instance.question_number);
-    setTimeToAnswer(instance.time_to_answer);
-    setSubjects(instance.preferences_quiz);
+  async function savingToContextPreferencesData(userId: number): Promise<void> {
+    setLoading(true);
+    const preferences = await getPreferences(userId);
+    const instance: PreferencesModel = preferences.instance;
+    const questionsList: QuestionModel[] = preferences.questionsList;
+    const quizList: QuizModel[] = preferences.quizList;
+    setPreferences(instance);
+    setQuestions(questionsList);
+    setQuizList(
+      quizList.map((quiz) => ({
+        value: quiz.id,
+        label: quiz.subject,
+      }))
+    );
     setLoading(false);
   }
 
-  async function getPreferencies(userId: number) {
-    const response = await fetch(`${configs.urls.user.PREFERENCES}/${userId}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${Cookies.get("accessToken")}`,
-      },
-    });
-    if (!response.ok) {
-      throw new Error(`${response.status} (${response.statusText})`);
+  async function update(userData: FormData): Promise<void> {
+    try {
+      setLoading(true);
+      const userId: number = await updatePreferences(userData);
+      await savingToContextPreferencesData(userId);
+    } catch (error: any) {
+      throw new Error(`Error at QuizSettingsProvider during update: ${error}`);
+    } finally {
+      setLoading(false);
     }
-    return await response.json();
   }
 
-  async function updatePreferencies(userData: FormData) {
-    const response = await fetch(
-      `${configs.urls.user.PREFERENCES_UPDATE}/${userData.get("id")}`,
-      {
-        method: "PUT",
-        body: userData,
-        headers: {
-          Authorization: `Bearer ${Cookies.get("accessToken")}`,
-        },
-      }
-    );
-    if (!response.ok) {
-      throw new Error(`${response.status} (${response.statusText})`);
+  function questionNumberChange(value: number) {
+    if (value > 0) {
+      setPreferences({ ...preferences, question_number: value });
     }
-    return await response.json();
+  }
+
+  function timeToAnswerChange(value: number) {
+    if (value > 0) {
+      setPreferences({ ...preferences, time_to_answer: value });
+    }
   }
 
   return (
     <QuizSettingsContext.Provider
       value={{
-        settingsId,
-        questionNumber,
-        timeToAnswer,
-        subjects,
-        setQuestionNumber,
-        setTimeToAnswer,
-        setSubjects,
-        updatePreferencies,
-        savingToContextPreferenciesData,
+        loading,
+        preferences,
+        quizList,
+        questions,
+        update,
+        questionNumberChange,
+        timeToAnswerChange,
+        savingToContextPreferencesData,
       }}
     >
       {children}
