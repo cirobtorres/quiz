@@ -3,7 +3,7 @@
 :root {
   --max-width: 1440px;
   --min-width: 1024px;
-  --border-radius: 12px;
+  --border-radius: 4px;
   --box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.3);
   --color-A: rgb(255, 255, 255);
   --color-B: hsl(39, 100%, 50%);
@@ -16,7 +16,6 @@
   --backgroundColor-D: rgb(206, 70, 127);
   --backgroundColor-E: rgb(133, 81, 192);
   --transformScale: scale(1.05);
-  /*Create a darken brightness attribute*/
   --brightness: brightness(0.8);
 }
 

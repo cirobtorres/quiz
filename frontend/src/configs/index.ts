@@ -9,6 +9,8 @@ export const configs = {
       RETRIEVE: "http://127.0.0.1:8000/api/user/retrieve-data" as string,
       RETRIEVE_AVATAR:
         "http://127.0.0.1:8000/api/user/retrieve-avatar" as string,
+      RETRIEVE_USERNAME:
+        "http://127.0.0.1:8000/api/user/retrieve-username" as string,
       LOGOUT: "http://127.0.0.1:8000/api/user/logout" as string,
       REGISTER: "http://127.0.0.1:8000/api/user/register" as string,
       UPDATE: "http://127.0.0.1:8000/api/user/update" as string,

@@ -5,6 +5,7 @@ from .views import (
     QuizUserRegisterView,
     QuizUserUpdateView,
     QuizUserListView,
+    QuizUserRetrieveView,
 )
 
 app_name = 'user'
@@ -25,6 +26,16 @@ urlpatterns = [
         view=QuizUserListView.as_view(),
         name='ranking'
     ),
+    # re_path(
+    #     route=r'^ranking/(?P<page>\d+)/?$',
+    #     view=QuizUserListView.as_view(),
+    #     name='ranking'
+    # ),
+    re_path(
+        route=r'^retrieve-username/(?P<username>\w+)/?$',
+        view=QuizUserRetrieveView.as_view(),
+        name='retrieve_username'
+    )
 ]
 
 if settings.DEBUG:

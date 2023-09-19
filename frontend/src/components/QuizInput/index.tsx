@@ -12,7 +12,7 @@ interface QuizInputProps {
   ) => void;
   name?: string;
   label?: string;
-  error?: string;
+  error?: string | string[];
   helpText?: string;
   placeholder?: string;
   required?: boolean;
@@ -52,7 +52,17 @@ export default function QuizInput(props: QuizInputProps): JSX.Element | null {
         }
         className={`${props.error ? styles.inputError : ""} ${styles.input}`}
       />
-      {props.error && <p className={styles.textError}>{props.error}</p>}
+      {props.error && typeof props.error === "string" ? (
+        <p className={styles.textError}>{props.error}</p>
+      ) : (
+        props.error &&
+        Array.isArray(props.error) &&
+        props.error.map((error, index) => (
+          <p key={index} className={styles.textError}>
+            {error}
+          </p>
+        ))
+      )}
       {props.helpText && (
         <span className={styles.textHelp}>{props.helpText}</span>
       )}

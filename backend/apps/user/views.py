@@ -228,3 +228,24 @@ class QuizUserListView(APIView):
         }
 
         return Response(data)
+
+
+class QuizUserRetrieveView(APIView):
+    model: QuizUser = get_user_model()
+    http_method_names = ['post']
+
+    def get_object(self, username: str, *args, **kwargs) -> QuizUser:
+        return self.model.objects.get(username=username)
+
+    def post(self, request: HttpRequest, *args, **kwargs) -> Response:
+        try:
+            user: QuizUser = self.get_object(request.data.get('username'))
+        except self.model.DoesNotExist:
+            return Response(
+                data=False,
+                status=status.HTTP_200_OK
+            )
+        return Response(
+            data=True,
+            status=status.HTTP_200_OK
+        )

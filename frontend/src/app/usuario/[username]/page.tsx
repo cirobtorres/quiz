@@ -152,7 +152,7 @@ export default function UserProfile(): JSX.Element {
             confirmAction={handleSubmit}
           />
           <Link href="/" className={styles.link}>
-            Voltar
+            Home
           </Link>
         </>
       )}

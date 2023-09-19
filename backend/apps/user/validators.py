@@ -75,4 +75,10 @@ class QuizUserValidator:
                     detail='Senha não pode ter menos de seis caracteres'
                 )
             )
+        if search(pattern=r'[^a-zA-Z0-9]', string=password):
+            self.errors['password'].append(
+                self.errorClass(
+                    detail='Senha não pode ter caracteres especiais'
+                )
+            )
         return password

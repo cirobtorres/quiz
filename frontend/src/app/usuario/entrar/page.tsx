@@ -70,7 +70,7 @@ export default function Login(): JSX.Element | void {
         Cadastre-se
       </Link>
       <Link href={configs.routers.HOME} className={styles.linkBackToHome}>
-        Voltar
+        Home
       </Link>
     </main>
   );

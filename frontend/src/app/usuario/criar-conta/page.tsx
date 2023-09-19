@@ -1,74 +1,66 @@
 "use client";
 
+import { useState } from "react";
+import Link from "next/link";
+
 import Button from "@/components/Button";
 import QuizInput from "@/components/QuizInput";
 import useQuizUser from "@/hooks/useQuizUser";
-import { useState } from "react";
 
 import styles from "./CreateUser.module.css";
-import Link from "next/link";
 import { configs } from "@/configs";
+import validatePassword from "@/functions/validations/validatePassword";
+import validateUsername from "@/functions/validations/validateUsername";
 
 export default function CreateQuizUser(): JSX.Element {
-  const { quizUser, login, register } = useQuizUser();
+  const { register } = useQuizUser();
 
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
 
-  const [usernameError, setUsernameError] = useState<string>("");
-  const [passwordError, setPasswordError] = useState<string>("");
-  const [confirmPasswordError, setConfirmPasswordError] = useState<string>("");
+  const [usernameError, setUsernameError] = useState<string[] | null>(null);
+  const [passwordError, setPasswordError] = useState<string[] | null>(null);
+  const [confirmPasswordError, setConfirmPasswordError] = useState<
+    string[] | null
+  >(null);
 
   async function handleSubmit(event: any): Promise<void> {
     event.preventDefault();
-    let anyError = false;
     try {
-      if (password !== confirmPassword) {
-        handlePasswordError("Senhas não conferem");
-        anyError = true;
-      }
-      if (validateUsername(username)) {
-        anyError = true;
-      }
-      if (!anyError) {
+      const usernameErrors: Promise<{ error: boolean; arrayError: string[] }> =
+        validateUsername(username);
+      const passwordErrors: { error: boolean; arrayError: string[] } =
+        validatePassword(password, confirmPassword);
+      const validateUsernameError = await usernameErrors;
+      if (validateUsernameError.error || passwordErrors.error) {
+        validateUsernameError.arrayError.length &&
+          handleUserError(validateUsernameError.arrayError);
+        passwordErrors.arrayError.length &&
+          handlePasswordError(passwordErrors.arrayError);
+      } else {
         await register?.(username, password);
       }
     } catch (error: any) {
-      handleUserError(error.message);
-      // handleUserError("Usuário já existe");
-      // throw new Error(`Error during register. ${error}`);
+      throw new Error(`Error during register: ${error}`);
     } finally {
       setPassword("");
       setConfirmPassword("");
     }
   }
 
-  function validateUsername(username: string): boolean {
-    let error = false;
-    if (username.length < 4 || username.length > 32) {
-      handleUserError("Usuário deve ter entre 4 e 32 caracteres");
-      error = true;
-    }
-    if (username.match(/[^a-zA-Z_]/g)) {
-      handleUserError("Usuário deve conter apenas letras");
-      error = true;
-    }
-    return error;
-  }
-
-  function handleUserError(error: string) {
+  function handleUserError(error: string[], timeout?: number) {
     setTimeout(() => {
-      setUsernameError("");
-    }, 5000);
+      setUsernameError(null);
+    }, timeout || 7000);
     setUsernameError(error);
   }
 
-  function handlePasswordError(error: string) {
+  function handlePasswordError(error: string[], timeout?: number) {
     setTimeout(() => {
-      setPasswordError("");
-      setConfirmPasswordError("");
-    }, 5000);
+      setPasswordError(null);
+      setConfirmPasswordError(null);
+    }, timeout || 7000);
     setPasswordError(error);
     setConfirmPasswordError(error);
   }
@@ -82,29 +74,29 @@ export default function CreateQuizUser(): JSX.Element {
           name="username"
           label="Apelido"
           value={username}
-          error={usernameError}
+          error={usernameError as string[]}
           required
           htmlFor={"username"}
           onChange={setUsername}
-          helpText="Usuário deve conter apenas letras e ter entre 4 e 32 caracteres"
+          helpText="Usuário deve ter entre 4 e 32 caracteres, conter apenas letras e _"
         />
         <QuizInput
           type={"password"}
           name="password"
           label="Senha"
           value={password}
-          error={passwordError}
+          error={passwordError as string[]}
           required
           htmlFor={"password"}
           onChange={setPassword}
-          helpText="A senha deve ser maior que 6 caracteres"
+          helpText="A senha deve ser maior que 6 caracteres e ter apenas letras e números"
         />
         <QuizInput
           type={"password"}
           name="password-confirmation"
           label="Confirme a Senha"
           value={confirmPassword}
-          error={confirmPasswordError}
+          error={confirmPasswordError as string[]}
           required
           htmlFor={"confirmPassword"}
           onChange={setConfirmPassword}
@@ -116,7 +108,7 @@ export default function CreateQuizUser(): JSX.Element {
         Login
       </Link>
       <Link href={configs.routers.HOME} className={styles.linkBackToHome}>
-        Voltar
+        Home
       </Link>
     </main>
   );
