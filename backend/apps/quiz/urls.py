@@ -1,11 +1,12 @@
 from django.conf import settings
-from django.urls import re_path
+from django.urls import re_path, path
 
 from .views import (
     LoadQuestions,
     LoadScore,
     ListQuizes,
     LoadPreferences,
+    SaveUserCustomQuiz,
 )
 
 
@@ -23,7 +24,7 @@ urlpatterns = [
         name='score',
     ),
     re_path(
-        route=r'^quiz-list/?$',
+        route=r'^quiz-list(?:/(?P<pk>\d+))?/?$',
         view=ListQuizes.as_view(),
         name='quiz',
     ),
@@ -37,6 +38,11 @@ urlpatterns = [
         view=LoadPreferences.as_view(),
         name='preferences_update',
     ),
+    re_path(
+        route=r'^save-custom-quiz/?$',
+        view=SaveUserCustomQuiz.as_view(),
+        name='save_custom_quiz',
+    )
 ]
 
 if settings.DEBUG:

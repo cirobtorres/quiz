@@ -36,8 +36,8 @@ export default function QuizSettings(): JSX.Element {
   async function handleSubmit(
     event: React.FormEvent<HTMLFormElement>
   ): Promise<void> {
-    event.preventDefault();
     setComponentLoading(true);
+    event.preventDefault();
     const userData = new FormData();
     userData.append("id", String(quizUser?.preferences.instance.id));
     userData.append("question_number", String(questionNumber));
@@ -48,8 +48,8 @@ export default function QuizSettings(): JSX.Element {
       throw new Error("No data to update");
     }
     await updatePreferences(userData);
-    setComponentLoading(false);
     router.push(configs.routers.HOME);
+    setComponentLoading(false);
   }
 
   function OnBlur(
@@ -84,7 +84,7 @@ export default function QuizSettings(): JSX.Element {
 
   return (
     <main className={styles.container}>
-      {loading ? (
+      {loading || componentLoading ? (
         <Loading />
       ) : (
         <>

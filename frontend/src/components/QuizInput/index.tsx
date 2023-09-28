@@ -1,7 +1,7 @@
 import styles from "./QuizInput.module.css";
 
 interface QuizInputProps {
-  type: "text" | "email" | "password" | "number";
+  type: "text" | "email" | "password" | "number" | "search";
   value: string | number;
   onChange: (event: any) => void;
   onBlur?: (
@@ -40,6 +40,7 @@ export default function QuizInput(props: QuizInputProps): JSX.Element | null {
         required={props.required}
         placeholder={props.placeholder}
         onChange={(event) => props.onChange?.(event.target.value)}
+        // onChange={props.type === "search" ? () : ((event) => props.onChange?.(event.target.value))}
         onBlur={
           props.onBlur &&
           ((event) =>

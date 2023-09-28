@@ -10,7 +10,6 @@ from apps.user.models import QuizUser
 class QuizModel(models.Model):
     subject: str = models.CharField(max_length=65)
     slug: str = models.SlugField(max_length=115, unique=True)
-    description: str = models.TextField(blank=True)
     created_at: datetime = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
@@ -20,7 +19,7 @@ class QuizModel(models.Model):
 class QuestionModel(models.Model):
     question_quiz: QuizModel = models.ForeignKey(
         to=QuizModel,
-        related_name='question',
+        related_name='questions',
         on_delete=models.CASCADE,
         null=True,
         blank=True,

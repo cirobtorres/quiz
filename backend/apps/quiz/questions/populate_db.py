@@ -21,7 +21,6 @@ __all__ = [
 class Quiz(TypedDict):
     subject: str
     slug: str
-    description: str
 
 
 class Answer(TypedDict):
@@ -34,7 +33,7 @@ class Question(TypedDict):
     answers: List[Answer]
 
 
-JSON = Union[Quiz, Question]
+JSON = List[Dict[str, Union[Quiz, List[Question]]]]
 
 
 def get_list_of_paths(**kwargs: str | tuple[str]) -> list[str]:

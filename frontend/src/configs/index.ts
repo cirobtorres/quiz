@@ -17,6 +17,8 @@ export const configs = {
       PREFERENCES: "http://127.0.0.1:8000/api/quiz/preferences" as string,
       PREFERENCES_UPDATE:
         "http://127.0.0.1:8000/api/quiz/preferences/update" as string,
+      SAVE_CUSTOM_QUIZ:
+        "http://127.0.0.1:8000/api/quiz/save-custom-quiz" as string,
     },
     token: {
       ACCESS: "http://127.0.0.1:8000/api/token/access" as string,

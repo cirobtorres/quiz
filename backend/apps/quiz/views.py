@@ -1,6 +1,7 @@
 from django.http import HttpRequest
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import QuerySet
+from django.utils.text import slugify
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -14,6 +15,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from .models import (
     QuizModel,
     QuestionModel,
+    AnswerModel,
     ScoreModel,
     PreferencesModel,
 )
@@ -131,14 +133,25 @@ class LoadScore(APIView):
 
 
 class ListQuizes(APIView):
-    """List all quizes for Select Component in frontend."""
+    """
+    No quiz pk: list all quizes to fill Select-Component in frontend
+    Quiz pk: list all questions from that specific quiz
+    """
     serializer_class = QuizSerializer
     model = QuizModel
+
+    def get_object(self, pk: str) -> QuizModel:
+        return self.model.objects.get(pk=pk)
 
     def get_queryset(self, **kwargs):
         return self.model.objects.all()
 
-    def get(self, request: HttpRequest, *args, **kwargs) -> Response:
+    def get(self, request: HttpRequest, pk: str = None, *args, **kwargs) -> Response:
+        if pk:
+            quiz_instance = self.get_object(pk=pk)
+            questions_model = quiz_instance.questions.all()
+            questions_serializers = QuestionSerializer(instance=questions_model, many=True)
+            return Response(data=questions_serializers.data, status=status.HTTP_200_OK)
         instances = self.get_queryset(**kwargs)
         serializers = self.serializer_class(instance=instances, many=True)
         return Response(data=serializers.data, status=status.HTTP_200_OK)
@@ -219,3 +232,29 @@ class LoadPreferences(APIView):
                 status=status.HTTP_200_OK
             )
         return Response(data={'error': 'not saved'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class SaveUserCustomQuiz(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def put(self, request: HttpRequest, *args, **kwargs) -> Response:
+
+        form_data = request.data.get('formData')
+
+        quiz = QuizModel.objects.get(pk=form_data.get('quizId'))
+        quiz.subject = form_data.get('quizSubject')
+        quiz.slug = slugify(quiz.subject)
+        quiz.save()
+        
+        question = QuestionModel.objects.get(pk=form_data.get('questionId'))
+        question.question_text = form_data.get('questionText')
+        question.save()
+
+        for answer in form_data.get('answers'):
+            answer_update = AnswerModel.objects.get(pk=answer.get('answerId'))
+            answer_update.answer_text = answer.get('answerText')
+            answer_update.is_correct = answer.get('isCorrect')
+            answer_update.save()
+            
+        return Response(data={'ok': 'ok'}, status=status.HTTP_200_OK)

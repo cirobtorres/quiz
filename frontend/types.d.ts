@@ -92,8 +92,6 @@ type QuizModel = {
   id: number;
   subject: string;
   slug: string;
-  description: string;
-  duration: number;
   created_at: string;
 };
 
@@ -101,7 +99,7 @@ type QuestionModel = {
   id: number;
   question_quiz: number;
   question_text: string;
-  get_shuffled_answers: AnswerModel[];
+  get_shuffled_answers?: AnswerModel[];
 };
 
 interface QuizIdsProps {
