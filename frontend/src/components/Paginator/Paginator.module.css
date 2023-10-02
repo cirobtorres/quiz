@@ -2,8 +2,8 @@
   display: flex;
   gap: 10px;
   padding: 0.5rem;
-  border-radius: 2rem 2rem 2rem 2rem;
-  background-color: var(--backgroundColor-D);
+  /* border-radius: 2rem 2rem 2rem 2rem;
+  background-color: var(--backgroundColor-D); */
 }
 
 .buttonsContainer button {
@@ -35,6 +35,6 @@
 
 .buttonPreviousDisabled,
 .buttonNextDisabled {
-  color: var(--color-C);
+  color: var(--color-E);
   font-weight: bold;
 }

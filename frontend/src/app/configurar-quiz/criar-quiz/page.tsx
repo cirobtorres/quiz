@@ -167,16 +167,38 @@ export default function CreateQuiz(): JSX.Element {
     }
   }
 
+  function resetQuestionSelect(): void {
+    setQuestionList([]);
+    setQuestion("");
+    setAnswers([]);
+    setAllquestionData({} as QuestionModel);
+    setCorrectAnswerText("");
+    setAnswerText1("");
+    setAnswerText2("");
+    setAnswerText3("");
+  }
+
   useEffect(() => {
     loadQuizes();
   }, []);
 
+  // useEffect(() => {
+  //   fillQuestionSelect();
+  // }, [quiz]);
+
   useEffect(() => {
-    fillQuestionSelect();
+    if (
+      !(quiz.length === 0) &&
+      quizes.map((quiz) => quiz.subject).includes(quiz[0].label)
+    ) {
+      fillQuestionSelect();
+    } else {
+      console.log("NÃO DÁ MAIS ERROR!");
+    }
   }, [quiz]);
 
   return (
-    <main className={styles.container}>
+    <div className={styles.container}>
       <form>
         <h1>Criar Quiz</h1>
         <p>
@@ -260,6 +282,6 @@ export default function CreateQuiz(): JSX.Element {
           Home
         </Link>
       </div>
-    </main>
+    </div>
   );
 }

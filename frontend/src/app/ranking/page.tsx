@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import styles from "./Ranking.module.css";
 import Paginator from "@/components/Paginator";
 import UserProfile from "@/components/UserProfile";
+import getScoreData from "@/libs/getScoreData";
 
 export default function Ranking(): JSX.Element {
   const [loading, setLoading] = useState<boolean>(true);
@@ -34,26 +35,13 @@ export default function Ranking(): JSX.Element {
           : typeof currentPage === "string"
           ? currentPage
           : configs.urls.RANKING;
-      const data: QuizUserPaginated = await loadScoreData(url);
+      const data: QuizUserPaginated = await getScoreData(url);
       setRanking(data);
     } catch (error) {
       console.error(error);
     } finally {
       setLoading(false);
     }
-  }
-
-  async function loadScoreData(url: string): Promise<QuizUserPaginated> {
-    const response: Response = await fetch(url, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    if (!response.ok) {
-      throw new Error(`${response.status} (${response.statusText})`);
-    }
-    return await response.json();
   }
 
   function orderByTotalCorrectAnswers(): void {
@@ -166,6 +154,7 @@ export default function Ranking(): JSX.Element {
     <Loading />
   ) : (
     <div className={styles.container}>
+      <UserProfile />
       <h1>Ranking</h1>
       <table className={styles.table}>
         <thead className={styles.thead}>

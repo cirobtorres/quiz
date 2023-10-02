@@ -83,7 +83,7 @@ export default function QuizSettings(): JSX.Element {
   }, []);
 
   return (
-    <main className={styles.container}>
+    <div className={styles.container}>
       {loading || componentLoading ? (
         <Loading />
       ) : (
@@ -143,6 +143,6 @@ export default function QuizSettings(): JSX.Element {
           </div>
         </>
       )}
-    </main>
+    </div>
   );
 }

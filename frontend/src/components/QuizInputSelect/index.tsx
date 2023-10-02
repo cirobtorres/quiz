@@ -11,6 +11,17 @@ interface Dictionary {
   answers?: any;
 }
 
+function slugify(text: string) {
+  return text
+    .toString()
+    .toLowerCase()
+    .replace(/\s+/g, "-")
+    .replace(/[^\w-]+/g, "")
+    .replace(/--+/g, "-")
+    .replace(/^-+/, "")
+    .replace(/-+$/, "");
+}
+
 export default function QuizInputSelect(props: {
   default: Dictionary[];
   quizes?: QuizModel[] | Dictionary[] | any;
@@ -27,9 +38,21 @@ export default function QuizInputSelect(props: {
         values = [values];
       }
       props.setValues?.(values);
-    } else {
-      props.setValues?.([]);
     }
+    // else {
+    //   props.setValues?.([]);
+    // }
+  }
+
+  function handleCreateOption(inputValue: any) {
+    const newValue = {
+      value: props.quizes.reduce((acc: QuizModel, cur: QuizModel) => {
+        return acc.id + cur.id;
+      }),
+      label: inputValue,
+      slug: slugify(inputValue),
+    };
+    handleOnChange(newValue);
   }
 
   return (
@@ -57,6 +80,7 @@ export default function QuizInputSelect(props: {
                 }))
           }
           onChange={handleOnChange}
+          onCreateOption={handleCreateOption}
         />
       ) : (
         <Select

@@ -1,0 +1,8 @@
+.mainContainer {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: var(--min-width);
+  height: 80%;
+}

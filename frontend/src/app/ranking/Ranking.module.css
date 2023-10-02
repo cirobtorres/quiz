@@ -1,20 +1,22 @@
 .container {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: var(--min-width);
-  background-color: var(--backgroundColor-C);
-  border-radius: var(--border-radius);
-  box-shadow: 0 0 10px var(--color-D);
+  /* background-color: var(--backgroundColor-C); */
+  /* border-radius: var(--border-radius); */
+  /* box-shadow: 0 0 10px var(--color-D); */
   overflow: hidden;
+  height: 80%;
 }
 
 .container > h1 {
   text-align: center;
   padding: 1rem;
   width: 100%;
-  background-color: var(--backgroundColor-D);
+  /* background-color: var(--backgroundColor-D); */
 }
 
 .container > table {
@@ -60,16 +62,16 @@
 }
 
 .tr:hover {
-  background-color: var(--backgroundColor-B);
+  background-color: var(--color-B);
 }
 
-.thead th {
+/* .thead th {
   background-color: var(--backgroundColor-D);
-}
+} */
 
 .thead th:hover:not(:nth-child(1)) {
-  /*Make it same background color, but darker*/
-  filter: brightness(90%);
+  /* filter: brightness(90%); */
+  background-color: var(--color-B);
 }
 
 .ranking {
