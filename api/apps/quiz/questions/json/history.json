@@ -1,0 +1,680 @@
+{
+  "quiz": {
+    "subject": "História do Brasil",
+    "slug": "historia-do-brasil"
+  },
+  "questions": [
+    {
+      "question_text": "Quem foi o rei português que liberou as expedições que culminaram com o descobrimento do Brasil?",
+      "answers": [
+        {
+          "text": "D. Manuel",
+          "is_correct": true
+        },
+        {
+          "text": "D. Sebastião",
+          "is_correct": false
+        },
+        {
+          "text": "D. Duarte",
+          "is_correct": false
+        },
+        {
+          "text": "D. Henrique",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "Em qual data o Brasil foi descoberto?",
+      "answers": [
+        {
+          "text": "22 de Abril de 1500",
+          "is_correct": true
+        },
+        {
+          "text": "8 de Junho de 1498",
+          "is_correct": false
+        },
+        {
+          "text": "12 de Abril de 1502",
+          "is_correct": false
+        },
+        {
+          "text": "10 de Março de 1500",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "Como ficou conhecida as mobilizações militares que se estenderam até 1654 e que tiveram a participação de senhores de engenho, negros e indígenas, quando os holandeses atacaram o nordeste brasileiro a fim de se fixarem na região com interesse no comércio açucareiro?",
+      "answers": [
+        {
+          "text": "Guerra Brasílica",
+          "is_correct": true
+        },
+        {
+          "text": "Guerra de Iguape",
+          "is_correct": false
+        },
+        {
+          "text": "Confederação dos Tamoios",
+          "is_correct": false
+        },
+        {
+          "text": "Saque do Recife",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "No descobrimento do Brasil, quem escreveu a carta ao rei português a respeito das descobertas do Novo Mundo?",
+      "answers": [
+        {
+          "text": "Pero Vaz de Caminha",
+          "is_correct": true
+        },
+        {
+          "text": "Vicente Yánez Pinzón",
+          "is_correct": false
+        },
+        {
+          "text": "André Gonçalves Alvarenga",
+          "is_correct": false
+        },
+        {
+          "text": "Gaspar de Lemos",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "Quais foram as principais atividades econômicas no desenvolvimento do Brasil Colônia (1500 a 1822)?",
+      "answers": [
+        {
+          "text": "Exploração de pau-brasil e cultivo de cana-de-açúcar",
+          "is_correct": true
+        },
+        {
+          "text": "Mineração e comércio de especiarias",
+          "is_correct": false
+        },
+        {
+          "text": "Pecuária e plantações de algodão",
+          "is_correct": false
+        },
+        {
+          "text": "Agricultura de subsistência e pesca",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "A cidade de Brasília foi projetada pelo arquiteto Oscar Niemeyer e urbanista Lúcio Costa. Qual foi o presidente do Brasil que idealizou e liderou a construção da cidade?",
+      "answers": [
+        {
+          "text": "Juscelino Kubitschek",
+          "is_correct": true
+        },
+        {
+          "text": "Getúlio Vargas",
+          "is_correct": false
+        },
+        {
+          "text": "Deodoro da Fonseca",
+          "is_correct": false
+        },
+        {
+          "text": "Jânio Quadros",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "Inconfidência Mineira",
+      "answers": [
+        {
+          "text": "",
+          "is_correct": true
+        },
+        {
+          "text": "",
+          "is_correct": false
+        },
+        {
+          "text": "",
+          "is_correct": false
+        },
+        {
+          "text": "",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "Por quem foi escrita a letra do Hino da Independência?",
+      "answers": [
+        {
+          "text": "Evaristo da Veiga",
+          "is_correct": true
+        },
+        {
+          "text": "Carlos Drummond de Andrade",
+          "is_correct": false
+        },
+        {
+          "text": "Graciliano Ramos",
+          "is_correct": false
+        },
+        {
+          "text": "Guimarães Rosa",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "Primeira tentativa de organizar a ocupação do Brasil. O sistema, que marca o fim pré-colonial (1530), consista em destinar a nobres aliados da Coroa portuguesa o direito de explorar uma de 14 porções de terras que subdividia o território. Esse sistema mostrou grandes falhas, pois sua administração, concentrada nos donatários, logo foi substituída pela do governador-geral.",
+      "answers": [
+        {
+          "text": "Capitanias hereditárias",
+          "is_correct": true
+        },
+        {
+          "text": "República Velha",
+          "is_correct": false
+        },
+        {
+          "text": "Feitorias",
+          "is_correct": false
+        },
+        {
+          "text": "Brasil Colônia",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "Fundada em 1531 por Martim Afonso de Souza a pedido da Coroa Portuguesa, qual a cidade mais antiga do Brasil, que completou 491 anos em 22 de janeiro de 2023?",
+      "answers": [
+        {
+          "text": "São Vicente - SP",
+          "is_correct": true
+        },
+        {
+          "text": "Porto Seguro - BA",
+          "is_correct": false
+        },
+        {
+          "text": "Olinda - PE",
+          "is_correct": false
+        },
+        {
+          "text": "Vila Velha - ES",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "Foi o último e mais duradouro presidente da Ditadura Militar (1964-1985). Encerrou o processo de abertura econômica iniciada por Ernesto Geisel.",
+      "answers": [
+        {
+          "text": "João Baptista de Oliveira Figueiredo",
+          "is_correct": true
+        },
+        {
+          "text": "Humberto de Alencar Castelo Branco",
+          "is_correct": false
+        },
+        {
+          "text": "Artur da Costa e Silva",
+          "is_correct": false
+        },
+        {
+          "text": "Emílio Garrastazu Médici",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "Tratado de Tordesilhas",
+      "answers": [
+        {
+          "text": "",
+          "is_correct": true
+        },
+        {
+          "text": "",
+          "is_correct": false
+        },
+        {
+          "text": "",
+          "is_correct": false
+        },
+        {
+          "text": "",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "Política do Café com Leite, República Velha (1889-1930)",
+      "answers": [
+        {
+          "text": "",
+          "is_correct": true
+        },
+        {
+          "text": "",
+          "is_correct": false
+        },
+        {
+          "text": "",
+          "is_correct": false
+        },
+        {
+          "text": "",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "República da Espada",
+      "answers": [
+        {
+          "text": "",
+          "is_correct": true
+        },
+        {
+          "text": "",
+          "is_correct": false
+        },
+        {
+          "text": "",
+          "is_correct": false
+        },
+        {
+          "text": "",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "Os quilombos eram comunidades formados por:",
+      "answers": [
+        {
+          "text": "Escravos fugitivos",
+          "is_correct": true
+        },
+        {
+          "text": "Escravos libertos",
+          "is_correct": false
+        },
+        {
+          "text": "Ex-escravos indígenas",
+          "is_correct": false
+        },
+        {
+          "text": "Mestiços africanos e portugueses",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "Qual foi o primeiro presidente eleito pelo voto direto após a Ditadura Militar (1964-1985)?",
+      "answers": [
+        {
+          "text": "Tancredo Neves",
+          "is_correct": true
+        },
+        {
+          "text": "José Sarney",
+          "is_correct": false
+        },
+        {
+          "text": "Fernando Collor de Mello",
+          "is_correct": false
+        },
+        {
+          "text": "Itamar Franco",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "Qual tribo indígena recepcionou os portugueses quando esses embarcaram pela primeira vez ao Brasil no período do descobrimento?",
+      "answers": [
+        {
+          "text": "Tupinambá",
+          "is_correct": true
+        },
+        {
+          "text": "Arawetê",
+          "is_correct": false
+        },
+        {
+          "text": "Enawenê-nawê",
+          "is_correct": false
+        },
+        {
+          "text": "Kaiapó",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "Quem descobriu o Brasil?",
+      "answers": [
+        {
+          "text": "Pedro Álvarez Cabral",
+          "is_correct": true
+        },
+        {
+          "text": "Cristóvão Colombo",
+          "is_correct": false
+        },
+        {
+          "text": "Fernão de Magalhães",
+          "is_correct": false
+        },
+        {
+          "text": "Vasco da Gama",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "Ciclo do Ouro, derrama, quinto",
+      "answers": [
+        {
+          "text": "",
+          "is_correct": true
+        },
+        {
+          "text": "",
+          "is_correct": false
+        },
+        {
+          "text": "",
+          "is_correct": false
+        },
+        {
+          "text": "",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "Movimento tenentista",
+      "answers": [
+        {
+          "text": "",
+          "is_correct": true
+        },
+        {
+          "text": "",
+          "is_correct": false
+        },
+        {
+          "text": "",
+          "is_correct": false
+        },
+        {
+          "text": "",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "Inconfidência Mineira?",
+      "answers": [
+        {
+          "text": "",
+          "is_correct": true
+        },
+        {
+          "text": "",
+          "is_correct": false
+        },
+        {
+          "text": "",
+          "is_correct": false
+        },
+        {
+          "text": "",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "Guerra dos Mascates",
+      "answers": [
+        {
+          "text": "",
+          "is_correct": true
+        },
+        {
+          "text": "",
+          "is_correct": false
+        },
+        {
+          "text": "",
+          "is_correct": false
+        },
+        {
+          "text": "",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "Guerra de Canudos",
+      "answers": [
+        {
+          "text": "",
+          "is_correct": true
+        },
+        {
+          "text": "",
+          "is_correct": false
+        },
+        {
+          "text": "",
+          "is_correct": false
+        },
+        {
+          "text": "",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "Crise das Antilhas",
+      "answers": [
+        {
+          "text": "",
+          "is_correct": true
+        },
+        {
+          "text": "",
+          "is_correct": false
+        },
+        {
+          "text": "",
+          "is_correct": false
+        },
+        {
+          "text": "",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "Sertanistas (bandeirantes), Entradas e Bandeiras",
+      "answers": [
+        {
+          "text": "",
+          "is_correct": true
+        },
+        {
+          "text": "",
+          "is_correct": false
+        },
+        {
+          "text": "",
+          "is_correct": false
+        },
+        {
+          "text": "",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "Vila Rica de Ouro Preto",
+      "answers": [
+        {
+          "text": "",
+          "is_correct": true
+        },
+        {
+          "text": "",
+          "is_correct": false
+        },
+        {
+          "text": "",
+          "is_correct": false
+        },
+        {
+          "text": "",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "Período Joanino",
+      "answers": [
+        {
+          "text": "",
+          "is_correct": true
+        },
+        {
+          "text": "",
+          "is_correct": false
+        },
+        {
+          "text": "",
+          "is_correct": false
+        },
+        {
+          "text": "",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "Quem foi o primeiro português a chegar em solo brasileiro?",
+      "answers": [
+        {
+          "text": "Duarte Pacheco, em 1498",
+          "is_correct": true
+        },
+        {
+          "text": "Pedro Álvarez Cabral, em 1500",
+          "is_correct": false
+        },
+        {
+          "text": "Vasco da Gama, em 1499",
+          "is_correct": false
+        },
+        {
+          "text": "Cristóvão Colombo, em 1492",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "Quem foi o primeiro presidente do Brasil?",
+      "answers": [
+        {
+          "text": "Deodoro da Fonseca",
+          "is_correct": true
+        },
+        {
+          "text": "Prudente de Moraes",
+          "is_correct": false
+        },
+        {
+          "text": "Nilo Peçanha",
+          "is_correct": false
+        },
+        {
+          "text": "Tomé de Sousa",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "Batalhas dos Guararapes",
+      "answers": [
+        {
+          "text": "",
+          "is_correct": true
+        },
+        {
+          "text": "",
+          "is_correct": false
+        },
+        {
+          "text": "",
+          "is_correct": false
+        },
+        {
+          "text": "",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "Plantation",
+      "answers": [
+        {
+          "text": "",
+          "is_correct": true
+        },
+        {
+          "text": "",
+          "is_correct": false
+        },
+        {
+          "text": "",
+          "is_correct": false
+        },
+        {
+          "text": "",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "Revolução Pernambucana",
+      "answers": [
+        {
+          "text": "",
+          "is_correct": true
+        },
+        {
+          "text": "",
+          "is_correct": false
+        },
+        {
+          "text": "",
+          "is_correct": false
+        },
+        {
+          "text": "",
+          "is_correct": false
+        }
+      ]
+    }
+  ]
+}

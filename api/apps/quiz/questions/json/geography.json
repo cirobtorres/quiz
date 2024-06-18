@@ -1,0 +1,368 @@
+{
+  "quiz": {
+    "subject": "Geografia do Brasil",
+    "slug": "geografia-do-brasil"
+  },
+  "questions": [
+    {
+      "question_text": "Qual capital de Roraima, Acre, Rondônia e Maranhão, nessa ordem?",
+      "answers": [
+        {
+          "text": "Boa Vista, Rio Branco, Porto Velho e São Luís.",
+          "is_correct": true
+        },
+        {
+          "text": "Macapá, Boa Vista, Porto Velho e Rio Branco.",
+          "is_correct": false
+        },
+        {
+          "text": "Boa Vista, São Luís, Macapá e Campo Grande.",
+          "is_correct": false
+        },
+        {
+          "text": "Campo Grande, Rio Branco, Porto Velho e São Luís.",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "Qual o bioma de planície aluvial e savana estépica situado entre Mato Grosso e Bolívia, que também costuma ser chamado de chaco boliviano?",
+      "answers": [
+        { "text": "Complexo do Pantanal", "is_correct": true },
+        { "text": "Manguezal", "is_correct": false },
+        { "text": "Lençóis Maranhenses", "is_correct": false },
+        { "text": "Bacia Amazônica", "is_correct": false }
+      ]
+    },
+    {
+      "question_text": "Qual dessas cidades não percente à região metropolitana da grande São Paulo?",
+      "answers": [
+        { "text": "Campinas", "is_correct": true },
+        { "text": "Osasco", "is_correct": false },
+        { "text": "Guarulhos", "is_correct": false },
+        { "text": "Santo André", "is_correct": false }
+      ]
+    },
+    {
+      "question_text": "Região serrana que, juntamente com a Serra do Espinhaço, compõe uma vasta cordilheira em formato de bumerangue conhecida por Cadeia do Espinhaço, situado no centro da Bahia",
+      "answers": [
+        { "text": "Chapada Diamantina", "is_correct": true },
+        { "text": "Chapada dos Veadeiros", "is_correct": false },
+        { "text": "Chapada dos Guimarães", "is_correct": false },
+        { "text": "Chapada do Araripe", "is_correct": false }
+      ]
+    },
+    {
+      "question_text": "Animal símbolo da Mata Atlântica",
+      "answers": [
+        { "text": "Mico-leão-dourado", "is_correct": true },
+        { "text": "Lobo-guará", "is_correct": false },
+        { "text": "Arara-azul", "is_correct": false },
+        { "text": "Onça-pintada", "is_correct": false }
+      ]
+    },
+    {
+      "question_text": "O Rio Amazonas:",
+      "answers": [
+        {
+          "text": "Ao entrar no Brasil, é chamado de Rio Solimões e somente ao receber as águas do Rio Negro que passa a ser chamado de Rio Amazonas",
+          "is_correct": true
+        },
+        {
+          "text": "É o segundo maior rio em volume de água do mundo, perdendo apenas para o Rio Nilo",
+          "is_correct": false
+        },
+        {
+          "text": "Tem uma das menores biodiversidades em rios do mundo quando considerada número de espécie por extensão de curso de água",
+          "is_correct": false
+        },
+        {
+          "text": "Nasce na Bolívia e deságua no Oceano Atlântico. Nos países andinos, é chamado de Rio Marañón",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "Sobre a Floresta Amazônica, é falso que:",
+      "answers": [
+        {
+          "text": "Abriga tribos indígenas como os Guaranis.",
+          "is_correct": true
+        },
+        {
+          "text": "É a maior floresta em território, ocupando nove países e nove estados brasileiros.",
+          "is_correct": false
+        },
+        {
+          "text": "Possui grande quantidade de cipós, bromélias e orquídeas, além de uma das maiores plantas aquáticas do mundo, a vitória régia.",
+          "is_correct": false
+        },
+        {
+          "text": "É a principal fonte de biodiversidade neotropical",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "Ponto mais alto do Brasil a 2.993 metros do nível do mar, localizado na cordilheira rochosa na Amazônia como parte da Serra do Imeri, fronteira Brasil-Venezuela.",
+      "answers": [
+        { "text": "Pico da Neblina", "is_correct": true },
+        { "text": "Monte Roraima", "is_correct": false },
+        { "text": "Pedra da Mina", "is_correct": false },
+        { "text": "Pico 31 de Março", "is_correct": false }
+      ]
+    },
+    {
+      "question_text": "Com relação ao Monte Roraima:",
+      "answers": [
+        {
+          "text": "As condições climáticas no topo da montanha apresentam significativas diferenças em relação à sua base",
+          "is_correct": true
+        },
+        {
+          "text": "É protegido pelo Parque Nacional do Monte Roraima em ação conjunta entre os três países",
+          "is_correct": false
+        },
+        {
+          "text": "Localizado na tríplice fronteira Brasil-Colômbia-Guiana e de formação rochosa única no planalto das Guianas",
+          "is_correct": false
+        },
+        {
+          "text": "Seu planalto apresenta flora e fauna similar ao que se estende a seus pés",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "Número de quedas de água que totalizam as Cataratas do Iguaçu, no Parque Nacional do Iguaçu, entre Brasil e Argentina.",
+      "answers": [
+        { "text": "275", "is_correct": true },
+        { "text": "108", "is_correct": false },
+        { "text": "77", "is_correct": false },
+        { "text": "211", "is_correct": false }
+      ]
+    },
+    {
+      "question_text": "Qual a área de proteção ecológica marcada por lagoas de água doce entre dunas de areia branca cuja paisagem desértica é unica no mundo?",
+      "answers": [
+        { "text": "Lençóis Maranhenses", "is_correct": true },
+        { "text": "Delta do Amazonas", "is_correct": false },
+        { "text": "Dunas do Rosado", "is_correct": false },
+        { "text": "Jalapão", "is_correct": false }
+      ]
+    },
+    {
+      "question_text": "Pampas são biomas de pradarias de clima subtropical localizados na América do Sul. No Brasil, o único estado onde estão presentes é:",
+      "answers": [
+        { "text": "Rio Grande do Sul", "is_correct": true },
+        { "text": "Santa Catarina", "is_correct": false },
+        { "text": "Mato Grosso do Sul", "is_correct": false },
+        { "text": "Paraná", "is_correct": false }
+      ]
+    },
+    {
+      "question_text": "Qual maior bacia hidrográfica exclusivamente brasileira?",
+      "answers": [
+        {
+          "text": "Bacia hidrográfica do Tocantins-Araguaia",
+          "is_correct": true
+        },
+        { "text": "Bacia Hidrográfica Amazônica", "is_correct": false },
+        { "text": "Bacia Platina", "is_correct": false },
+        {
+          "text": "Bacia hidrográfica do São Francisco",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "Qual único rio brasileiro possui regime misto de alimentação pluvial e nival (neve)?",
+      "answers": [
+        { "text": "Rio Amazonas", "is_correct": true },
+        { "text": "Rio Paraná", "is_correct": false },
+        { "text": "Rio Parnaíba", "is_correct": false },
+        { "text": "Rio Araguaia", "is_correct": false }
+      ]
+    },
+    {
+      "question_text": "Conjunto de formações rochosas de cor avermelhada, que se estendem por 65 km ao longo do Rio São Francisco, entre os estados de Alagoas e Sergipe.",
+      "answers": [
+        { "text": "Cânions do Xingó", "is_correct": true },
+        { "text": "Cânions de Furnas", "is_correct": false },
+        { "text": "Cânions Itaimbezinho", "is_correct": false },
+        { "text": "Cânions Guartelá", "is_correct": false }
+      ]
+    },
+    {
+      "question_text": "Não corresponde a tribo indígena tipicamente brasileira.",
+      "answers": [
+        { "text": "Quéchuas", "is_correct": true },
+        { "text": "Guarani", "is_correct": false },
+        { "text": "Yanomami", "is_correct": false },
+        { "text": "Pataxó", "is_correct": false }
+      ]
+    },
+    {
+      "question_text": "Termo derivado do Tupi que designa “Estrondo” e que corresponde a um fenômeno natural do encontro das águas do rio Amazonas com o oceano.",
+      "answers": [
+        { "text": "Pororoca", "is_correct": true },
+        { "text": "Boitatá", "is_correct": false },
+        { "text": "Oiapoque", "is_correct": false },
+        { "text": "Taturana", "is_correct": false }
+      ]
+    },
+    {
+      "question_text": "Qual flora não é nativa do Brasil?",
+      "answers": [
+        { "text": "Cipreste", "is_correct": true },
+        { "text": "Carnaúba", "is_correct": false },
+        { "text": "Araucárias", "is_correct": false },
+        { "text": "Babaçu", "is_correct": false }
+      ]
+    },
+    {
+      "question_text": "Maior felino do continente americano e uma das espécies símbolo da fauna brasileira, único do gênero “Panthera” no nosso continente, que é o mesmo gênero do leão, do tigre e do leopardo.",
+      "answers": [
+        { "text": "Onça-pintada", "is_correct": true },
+        { "text": "Onça-parda", "is_correct": false },
+        { "text": "Jaguarundi", "is_correct": false },
+        { "text": "Jaguatirica", "is_correct": false }
+      ]
+    },
+    {
+      "question_text": "Mamífero aquático parente das baleias e dos golfinhos, mas que não vive no mar, e sim na água doce. Seu habitat são os rios amazônicos do Brasil, da Bolívia, da Venezuela, da Colômbia, do Equador e do Peru.",
+      "answers": [
+        { "text": "Boto-cor-de-rosa", "is_correct": true },
+        { "text": "Peixe-boi-da-amazônia", "is_correct": false },
+        { "text": "Ariranha", "is_correct": false },
+        { "text": "Lontra-neotropical", "is_correct": false }
+      ]
+    },
+    {
+      "question_text": "Qual é o principal tipo de clima predominante na Região Amazônica?",
+      "answers": [
+        { "text": "Equatorial", "is_correct": true },
+        { "text": "Subtropical", "is_correct": false },
+        { "text": "Tropical Úmido", "is_correct": false },
+        { "text": "Tropical Atlântico", "is_correct": false }
+      ]
+    },
+    {
+      "question_text": "Clima característico da região sul do Brasil, marcado por invernos frios e verões amenos, com chuvas bem distribuídas ao longo do ano.",
+      "answers": [
+        { "text": "Subtropical", "is_correct": true },
+        { "text": "Tropical", "is_correct": false },
+        { "text": "Oceânico", "is_correct": false },
+        { "text": "Semiárido", "is_correct": false }
+      ]
+    },
+    {
+      "question_text": "O Parque Nacional da Chapada dos Veadeiros, que está localizado no nordeste do estado de Goiás, foi declarado Patrimônio Natural da Humanidade pela UNESCO, em 2001. Além da conservação, o Parque tem como objetivos:",
+      "answers": [
+        {
+          "text": "A pesquisa científica, a educação ambiental e a visitação pública",
+          "is_correct": true
+        },
+        {
+          "text": "Preservar áreas de garimpos como parte da história local",
+          "is_correct": false
+        },
+        {
+          "text": "Estimular a caça e pesca sustentável como forma de educar a população sobre práticas não predatórias",
+          "is_correct": false
+        },
+        {
+          "text": "Promover a exploração intensiva de recursos naturais para fomentar o desenvolvimento econômico da região",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "O Parque Nacional das Emas é administrado atualmente pelo Instituto Chico Mendes de Conservação da Biodiversidade, o ICMBio. Não é responsabilidade do ICMBio:",
+      "answers": [
+        {
+          "text": "Broibir atividades de pesquisa científica como forma de reservação da biosfera do Pantanal",
+          "is_correct": true
+        },
+        {
+          "text": "Abrigar e assegurar o habitat de grandes mamíferos, como onças-pintadas e lobos-guarás",
+          "is_correct": false
+        },
+        {
+          "text": "Proteger paisagens naturais e pouco alteradas, em especial as Chapadas e Furnas do rio Jacuba",
+          "is_correct": false
+        },
+        {
+          "text": "Propiciar meios para o monitoramento do fogo, das espécies exóticas e invasoras e do uso de agrotóxicos nos entornos",
+          "is_correct": false
+        }
+      ]
+    },
+    {
+      "question_text": "Qual é o bioma caracterizado por ser uma savana arborizada, composto por árvores baixas e retorcidas, com vegetação adaptada a incêndios frequentes, e que abrange uma vasta área do território brasileiro?",
+      "answers": [
+        { "text": "Cerrado", "is_correct": true },
+        { "text": "Pantanal", "is_correct": false },
+        { "text": "Pampas", "is_correct": false },
+        { "text": "Mata de Araucárias", "is_correct": false }
+      ]
+    },
+    {
+      "question_text": "Qual estado brasileiro tem mais municípios?",
+      "answers": [
+        { "text": "Minas Gerais", "is_correct": true },
+        { "text": "São Paulo", "is_correct": false },
+        { "text": "Bahia", "is_correct": false },
+        { "text": "Mato Grosso do Sul", "is_correct": false }
+      ]
+    },
+    {
+      "question_text": "Qual macroregião é a maior do Brasil?",
+      "answers": [
+        { "text": "Norte", "is_correct": true },
+        { "text": "Nordeste", "is_correct": false },
+        { "text": "Centro-Oeste", "is_correct": false },
+        { "text": "Sudeste", "is_correct": false }
+      ]
+    },
+    {
+      "question_text": "Qual dos estados abaixo não pertence a região Nordeste?",
+      "answers": [
+        { "text": "Pará", "is_correct": true },
+        { "text": "Maranhão", "is_correct": false },
+        { "text": "Paraíba", "is_correct": false },
+        { "text": "Piauí", "is_correct": false }
+      ]
+    },
+    {
+      "question_text": "Estado mais populoso do Brasil",
+      "answers": [
+        { "text": "São Paulo", "is_correct": true },
+        { "text": "Minas Gerais", "is_correct": false },
+        { "text": "Bahia", "is_correct": false },
+        { "text": "Rio de Janeiro", "is_correct": false }
+      ]
+    },
+    {
+      "question_text": "Quais são as subregiões do Nordeste?",
+      "answers": [
+        {
+          "text": "Meio-Norte, Sertão, Agreste e Zona da Mata",
+          "is_correct": true
+        },
+        {
+          "text": "Zona da Mata, Sertão, Igapó e Centro-sul",
+          "is_correct": false
+        },
+        {
+          "text": "Norte, Meio-Norte, Sertão e Agreste",
+          "is_correct": false
+        },
+        {
+          "text": "Norte, Sul, Zona da Mata e Sertão",
+          "is_correct": false
+        }
+      ]
+    }
+  ]
+}
