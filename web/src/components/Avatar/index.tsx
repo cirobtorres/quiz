@@ -60,12 +60,16 @@ export default function Avatar({ user }: any) {
               />
             </button>
           </div>
-          <div className="absolute top-full left-1/2 -translate-x-1/2 w-40">
-            <motion.ul
-              variants={listVariants}
-              style={{ pointerEvents: isOpen ? "auto" : "none" }}
-              className="w-full flex flex-col gap-3 bg-white p-3"
-            >
+          <motion.div
+            variants={listVariants}
+            style={{
+              pointerEvents: isOpen ? "auto" : "none",
+              shadow: isOpen ? "0 10px 20px 0 rgba(0, 0, 0, 0.5)" : "none",
+            }}
+            layout
+            className="absolute top-full left-1/2 -translate-x-1/2"
+          >
+            <motion.ul className="w-40 flex flex-col gap-3 p-3 text-slate-200 bg-gradient-to-tr from-rose-900 via-pink-900 to-rose-950">
               <motion.li variants={itemVariants}>
                 <Link href="/">Configurar Quiz</Link>
               </motion.li>
@@ -93,7 +97,7 @@ export default function Avatar({ user }: any) {
                 </button>
               </motion.li>
             </motion.ul>
-          </div>
+          </motion.div>
         </motion.div>
       ) : (
         <Link

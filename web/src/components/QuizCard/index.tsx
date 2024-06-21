@@ -14,12 +14,18 @@ export default function Quiz({
   description: string;
 }) {
   return (
-    <div className="flex flex-col w-full max-w-96 h-52 shadow-darker rounded-lg overflow-hidden">
+    <div
+      className={`
+      flex flex-col w-full max-w-96 min-w-60 h-60 shadow-darker rounded-lg overflow-hidden outline-slate-500 outline-2 outline-offset-2 hover:outline cursor-pointer
+      border-2 border-slate-500
+    `}
+    >
       <div className="relative flex-[2_2_0] p-3 bg-slate-500">
         <Image
           src={src}
           alt={alt}
           fill
+          sizes="(max-width: 768px) 100vw, 33vw"
           className="absolute object-cover"
         ></Image>
       </div>

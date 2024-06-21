@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "../styles/globals.css";
+import { DarkModeProvider } from "../contexts/darkModeContext";
+import Body from "../components/Body";
+import { ModalProvider } from "../contexts/modalContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,15 +19,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`
-          ${inter.className} 
-          min-h-svh 
-          bg-gradient-to-tr from-rose-900 to-indigo-900 
-        `}
-      >
-        {children}
-      </body>
+      <DarkModeProvider>
+        <ModalProvider>
+          <Body fontFamily={inter.className}>{children}</Body>
+        </ModalProvider>
+      </DarkModeProvider>
     </html>
   );
 }

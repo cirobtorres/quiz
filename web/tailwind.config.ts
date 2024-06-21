@@ -7,9 +7,13 @@ const config: Config = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  darkMode: "selector",
   theme: {
     extend: {
       backgroundImage: {},
+      textColor: {
+        crimson: "var(--crimson)",
+      },
       boxShadow: {
         darker: "0 10px 20px 0 rgba(0, 0, 0, 0.5)",
       },

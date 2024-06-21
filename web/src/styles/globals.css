@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --crimson: #dc143c;
+}
+
 @layer utilities {
   .current-page {
     outline-color: #f59e0b;
