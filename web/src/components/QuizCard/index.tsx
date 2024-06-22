@@ -1,39 +1,71 @@
 import Image from "next/image";
+import Link from "next/link";
 
-export default function Quiz({
-  src,
-  alt,
-  theme,
-  title,
-  description,
-}: {
-  src: string;
-  alt: string;
-  theme: string;
+interface QuizCardProps {
+  image?: { src: string; alt: string };
   title: string;
   description: string;
-}) {
+  link: string;
+  options?: {
+    theme?: string;
+    titleColor?: string;
+    textColor?: string;
+    titleAlign?: string;
+    textAlign?: string;
+  };
+}
+
+export default function Quiz({
+  image,
+  title,
+  description,
+  link,
+  options,
+}: QuizCardProps) {
   return (
-    <div
-      className={`
-      flex flex-col w-full max-w-96 min-w-60 h-60 shadow-darker rounded-lg overflow-hidden outline-slate-500 outline-2 outline-offset-2 hover:outline cursor-pointer
-      border-2 border-slate-500
-    `}
+    <Link
+      href={link}
+      className="flex flex-col w-full max-w-96 min-w-52 h-full max-h-60 shadow-darker rounded-xl overflow-hidden cursor-pointer"
     >
-      <div className="relative flex-[2_2_0] p-3 bg-slate-500">
-        <Image
-          src={src}
-          alt={alt}
-          fill
-          sizes="(max-width: 768px) 100vw, 33vw"
-          className="absolute object-cover"
-        ></Image>
+      {image && (
+        <>
+          <div className="relative flex-[2_2_0] p-3 bg-slate-500">
+            <Image
+              src={image.src}
+              alt={image.alt}
+              fill
+              sizes="(max-width: 768px) 100vw, 33vw"
+              className="absolute object-cover"
+            ></Image>
+          </div>
+          <hr />
+        </>
+      )}
+      <div
+        className="flex-1 p-3"
+        style={{
+          backgroundColor: options?.theme ?? "#1e293b",
+        }}
+      >
+        <h2
+          className={`${options?.titleAlign} font-extrabold text-xl`}
+          style={{
+            color: options?.titleColor ?? "#fff",
+          }}
+        >
+          {title}
+        </h2>
+        {description && (
+          <p
+            className={`${options?.textAlign} text-sm`}
+            style={{
+              color: options?.textColor ?? "#fff",
+            }}
+          >
+            {description}
+          </p>
+        )}
       </div>
-      <hr />
-      <div className="flex-1 p-3" style={{ backgroundColor: theme }}>
-        <h2 className="text-xl text-slate-200">{title}</h2>
-        {description && <p className="text-sm text-slate-400">{description}</p>}
-      </div>
-    </div>
+    </Link>
   );
 }

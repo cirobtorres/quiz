@@ -1,6 +1,6 @@
 import Countdown from "../Countdown";
+import Skip from "../Skip";
 import Response from "./Response";
-import { FaArrowRight } from "react-icons/fa";
 
 const temporaryPages = [
   { questionId: 1, current: false, correct: true },
@@ -93,18 +93,5 @@ const Pagination = () => {
         </li>
       ))}
     </ul>
-  );
-};
-
-const Skip = () => {
-  return (
-    <button
-      className={`
-        relative w-12 h-12 flex justify-center items-center gap-3 rounded-full 
-        text-indigo-700 bg-white shadow-darker animate-bounce-horizontal
-      `}
-    >
-      <FaArrowRight size={20} />
-    </button>
   );
 };

@@ -17,6 +17,12 @@ const config: Config = {
       boxShadow: {
         darker: "0 10px 20px 0 rgba(0, 0, 0, 0.5)",
       },
+      maxWidth: {
+        // QuizCard max width = 24rem
+        // QuizCard flex gap between each card = 1rem
+        // 24rem * 3 (cards) + 1rem * 2 (gaps) = 74rem
+        webpage: "74rem",
+      },
       animation: {
         loading: "rotate 2s linear infinite",
         "loading-dashes": "dash 1.5s ease-in-out infinite",
@@ -77,6 +83,9 @@ const config: Config = {
       },
     },
   },
-  plugins: [require("@xpd/tailwind-3dtransforms")],
+  plugins: [
+    require("@xpd/tailwind-3dtransforms"),
+    require("tailwind-scrollbar"),
+  ],
 };
 export default config;
