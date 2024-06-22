@@ -5,9 +5,9 @@ export default function ConfirmButton({ text }: { text: string }) {
     <motion.button
       type="button"
       whileTap={{ scale: 1 }}
-      whileHover={{ scale: 1.05 }}
+      whileHover={{ scale: 1.02 }}
       transition={{ type: "spring", bounce: 0.5, duration: 0.5 }}
-      className="text-white font-extrabold py-2 px-3 rounded-xl outline-none bg-blue-700"
+      className="flex-1 font-extrabold h-14 text-lg rounded-xl outline-none text-white bg-blue-700"
       onClick={() => console.log("Confirmar")}
     >
       {text}

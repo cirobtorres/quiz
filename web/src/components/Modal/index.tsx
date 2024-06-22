@@ -2,7 +2,6 @@
 
 import { useRef } from "react";
 import { motion } from "framer-motion";
-import ConfirmButton from "../ConfirmButton";
 import CloseButton from "../CloseButton";
 
 export default function Modal({
@@ -82,5 +81,20 @@ const CancelButton = ({
     >
       {text}
     </button>
+  );
+};
+
+const ConfirmButton = ({ text }: { text: string }) => {
+  return (
+    <motion.button
+      type="button"
+      whileTap={{ scale: 1 }}
+      whileHover={{ scale: 1.02 }}
+      transition={{ type: "spring", bounce: 0.5, duration: 0.5 }}
+      className="text-white font-extrabold py-2 px-3 rounded-xl outline-none bg-blue-700"
+      onClick={() => console.log("Confirmar")}
+    >
+      {text}
+    </motion.button>
   );
 };

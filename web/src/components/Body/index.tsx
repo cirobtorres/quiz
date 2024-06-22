@@ -12,6 +12,7 @@ export default function Body({
 }) {
   const { theme } = useTheme();
   const { isOpen } = useModal();
+
   return (
     <body
       className={`${theme} ${isOpen ? "overflow-y-hidden" : null} ${fontFamily} 
@@ -19,7 +20,9 @@ export default function Body({
       min-h-svh bg-gradient-to-tr from-rose-900 to-indigo-900 dark:from-black dark:to-neutral-800
       `} // [background-image:url("/images/designs/main-background-1011x666.jpg")]
     >
-      {children}
+      <div className="w-full max-w-webpage mx-auto h-full min-h-screen flex flex-col justify-center items-center">
+        {children}
+      </div>
     </body>
   );
 }

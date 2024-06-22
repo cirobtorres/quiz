@@ -3,12 +3,10 @@
 import Avatar from "@/components/Avatar";
 import Modal from "@/components/Modal";
 import QuizCard from "@/components/QuizCard";
-import { useState } from "react";
 import useTheme from "../hooks/useTheme";
 import useModal from "../hooks/useModal";
 
 export default function HomePage() {
-  // const [isOpen, setIsOpen] = useState(false);
   const { isOpen, setIsOpen } = useModal();
   const modalProps = {
     title:
@@ -20,7 +18,7 @@ export default function HomePage() {
   return (
     <>
       <Modal {...modalProps} />
-      <header className="w-full max-w-webpage mx-auto relative flex-1 py-4 mb-12">
+      <header className="w-full relative py-4 mb-12">
         <UserFeatures />
         <h1
           onClick={() => setIsOpen(true)}
@@ -29,7 +27,7 @@ export default function HomePage() {
           Lorem ipsum dolor sit amet consectetur adipisicing.
         </h1>
       </header>
-      <main className="w-full max-w-webpage mx-auto flex flex-col justify-center">
+      <main className="w-full flex flex-col justify-center mb-auto">
         <div className="my-2">
           <h2 className="text-white text-4xl font-extrabold py-2 mb-4">
             QUIZ rápido

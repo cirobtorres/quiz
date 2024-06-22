@@ -41,7 +41,7 @@ const responseOptions = [
 
 export default function QuestionCard() {
   return (
-    <div className="w-3/4 flex flex-col gap-3 items-center">
+    <main className="flex flex-col gap-3 items-center">
       <Statement />
       <Countdown duration={30} whenFinish={() => console.log("Finish")} />
       {temporaryAnswers.map((answer: any, index: number) => (
@@ -54,7 +54,7 @@ export default function QuestionCard() {
       ))}
       <Pagination />
       <Skip />
-    </div>
+    </main>
   );
 }
 

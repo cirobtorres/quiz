@@ -81,7 +81,7 @@ export default function Avatar({ user }: any) {
             >
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="rounded-full w-28 h-28 relative overflow-hidden hover:shadow-darker transition ease-in duration-300 group"
+                className="rounded-full w-28 h-28 relative overflow-hidden transition ease-in duration-300 group"
               >
                 <Image
                   src={user.src}
