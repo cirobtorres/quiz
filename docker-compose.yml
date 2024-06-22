@@ -1,0 +1,56 @@
+version: "3.9"
+
+services:
+  web:
+    image: web
+    container_name: web_next
+    build:
+      context: ./web
+    restart: always
+    volumes:
+      - ./web:/app
+      - /web/app/node_modules
+    env_file:
+      - ./web/.env.local
+    ports:
+      - 3000:3000
+    networks:
+      - quiz_network
+
+  api:
+    image: api
+    container_name: api_django
+    build:
+      context: ./api
+    restart: always
+    volumes:
+      - ./api/api-django:/api-django
+      - ./data/web/static:/data/web/static/
+      - ./data/web/media:/data/web/media/
+    env_file:
+      - ./api/env/.env
+    ports:
+      - 8000:8000
+    depends_on:
+      - quiz_db
+    networks:
+      - quiz_network
+
+  quiz_db:
+    image: postgres:16.1-alpine3.19
+    container_name: quiz_db
+    volumes:
+      - ./data/postgres/api:/var/lib/postgresql/data/
+    env_file:
+      - ./api/env/.env
+    ports:
+      - 5432:5433
+    networks:
+      - quiz_network
+
+volumes:
+  postgres_data:
+
+networks:
+  quiz_network:
+    driver: bridge
