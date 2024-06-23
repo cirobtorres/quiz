@@ -108,7 +108,7 @@ DATABASES = {
         'NAME': os.getenv('POSTGRES_DB', 'CHANGE-ME'),
         'USER': os.getenv('POSTGRES_USER', 'postgres'),
         'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'CHANGE-ME'),
-        'HOST': os.getenv('POSTGRES_HOST') if DEBUG == False else 'localhost',
+        'HOST': os.getenv('POSTGRES_HOST', 'CHANGE-ME'), # Change-me to localhost if running directly through the prompt
         'PORT': os.getenv('POSTGRES_PORT', 5432)
     }
 }
