@@ -19,6 +19,7 @@ load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+DATA_DIR = BASE_DIR.parent / 'data' / 'web'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -105,10 +106,10 @@ DATABASES = {
     'default': {
         'ENGINE': os.getenv('DB_ENGINE', 'CHANGE-ME'),
         'NAME': os.getenv('POSTGRES_DB', 'CHANGE-ME'),
-        'USER': os.getenv('POSTGRES_USER', 'CHANGE-ME'),
+        'USER': os.getenv('POSTGRES_USER', 'postgres'),
         'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'CHANGE-ME'),
-        'HOST': os.getenv('POSTGRES_HOST', 'CHANGE-ME'),
-        'PORT': os.getenv('POSTGRES_PORT', 'CHANGE-ME')
+        'HOST': os.getenv('POSTGRES_HOST') if DEBUG == False else 'localhost',
+        'PORT': os.getenv('POSTGRES_PORT', 5432)
     }
 }
 
@@ -142,11 +143,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 MEDIA_URL = 'media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'static', 'media')
+MEDIA_ROOT = os.path.join(DATA_DIR, 'static', 'media')
 
 STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'staticfiles'), ]
+STATIC_ROOT = os.path.join(DATA_DIR, 'static')
 
 
 # Default primary key field type

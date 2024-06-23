@@ -1,14 +1,14 @@
-version: "3.9"
+# version: "3.9"
 
 services:
   web:
     image: web
-    container_name: web_next
+    container_name: web
     build:
       context: ./web
     restart: always
     volumes:
-      - ./web:/app
+      - ./web:/usr/src/app
       - /web/app/node_modules
     env_file:
       - ./web/.env.local
@@ -19,20 +19,35 @@ services:
 
   api:
     image: api
-    container_name: api_django
+    container_name: api
     build:
       context: ./api
     restart: always
     volumes:
-      - ./api/api-django:/api-django
+      - ./api/api-django:/api
       - ./data/web/static:/data/web/static/
       - ./data/web/media:/data/web/media/
     env_file:
       - ./api/dot_env/.env
-    ports:
-      - 8000:8000
     depends_on:
       - quiz_db
+    ports:
+      - 8000:8000
+    networks:
+      - quiz_network
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    restart: always
+    volumes:
+      - ./data/pgadmin:/var/lib/pgadmin
+    env_file:
+      - ./api/dot_env/.env
+    depends_on:
+      - quiz_db
+    ports:
+      - 5050:80
     networks:
       - quiz_network
 
@@ -44,12 +59,9 @@ services:
     env_file:
       - ./api/dot_env/.env
     ports:
-      - 5432:5433
+      - 5432:5432
     networks:
       - quiz_network
-
-volumes:
-  postgres_data:
 
 networks:
   quiz_network:
