@@ -17,8 +17,7 @@ export default function PasswordInput({
   placeholder: string;
 }) {
   const [type, setType] = useState("password");
-
-  const handleOnChange = (event: any) => {
+  const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
   };
 
@@ -31,8 +30,8 @@ export default function PasswordInput({
       <div className={"relative"}>
         <input
           id={id}
-          type={type}
           name={id}
+          type={type}
           placeholder={placeholder}
           value={value}
           onChange={handleOnChange}
@@ -53,13 +52,10 @@ export default function PasswordInput({
         <label
           htmlFor={id}
           className={`
-            absolute start-[10px] top-[14px] z-10 origin-[0] -translate-y-[1.1rem] scale-75 transform 
-            pointer-events-none px-2 text-lg duration-300 ${
-              value ? "text-amber-500" : "text-black"
-            }
-            peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-focus:text-amber-500
-            peer-placeholder-shown:scale-100 peer-focus:top-[14px] peer-focus:-translate-y-[1.1rem] 
-            peer-focus:scale-75 peer-focus:px-2 rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4
+            text-amber-500 absolute start-[10px] top-[14px] z-10 origin-[0] -translate-y-[1.1rem] scale-75 transform pointer-events-none px-2 text-lg duration-300
+            peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-black peer-placeholder-shown:scale-100 
+            peer-focus:top-[14px] peer-focus:-translate-y-[1.1rem] peer-focus:text-amber-500 peer-focus:scale-75 peer-focus:px-2 
+            rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4
           `}
         >
           {label}

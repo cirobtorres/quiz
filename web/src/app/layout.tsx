@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "../styles/globals.css";
-import { DarkModeProvider } from "../contexts/darkModeContext";
 import Body from "../components/Body";
+import { UserProvider } from "../contexts/userContext";
 import { ModalProvider } from "../contexts/modalContext";
+import { DarkModeProvider } from "../contexts/darkModeContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,7 +22,9 @@ export default function RootLayout({
     <html lang="en">
       <DarkModeProvider>
         <ModalProvider>
-          <Body fontFamily={inter.className}>{children}</Body>
+          <UserProvider>
+            <Body fontFamily={inter.className}>{children}</Body>
+          </UserProvider>
         </ModalProvider>
       </DarkModeProvider>
     </html>

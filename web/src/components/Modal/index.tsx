@@ -17,8 +17,8 @@ export default function Modal({
 }) {
   const ref = useRef<HTMLDivElement>(null);
 
-  const verifyIfSameElement = (event: any) => {
-    setIsOpen(!(event.target === ref.current));
+  const clickOutsideClosing = (event: React.MouseEvent) => {
+    if (event.target === ref.current) setIsOpen(false);
   };
 
   return isOpen ? (
@@ -26,7 +26,7 @@ export default function Modal({
       <div className="overflow-hidden fixed inset-0 w-screen h-screen flex justify-center items-center z-[9999] bg-black opacity-50" />
       <div
         ref={ref}
-        onClick={(event: any) => verifyIfSameElement(event)}
+        onClick={(event: any) => clickOutsideClosing(event)}
         className="fixed inset-0 w-screen h-screen flex justify-center items-center z-[99999]"
       >
         <section

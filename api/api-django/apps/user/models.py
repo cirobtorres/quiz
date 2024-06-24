@@ -4,18 +4,20 @@ from ..quiz.models import QuizModel
 
 
 class QuizUserManager(BaseUserManager):
-    def create_user(self, username, password=None, **extra_fields) -> 'UserModel':
+    def create_user(self, username, email, password=None, **extra_fields) -> 'UserModel':
         if not username:
             raise ValueError('User must have an username')
+        if not email:
+            raise ValueError('User must have an email')
 
         username = AbstractBaseUser.normalize_username(username)
-        user = self.model(username=username, **extra_fields)
+        user = self.model(username=username, email=email, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
 
         return user
 
-    def create_superuser(self, username, password, **extra_fields) -> 'UserModel':
+    def create_superuser(self, username, email, password, **extra_fields) -> 'UserModel':
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
 
@@ -25,16 +27,17 @@ class QuizUserManager(BaseUserManager):
         if extra_fields.get('is_superuser') is not True:
             raise ValueError('Superuser must have "is_superuser=True"')
 
-        return self.create_user(username, password, **extra_fields)
+        return self.create_user(username, email, password, **extra_fields)
 
 
 class UserModel(AbstractBaseUser, PermissionsMixin):
     objects = QuizUserManager()
 
-    USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = []
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username']
 
     username = models.CharField(max_length=32, unique=True)
+    email = models.EmailField(max_length=255, unique=True)
     avatar = models.ImageField(upload_to='images/', blank=True, null=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)

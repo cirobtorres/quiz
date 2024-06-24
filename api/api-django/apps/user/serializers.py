@@ -8,7 +8,7 @@ from .validators import UserValidator
 class UserSerializer(ModelSerializer):
     class Meta:
         model = get_user_model()
-        fields = 'id', 'username', 'password', 'avatar', 'get_total_score', 'is_active', 'is_staff', 'last_login', 'created_at', 'updated_at', 
+        fields = 'id', 'email', 'username', 'password', 'avatar', 'get_total_score', 'is_active', 'is_staff', 'last_login', 'created_at', 'updated_at', 
         read_only_fields = 'id', 'get_total_score', 'is_active', 'is_staff', 'last_login', 'created_at', 'updated_at', 
         extra_kwargs = { 'password': { 'write_only': True } }
     
@@ -60,3 +60,5 @@ class UserScoreSerializer(ModelSerializer):
         model = ScoreModel
         fields = 'quiz', 'user', 'total', 'corrects', 'get_score_percentage', 'created_at', 
         read_only_fields = 'get_score_percentage', 'created_at', 
+
+

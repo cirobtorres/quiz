@@ -16,9 +16,8 @@ export default function Body({
   return (
     <body
       className={`${theme} ${isOpen ? "overflow-y-hidden" : null} ${fontFamily} 
-      scrollbar scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-thumb-sky-700 scrollbar-track-sky-300
-      min-h-svh bg-gradient-to-tr from-rose-900 to-indigo-900 dark:from-black dark:to-neutral-800
-      `} // [background-image:url("/images/designs/main-background-1011x666.jpg")]
+      min-h-svh bg-gradient-to-tr from-slate-400 to-slate-200 
+      `}
     >
       <div className="w-full max-w-webpage mx-auto h-full min-h-screen flex flex-col justify-center items-center">
         {children}

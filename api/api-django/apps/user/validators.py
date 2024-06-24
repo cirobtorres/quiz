@@ -5,6 +5,7 @@ from django.contrib.auth import get_user_model
 from rest_framework.validators import ValidationError as DRFValidationError
 
 
+email = NewType('email', str)
 username = NewType('username', str)
 password = NewType('password', str)
 
@@ -20,11 +21,16 @@ class UserValidator:
     
     def clean(self) -> None:
         # return True
+        self.clean_email()
         self.clean_username()
         self.clean_password()
 
         if self.errors:
             raise self.error_class(self.errors)
+    
+    def clean_email(self) -> email:
+        # Code here
+        return email
     
     def clean_username(self) -> username:
         pattern = r'[^A-Za-z0-9_]'
@@ -39,8 +45,10 @@ class UserValidator:
     
     def clean_password(self) -> password:
         password = self.data.get('password')
-        if len(password) < 4 or len(password) > 12:
-            self.errors['password'].append('Senha não pode ser menor que 4 nem maior que 12 caracteres')
+        # if len(password) < 4 or len(password) > 12:
+        #     self.errors['password'].append('Senha não pode ser menor que 4 nem maior que 12 caracteres')
+        if len(password) < 4:
+            self.errors['password'].append('Senha não pode ser menor que 4 caracteres')
         if search(r'\s', password):
             self.errors['password'].append('A senha não deve conter espaços')
         if not search(r'(?=.*[A-Z])', password):

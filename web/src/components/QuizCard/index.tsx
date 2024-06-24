@@ -69,3 +69,39 @@ export default function Quiz({
     </Link>
   );
 }
+
+export function InlineQuiz({
+  title,
+  description,
+  link,
+  options,
+}: QuizCardProps) {
+  return (
+    <Link
+      href={link}
+      className="flex flex-col items-start w-full min-w-52 h-full max-h-60 min-h-14 p-3 shadow-darker rounded-r-full overflow-hidden cursor-pointer"
+      style={{
+        backgroundColor: options?.theme ?? "#1e293b",
+      }}
+    >
+      <h2
+        className={`${options?.titleAlign} font-extrabold text-xl uppercase`}
+        style={{
+          color: options?.titleColor ?? "#fff",
+        }}
+      >
+        {title}
+      </h2>
+      {description && (
+        <p
+          className={`${options?.textAlign} text-sm`}
+          style={{
+            color: options?.textColor ?? "#fff",
+          }}
+        >
+          {description}
+        </p>
+      )}
+    </Link>
+  );
+}

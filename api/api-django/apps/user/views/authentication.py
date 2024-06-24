@@ -14,10 +14,10 @@ class UserRegisterView(APIView, UserUtilities):
     http_method_names = ['post']
 
     def post(self, request) -> Response:
-        username = request.data.get('username')
+        email = request.data.get('email')
         password = request.data.get('password')
 
-        if not all([username, password]):
+        if not all([email, password]):
             return Response(data={'message': 'Missing fields', }, status=HTTP_400_BAD_REQUEST)
         
         user_serializer = self.user_serializer(data=request.data)
@@ -37,3 +37,5 @@ class UserLoginView(UserUtilities, TokenObtainPairView):
         except AuthenticationFailed as e:
             # print('-x' * 35 + '-\n', e, '\n', '*' * 70, '\n', sep='') 
             return Response({'message': 'Invalid username or password', }, status=HTTP_401_UNAUTHORIZED)
+
+
