@@ -25,7 +25,7 @@ export default function Skip() {
     >
       {instructions && (
         <>
-          <div className="absolute p-3 top-[calc(-100%_-_12px)] rounded-lg shadow-darker bg-white">
+          <div className="absolute p-3 top-[calc(-100%_-_12px)] left-1/2 -translate-x-1/2 rounded-lg shadow-darker bg-white">
             Pular
           </div>
         </>

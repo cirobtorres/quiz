@@ -1,4 +1,4 @@
-import { SiLootcrate } from "react-icons/si";
+// import { SiLootcrate } from "react-icons/si";
 import type { Config } from "tailwindcss";
 
 const config: Config = {
@@ -16,6 +16,7 @@ const config: Config = {
       },
       boxShadow: {
         darker: "0 10px 20px 0 rgba(0, 0, 0, 0.5)",
+        "darker-bottom": "0 10px 20px 0 rgba(0, 0, 0, 0.5)",
       },
       maxWidth: {
         // QuizCard max width = 24rem

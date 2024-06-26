@@ -44,17 +44,6 @@ export default function Avatar() {
   const [isOpen, setIsOpen] = useState(false);
   const userAvatarSize = 3.5; // rem
   const { user } = useUser();
-  // const user: UserProps = {
-  //   id: 1,
-  //   username: "johndoe",
-  //   email: "johndoe@gmail.com",
-  //   avatar: "/images/user/avatar/user-avatar.jpg",
-  //   // avatar: null,
-  //   is_active: true,
-  //   last_login: new Date(Date.now() - 123456),
-  //   created_at: new Date(Date.now() - new Date("2023-07-11").getTime()),
-  //   updated_at: new Date(Date.now()),
-  // };
   return (
     <div className="h-full flex flex-row items-center">
       {user ? (
@@ -182,12 +171,18 @@ const SignedInAvatarBox = ({
   user: UserProps;
 }) => {
   const { logout } = useUser();
-  // signedInAvatarBoxWidth = div width
   const signedInAvatarBoxWidth = 24; // rem
   const calcLeftDeslocation = signedInAvatarBoxWidth / 2 - userAvatarSize / 2;
 
   const left = `-${calcLeftDeslocation}rem`;
   const width = `${signedInAvatarBoxWidth}rem`;
+
+  const handleLogout = () => {
+    if (logout) {
+      logout();
+      setIsOpen(false);
+    }
+  };
 
   return (
     <motion.div
@@ -198,7 +193,7 @@ const SignedInAvatarBox = ({
         left: left,
       }}
       layout
-      className="w-96 absolute top-[140%] rounded-3xl bg-slate-200"
+      className="w-96 absolute top-[140%] rounded-3xl bg-gradient-to-bl from-gray-200 to-gray-300"
     >
       <motion.div variants={itemVariants} className="flex p-2">
         <span className="flex-1 ml-10 text-center">{user.email}</span>
@@ -248,7 +243,7 @@ const SignedInAvatarBox = ({
       >
         <Link
           href="/"
-          className="w-full flex-1 flex justify-center gap-2 p-4 rounded-l-full bg-white hover:bg-slate-100" // group
+          className="w-full flex-1 flex justify-center gap-2 p-4 rounded-l-full bg-gray-200 hover:bg-gray-100" // group
         >
           Perfil{" "}
           <div className="w-6 h-6 relative">
@@ -264,8 +259,8 @@ const SignedInAvatarBox = ({
         </Link>
         <button
           type="button"
-          onClick={logout}
-          className="w-full flex-1 flex items-center gap-2 text-center p-4 rounded-r-full bg-white hover:bg-slate-100"
+          onClick={handleLogout}
+          className="w-full flex-1 flex items-center gap-2 text-center p-4 rounded-r-full bg-gray-200 hover:bg-gray-100"
         >
           <IoExitOutline size={25} /> Sair
         </button>
@@ -294,8 +289,7 @@ const SignedOutAvatarBox = ({
   isOpen: boolean;
   setIsOpen: (value: boolean) => void;
 }) => {
-  // signedOutAvatarBoxWidth = div width
-  const signedOutAvatarBoxWidth = 12; // rem
+  const signedOutAvatarBoxWidth = 14; // rem
   const calcLeftDeslocation = signedOutAvatarBoxWidth / 2 - userAvatarSize / 2;
 
   const left = `-${calcLeftDeslocation}rem`;

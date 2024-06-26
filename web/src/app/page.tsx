@@ -6,9 +6,11 @@ import Avatar from "@/components/Avatar";
 import { motion } from "framer-motion";
 import Input from "../components/Input";
 import QuizCard, { InlineQuiz } from "@/components/QuizCard";
-import PasswordInput from "../components/PasswordInput";
+import PasswordInput, { PasswordRules } from "../components/PasswordInput";
+import useUser from "@/hooks/useUser";
 
 export default function HomePage() {
+  const { user } = useUser();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -79,114 +81,63 @@ export default function HomePage() {
             </div>
           </div>
           <div className="w-[30rem] rounded-2xl p-4 bg-slate-200 shadow-xl z-50">
-            <h2 className="text-gray-800 text-4xl font-extrabold py-2 mb-4">
-              Criar Conta
-            </h2>
-            <form className="w-full">
-              <div className="flex flex-col gap-2">
-                <Input
-                  id="username"
-                  label="Apelido"
-                  placeholder="johndoe"
-                  value={username}
-                  setValue={setUsername}
-                />
-                <Input
-                  id="email"
-                  label="E-mail"
-                  placeholder="johndoe@email.com"
-                  value={email}
-                  setValue={setEmail}
-                />
-                <PasswordInput
-                  id="password"
-                  label="Senha"
-                  placeholder=""
-                  value={password}
-                  setValue={setPassword}
-                />
-                <PasswordInput
-                  id="confirmPassword"
-                  label="Confirmar Senha"
-                  placeholder=""
-                  value={confirmPassword}
-                  setValue={setConfirmPassword}
-                />
-              </div>
-              <div className="grid grid-cols-3 gap-1 h-[5.5rem] py-4">
-                {password && (
-                  <>
-                    <span
-                      className="flex justify-center items-center h-full text-white text-xs rounded-md p-1 shadow-xl cursor-pointer"
-                      style={{
-                        backgroundColor:
-                          password === confirmPassword ? "#22c55e" : "#ef4444",
-                      }}
-                    >
-                      Confirmação de Senha
-                    </span>
-                    <span
-                      className="flex justify-center items-center h-full text-white text-xs rounded-md p-1 shadow-xl cursor-pointer"
-                      style={{
-                        backgroundColor:
-                          password.length >= 8 ? "#22c55e" : "#ef4444",
-                      }}
-                    >
-                      &gt; 8 caracteres
-                    </span>
-                    <span
-                      className="flex justify-center items-center h-full text-white text-xs rounded-md p-1 shadow-xl cursor-pointer"
-                      style={{
-                        backgroundColor: /[A-Z]/.test(password)
-                          ? "#22c55e"
-                          : "#ef4444",
-                      }}
-                    >
-                      Maiúscula
-                    </span>
-                    <span
-                      className="flex justify-center items-center h-full text-white text-xs rounded-md p-1 shadow-xl cursor-pointer"
-                      style={{
-                        backgroundColor: /[a-z]/.test(password)
-                          ? "#22c55e"
-                          : "#ef4444",
-                      }}
-                    >
-                      Minúscula
-                    </span>
-                    <span
-                      className="flex justify-center items-center h-full text-white text-xs rounded-md p-1 shadow-xl cursor-pointer"
-                      style={{
-                        backgroundColor: /\d/.test(password)
-                          ? "#22c55e"
-                          : "#ef4444",
-                      }}
-                    >
-                      Dígito
-                    </span>
-                    <span
-                      className="flex justify-center items-center h-full text-white text-xs rounded-md p-1 shadow-xl cursor-pointer"
-                      style={{
-                        backgroundColor: /[^\w]/.test(password)
-                          ? "#22c55e"
-                          : "#ef4444",
-                      }}
-                    >
-                      Símbolo
-                    </span>
-                  </>
-                )}
-              </div>
-              <motion.button
-                whileTap={{ scale: 1 }}
-                whileHover={{ scale: 1.02 }}
-                transition={{ type: "spring", bounce: 0.5, duration: 0.5 }}
-                className="ml-auto flex justify-center items-center w-1/2 px-8 font-extrabold h-12 text-lg rounded-xl outline-none text-white bg-blue-700"
-                onClick={() => console.log("Confirmar")}
-              >
-                Confirmar
-              </motion.button>
-            </form>
+            {!user ? (
+              <>
+                {/* <Radio /> */}
+                <h2 className="text-gray-800 text-4xl font-extrabold py-2 mb-4">
+                  Criar Conta
+                </h2>
+                <form className="w-full">
+                  <div className="flex flex-col gap-2">
+                    <Input
+                      id="username"
+                      label="Apelido"
+                      placeholder="johndoe"
+                      value={username}
+                      setValue={setUsername}
+                    />
+                    <Input
+                      id="email"
+                      label="E-mail"
+                      placeholder="johndoe@email.com"
+                      value={email}
+                      setValue={setEmail}
+                    />
+                    <PasswordInput
+                      id="password"
+                      label="Senha"
+                      placeholder=""
+                      value={password}
+                      setValue={setPassword}
+                    />
+                    <PasswordInput
+                      id="confirmPassword"
+                      label="Confirmar Senha"
+                      placeholder=""
+                      value={confirmPassword}
+                      setValue={setConfirmPassword}
+                    />
+                  </div>
+                  <PasswordRules
+                    password1={password}
+                    password2={confirmPassword}
+                  />
+                  <motion.button
+                    whileTap={{ scale: 1 }}
+                    whileHover={{ scale: 1.02 }}
+                    transition={{ type: "spring", bounce: 0.5, duration: 0.5 }}
+                    className="ml-auto flex justify-center items-center w-1/2 px-8 font-extrabold h-12 text-lg rounded-xl outline-none text-white bg-blue-700"
+                    onClick={() => console.log("Confirmar")}
+                  >
+                    Confirmar
+                  </motion.button>
+                </form>
+              </>
+            ) : (
+              <h2 className="text-gray-800 text-4xl font-extrabold py-2 mb-4">
+                {user.username}
+              </h2>
+            )}
           </div>
         </div>
         <div className="my-2">
@@ -239,8 +190,14 @@ export default function HomePage() {
 
 const User = () => {
   return (
-    <div className="absolute flex items-center justify-center right-0 top-1/2 -translate-y-1/2 gap-8 z-[999]">
+    <div className="absolute flex items-center justify-center right-40 top-1/2 -translate-y-1/2 gap-8 z-[999]">
       <Avatar />
     </div>
+  );
+};
+
+const Radio = () => {
+  return (
+    <div className="size-3 rounded-full outline outline-2 outline-offset-2 cursor-pointer outline-red-500 bg-red-500"></div>
   );
 };

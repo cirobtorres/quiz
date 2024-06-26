@@ -11,7 +11,7 @@ class QuizSerializer(ModelSerializer):
 class QuestionSerializer(ModelSerializer):
     class Meta:
         model = QuestionModel
-        fields = 'id', 'quiz', 'text', 'get_shuffled_answers', 
+        fields = 'id', 'quiz_id', 'text', 'get_shuffled_answers', 
 
     get_shuffled_answers = SerializerMethodField()
 
@@ -22,6 +22,6 @@ class QuestionSerializer(ModelSerializer):
 class AnswerSerializer(ModelSerializer):
     class Meta:
         model = AnswerModel
-        fields = 'id', 'question', 'text', 'is_correct', 
+        fields = 'id', 'question_id', 'text', 'is_correct', 
 
 
