@@ -110,7 +110,7 @@
       ]
     },
     {
-      "question_text": "A cidade de Brasília foi projetada pelo arquiteto Oscar Niemeyer e urbanista Lúcio Costa. Qual foi o presidente do Brasil que idealizou e liderou a construção da cidade?",
+      "question_text": "A cidade de Brasília foi projetada pelo arquiteto Oscar Niemeyer e o urbanista Lúcio Costa. Qual foi o presidente do Brasil que idealizou e liderou a construção da cidade?",
       "answers": [
         {
           "text": "Juscelino Kubitschek",
@@ -194,7 +194,7 @@
       ]
     },
     {
-      "question_text": "Fundada em 1531 por Martim Afonso de Souza a pedido da Coroa Portuguesa, qual a cidade mais antiga do Brasil, que completou 491 anos em 22 de janeiro de 2023?",
+      "question_text": "Fundada em 1531 por Martim Afonso de Souza, a pedido da Coroa Portuguesa, qual a cidade mais antiga do Brasil, que completou 491 anos em 22 de janeiro de 2023?",
       "answers": [
         {
           "text": "São Vicente - SP",

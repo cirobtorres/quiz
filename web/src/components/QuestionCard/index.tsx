@@ -6,19 +6,50 @@ const responseOptions = ["A", "B", "C", "D"];
 
 export default function QuestionCard({
   question,
+  questions,
   setQuestion,
+  nextQuestion,
 }: {
   question: Question;
+  questions: Question[];
   setQuestion: (question: Question) => void;
+  nextQuestion: () => void;
 }) {
-  function flipCards(question: Question, quizId: number) {
-    setQuestion(question);
-  }
-
-  const handleFlip = (id: number) => {
-    if (question.getNotAnswered) {
-      flipCards(question.onClick(id), question.getQuizId);
+  const flipCards = (answerId: number) => {
+    if (!question.getAnswered) {
+      const solveQuestion = question.onClick(answerId);
+      setQuestion(solveQuestion);
+      // The code below recreates questions.currect with updated values from previous answered questions
+      // This is important so we can style QuestionIndex component
+      questions.map((innerQuestion, index, arr) => {
+        if (innerQuestion.getId === question.getId) {
+          return arr.splice(index, 1, innerQuestion.onClick(answerId))[0];
+        }
+        return innerQuestion;
+      });
+    } else {
+      questions.map((innerQuestion, index, arr) => {
+        if (innerQuestion.getId === question.getId) {
+          return arr.splice(
+            index,
+            1,
+            new Question(
+              question.getId,
+              question.getQuizId,
+              question.getText,
+              question.getShuffledAnswers,
+              false
+            )
+          )[0];
+        }
+        return innerQuestion;
+      });
     }
+  };
+
+  const skipFunction = () => {
+    flipCards(0); // The id passed to this function within skipFunction won't matter
+    nextQuestion();
   };
 
   return (
@@ -29,7 +60,7 @@ export default function QuestionCard({
             {question.getText}
           </h1>
           <div className="absolute top-3/4 left-1/2 -translate-x-1/2 p-4 shadow-darker bg-slate-500 rounded-full">
-            <Countdown duration={30} whenFinish={() => console.log("Finish")} />
+            <Countdown duration={30} whenFinish={skipFunction} />
           </div>
         </div>
       </header>
@@ -39,7 +70,7 @@ export default function QuestionCard({
             key={`${index}-${answer.id}`}
             answer={answer}
             option={responseOptions[index]}
-            flip={handleFlip}
+            flip={flipCards}
           />
         ))}
       </div>

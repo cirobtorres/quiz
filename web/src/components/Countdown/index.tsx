@@ -21,7 +21,7 @@ export default function Countdown(props: CountdownProps) {
         size={140}
         strokeWidth={12}
         isPlaying
-        onComplete={props.whenFinish}
+        onComplete={() => props.whenFinish()}
         colors={["#bce596", "#f7b801", "#ed827a", "#fc4747"]}
         colorsTime={[start, middle, end, 0]}
       >

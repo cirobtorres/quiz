@@ -1,11 +1,11 @@
 import Answer from "./Answer";
 
 export default class Question {
-  private id: number; // 1. The 'number' id of a question.
-  private quizId: number; // 2. The 'number' id of the respective quiz to which this question belongs.
-  private text: string; // 3. The 'string' text of the question statement.
-  private shuffledAnswers: Answer[]; // 4. An 'array' of four randomly shuffled answer instances.
-  private selected?: boolean; // 5. A 'boolean' indicating whether the question was answered or not.
+  private id: number; // 1. 'number' id of this question
+  private quizId: number; // 2. 'number' id of the respective quiz to which this question belongs
+  private text: string; // 3. 'string' text containing the question statement
+  private shuffledAnswers: Answer[]; // 4. 'array' of four randomly shuffled answer instances
+  private selected?: boolean; // 5. true if answer card chosen by user was the correct one; false otherwise
 
   constructor(
     id: number,
@@ -38,27 +38,25 @@ export default class Question {
   }
 
   get getSelected() {
+    // True if user has chosen the correct card; false otherwise
     return this.selected;
   }
 
-  get getNotAnswered() {
-    return !this.getAnswered;
-  }
-
   get getAnswered() {
+    // ALWAYS TRUE if user has already answered this question, correct or not
     for (let answer of this.getShuffledAnswers) {
       if (answer.getFlipped) return true;
     }
     return false;
   }
 
-  onClick(id: number) {
+  onClick(answerId: number) {
     const selected = this.getShuffledAnswers.find(
-      (answer) => answer.getId === id
-    )?.getIsCorrect; // Returns a boolean: true if user has selected the correct answer
+      (answer) => answer.getId === answerId
+    )?.getIsCorrect; //Returns true if answerId matches the correct answer card; false otherwise
     const flippedCards = this.getShuffledAnswers.map((answer) => {
       // Flips the chosen card
-      if (answer.getId === id) {
+      if (answer.getId === answerId) {
         return new Answer(
           answer.getId,
           answer.getText,

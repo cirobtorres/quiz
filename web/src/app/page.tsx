@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { FaStar } from "react-icons/fa";
 import Avatar from "@/components/Avatar";
 import { motion } from "framer-motion";
@@ -232,7 +232,8 @@ const radioOuterVariants = {
   checked: {
     outlineColor: "#22c55e",
     transition: {
-      duration: 0.1,
+      duration: 0.18,
+      ease: "linear",
     },
   },
 };
@@ -246,7 +247,8 @@ const radioInnerVariants = {
     scale: 1,
     backgroundColor: "#22c55e",
     transition: {
-      duration: 0.1,
+      duration: 0.18,
+      ease: "linear",
     },
   },
 };
