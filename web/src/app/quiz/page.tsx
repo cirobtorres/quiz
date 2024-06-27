@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Loading from "@/components/Loading";
 import QuestionCard from "@/components/QuestionCard";
 import useUser from "@/hooks/useUser";
@@ -8,29 +8,22 @@ import Question from "@/models/Question";
 import Skip from "@/components/Skip";
 import Pagination from "@/components/Pagination";
 import { randomizeBackground } from "@/functions";
-
-async function getQuestions() {
-  const response = await fetch("http://127.0.0.1:8000/api/quiz/question", {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-  if (!response.ok) {
-    throw new Error(
-      `Failed during getQuestions: ${response.statusText} ${response.status}`
-    );
-  }
-  return response.json();
-}
+import getQuestions from "@/libs/getQuestions";
+import { redirect } from "next/navigation";
 
 export default function QuizPage() {
-  const { user } = useUser();
+  const { user, loading: userLoading } = useUser();
+
+  if (!user && !userLoading) {
+    redirect("/");
+  }
+
+  const [question, setQuestion] = useState<Question | null>(null);
   const [questions, setQuestions] = useState<Question[]>([]);
   const [loading, setLoading] = useState(false);
-  const backgrounds = randomizeBackground();
+  const [backgrounds, setBackgrounds] = useState(randomizeBackground());
 
-  const savingQuestions = async () => {
+  const loadingQuestions = async () => {
     try {
       setLoading(true);
       const questionArray = await getQuestions();
@@ -46,24 +39,32 @@ export default function QuizPage() {
     }
   };
 
+  const nextQuestion = () => {
+    console.log("nextQuestion");
+  };
+
   useEffect(() => {
-    savingQuestions(); // Load once when mounting the component
+    questions.length > 0 && setQuestion(questions[0]);
+  }, [questions]);
+
+  useEffect(() => {
+    loadingQuestions(); // Load once when mounting the component: save all questions at once
   }, []);
 
-  return loading || questions.length === 0 ? (
+  return loading || userLoading || question === null ? (
     <Loading />
   ) : (
     <main
-      key={questions[0].getId}
+      key={question.getId}
       className="fixed w-screen h-screen flex flex-col items-center"
       style={{
         backgroundImage: String(backgrounds[0]),
       }}
     >
-      <QuestionCard question={questions[0]} />
+      <QuestionCard question={question} setQuestion={setQuestion} />
       <div className="w-full flex flex-col items-center mt-2">
         <Pagination questions={questions} />
-        <Skip />
+        {question.getAnswered ? <Skip nextQuestion={nextQuestion} /> : null}
       </div>
     </main>
   );

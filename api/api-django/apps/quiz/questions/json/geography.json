@@ -281,7 +281,7 @@
       "question_text": "O Parque Nacional das Emas é administrado atualmente pelo Instituto Chico Mendes de Conservação da Biodiversidade, o ICMBio. Não é responsabilidade do ICMBio:",
       "answers": [
         {
-          "text": "Broibir atividades de pesquisa científica como forma de reservação da biosfera do Pantanal",
+          "text": "Proibir atividades de pesquisa científica como forma de reservação da biosfera do Pantanal",
           "is_correct": true
         },
         {
@@ -299,7 +299,7 @@
       ]
     },
     {
-      "question_text": "Qual é o bioma caracterizado por ser uma savana arborizada, composto por árvores baixas e retorcidas, com vegetação adaptada a incêndios frequentes, e que abrange uma vasta área do território brasileiro?",
+      "question_text": "Qual é o bioma caracterizado por ser uma savana arborizada, composto por árvores baixas e retorcidas, com vegetação adaptada a incêndios frequentes e que abrange uma vasta área do território brasileiro?",
       "answers": [
         { "text": "Cerrado", "is_correct": true },
         { "text": "Pantanal", "is_correct": false },

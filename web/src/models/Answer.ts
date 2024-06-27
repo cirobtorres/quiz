@@ -1,19 +1,16 @@
 export default class Answer {
-  private id: number;
-  private questionId: number;
-  private text: string;
-  private isCorrect: boolean;
-  private flipped?: boolean;
+  private id: number; // 1. The 'number' id of an Answer.
+  private text: string; // 2. The 'string' text of the answer option.
+  private isCorrect: boolean; // 3. A 'boolean' indicating if this answer option is a correct option for that question id.
+  private flipped?: boolean; // 4. A 'boolean' indicating whether this answer option was flipped or not.
 
   constructor(
     id: number,
-    questionId: number,
     text: string,
     isCorrect: boolean,
     flipped: boolean = false
   ) {
     this.id = id;
-    this.questionId = questionId;
     this.text = text;
     this.isCorrect = isCorrect;
     this.flipped = flipped;
@@ -21,10 +18,6 @@ export default class Answer {
 
   get getId() {
     return this.id;
-  }
-
-  get getQuestionId() {
-    return this.questionId;
   }
 
   get getText() {
@@ -39,12 +32,7 @@ export default class Answer {
     return this.flipped;
   }
 
-  static create(obj: {
-    id: number;
-    questionId: number;
-    text: string;
-    isCorrect: boolean;
-  }) {
-    return new Answer(obj.id, obj.questionId, obj.text, obj.isCorrect);
+  static create(obj: AnswerAPI) {
+    return new Answer(obj.id, obj.text, obj.is_correct);
   }
 }

@@ -42,7 +42,10 @@ export default function Input({
           value={value}
           onChange={handleOnChange}
           className={!options ? designA[0] : designB[0]}
-          style={{ borderBottom: value ? "1px solid #f59e0b" : "" }}
+          style={{
+            borderBottom:
+              options?.alternateDesign && value ? "1px solid #f59e0b" : "",
+          }}
         />
         <label htmlFor={id} className={!options ? designA[2] : designB[2]}>
           {label}

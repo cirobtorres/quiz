@@ -1,0 +1,14 @@
+export default async function getQuestions() {
+  const response = await fetch("http://127.0.0.1:8000/api/quiz/question", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  if (!response.ok) {
+    throw new Error(
+      `Failed during getQuestions: ${response.statusText} ${response.status}`
+    );
+  }
+  return response.json();
+}

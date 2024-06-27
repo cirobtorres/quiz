@@ -116,18 +116,18 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': 'quizdatabase',
-    # }
     'default': {
-        'ENGINE': os.getenv('DB_ENGINE', 'CHANGE-ME'),
-        'NAME': os.getenv('POSTGRES_DB', 'CHANGE-ME'),
-        'USER': os.getenv('POSTGRES_USER', 'postgres'),
-        'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'CHANGE-ME'),
-        'HOST': os.getenv('POSTGRES_HOST', 'CHANGE-ME'), # Change-me to localhost if running directly through the prompt
-        'PORT': os.getenv('POSTGRES_PORT', 5432)
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'quizdatabase',
     }
+    # 'default': {
+    #     'ENGINE': os.getenv('DB_ENGINE', 'CHANGE-ME'),
+    #     'NAME': os.getenv('POSTGRES_DB', 'CHANGE-ME'),
+    #     'USER': os.getenv('POSTGRES_USER', 'postgres'),
+    #     'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'CHANGE-ME'),
+    #     'HOST': os.getenv('POSTGRES_HOST', 'CHANGE-ME'), # Change-me to localhost if running directly through the prompt
+    #     'PORT': os.getenv('POSTGRES_PORT', 5432)
+    # }
 }
 
 # Password validation

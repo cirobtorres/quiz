@@ -26,8 +26,8 @@ export default function SigninPage() {
     } catch (error) {
       throw error;
     } finally {
-      setEmail("");
-      setPassword("");
+      // setEmail("");
+      // setPassword("");
     }
   };
 
@@ -44,6 +44,7 @@ export default function SigninPage() {
             placeholder="johndoe@email.com"
             value={email}
             setValue={setEmail}
+            options={{ alternateDesign: true }}
           />
           <PasswordInput
             id="password"
@@ -51,6 +52,7 @@ export default function SigninPage() {
             placeholder=""
             value={password}
             setValue={setPassword}
+            options={{ alternateDesign: true }}
           />
           <div className="flex">
             <CancelButton text="Voltar" href="/" />

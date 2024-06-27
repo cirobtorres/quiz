@@ -4,6 +4,7 @@ type UserProps = {
   username: string;
   email: string;
   avatar: string | null;
+  get_total_score: number;
   is_active: boolean;
   last_login: Date;
   created_at: Date;

@@ -9,6 +9,7 @@ import { IoExitOutline } from "react-icons/io5";
 import { IoIosClose } from "react-icons/io";
 import { FaCamera } from "react-icons/fa";
 import useUser from "../../hooks/useUser";
+import { User } from "@/models/User";
 
 const listVariants = {
   open: {
@@ -73,7 +74,7 @@ const SignedInAvatar = ({
   userAvatarSize: number;
   isOpen: boolean;
   setIsOpen: (value: boolean) => void;
-  user: UserProps;
+  user: User;
 }) => {
   return (
     <motion.div
@@ -83,7 +84,7 @@ const SignedInAvatar = ({
     >
       <div
         className={`rounded-full ${
-          user.avatar
+          user.getAvatar
             ? "bg-gradient-to-tr from-pink-500 to-yellow-500"
             : "bg-white"
         } p-[2px]`}
@@ -97,7 +98,9 @@ const SignedInAvatar = ({
           className="relative rounded-full w-full h-full bg-white overflow-hidden"
         >
           <Image
-            src={user.avatar ?? "/images/user/avatar/1281x1281-user-icon.png"}
+            src={
+              user.getAvatar ?? "/images/user/avatar/1281x1281-user-icon.png"
+            }
             alt="Imagem to usuário"
             fill
             sizes="(max-width: 768px) 100vw, 33vw"
@@ -168,7 +171,7 @@ const SignedInAvatarBox = ({
   userAvatarSize: number;
   isOpen: boolean;
   setIsOpen: (value: boolean) => void;
-  user: UserProps;
+  user: User;
 }) => {
   const { logout } = useUser();
   const signedInAvatarBoxWidth = 24; // rem
@@ -196,7 +199,7 @@ const SignedInAvatarBox = ({
       className="w-96 absolute top-[140%] rounded-3xl bg-gradient-to-bl from-gray-200 to-gray-300"
     >
       <motion.div variants={itemVariants} className="flex p-2">
-        <span className="flex-1 ml-10 text-center">{user.email}</span>
+        <span className="flex-1 ml-10 text-center">{user.getEmail}</span>
         <button onClick={() => setIsOpen(!isOpen)}>
           <IoIosClose strokeWidth={20} size={25} />
         </button>
@@ -210,7 +213,9 @@ const SignedInAvatarBox = ({
           className="rounded-full w-28 h-28 relative overflow-hidden transition ease-in duration-300 group"
         >
           <Image
-            src={user.avatar ?? "/images/user/avatar/1281x1281-user-icon.png"}
+            src={
+              user.getAvatar ?? "/images/user/avatar/1281x1281-user-icon.png"
+            }
             alt="Imagem to usuário"
             fill
             sizes="(max-width: 768px) 100vw, 33vw"
@@ -226,7 +231,7 @@ const SignedInAvatarBox = ({
       </motion.div>
       <motion.div variants={itemVariants} className="text-center my-2">
         <h3 className="text-xl">
-          Olá, <strong>{user.username}!</strong>
+          Olá, <strong>{user.getUsername}!</strong>
         </h3>
       </motion.div>
       <motion.div variants={itemVariants} className="flex justify-center">

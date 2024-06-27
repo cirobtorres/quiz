@@ -7,9 +7,10 @@ import getUserData from "../libs/getUserData";
 import refreshSession from "../libs/refreshSession";
 import loginUser from "../libs/loginUser";
 import registerUser from "../libs/registerUser";
+import { User } from "@/models/User";
 
 interface UserContextProps {
-  user: UserProps | null;
+  user: User | null;
   loading: boolean;
   login?: (username: string, password: string) => Promise<void>;
   logout?: () => Promise<void>;
@@ -34,7 +35,7 @@ interface DecodedTokenProps extends JwtPayload {
 const UserContext = createContext<UserContextProps>({} as UserContextProps);
 
 export function UserProvider(props: any): JSX.Element {
-  const [user, setUser] = useState<UserProps | null>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
   const handleToken = async ({
@@ -45,14 +46,18 @@ export function UserProvider(props: any): JSX.Element {
     refresh: string;
   }) => {
     const accessPayload: DecodedTokenProps = jwtDecode(access);
-    const refreshPayload: DecodedTokenProps = jwtDecode(refresh);
 
     Cookies.set("accessToken", access, {
       expires: accessPayload.exp,
     });
-    Cookies.set("refreshToken", refresh, {
-      expires: refreshPayload.exp,
-    });
+
+    if (refresh) {
+      const refreshPayload: DecodedTokenProps = jwtDecode(refresh);
+
+      Cookies.set("refreshToken", refresh, {
+        expires: refreshPayload.exp,
+      });
+    }
 
     const { token_type, user_id } = accessPayload;
 
@@ -67,8 +72,9 @@ export function UserProvider(props: any): JSX.Element {
       try {
         const { token_type, user_id } = await handleToken(token);
         const userData = await getUserData({ token_type, user_id });
-        setUser(userData);
+        setUser(User.create(userData));
       } catch (error) {
+        throw error;
       } finally {
         setLoading(false);
       }

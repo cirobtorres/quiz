@@ -8,13 +8,17 @@ import Input from "../components/Input";
 import QuizCard, { InlineQuiz } from "@/components/QuizCard";
 import PasswordInput, { PasswordRules } from "../components/PasswordInput";
 import useUser from "@/hooks/useUser";
+import Loading from "@/components/Loading";
 
 export default function HomePage() {
-  const { user } = useUser();
-  const [username, setUsername] = useState("");
+  const { user, loading } = useUser();
+  const [signUpUsername, setSignUpUsername] = useState("");
+  const [signInUsername, setSignInUsername] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [signUpPassword, setSignUpPassword] = useState("");
+  const [signInPassword, setSignInPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [radioType, setRadioType] = useState<"signup" | "signin">("signup");
   return (
     <>
       <div className="relative w-screen opacity-10">
@@ -81,61 +85,86 @@ export default function HomePage() {
             </div>
           </div>
           <div className="w-[30rem] rounded-2xl p-4 bg-slate-200 shadow-xl z-50">
-            {!user ? (
+            {loading ? (
+              <div className="w-full h-full flex items-center justify-center">
+                <Loading />
+              </div>
+            ) : !user ? (
               <>
-                {/* <Radio /> */}
-                <h2 className="text-gray-800 text-4xl font-extrabold py-2 mb-4">
-                  Criar Conta
-                </h2>
-                <form className="w-full">
-                  <div className="flex flex-col gap-2">
-                    <Input
-                      id="username"
-                      label="Apelido"
-                      placeholder="johndoe"
-                      value={username}
-                      setValue={setUsername}
-                    />
-                    <Input
-                      id="email"
-                      label="E-mail"
-                      placeholder="johndoe@email.com"
-                      value={email}
-                      setValue={setEmail}
-                    />
-                    <PasswordInput
-                      id="password"
-                      label="Senha"
-                      placeholder=""
-                      value={password}
-                      setValue={setPassword}
-                    />
-                    <PasswordInput
-                      id="confirmPassword"
-                      label="Confirmar Senha"
-                      placeholder=""
-                      value={confirmPassword}
-                      setValue={setConfirmPassword}
-                    />
-                  </div>
-                  <PasswordRules
-                    password1={password}
-                    password2={confirmPassword}
-                  />
-                  <motion.button
-                    whileTap={{ scale: 1 }}
-                    whileHover={{ scale: 1.02 }}
-                    transition={{ type: "spring", bounce: 0.5, duration: 0.5 }}
-                    className="ml-auto flex justify-center items-center w-1/2 px-8 font-extrabold h-12 text-lg rounded-xl outline-none text-white bg-blue-700"
-                    onClick={() => console.log("Confirmar")}
-                  >
-                    Confirmar
-                  </motion.button>
-                </form>
+                <Radio radioType={radioType} setRadioType={setRadioType} />
+                {radioType === "signup" ? (
+                  <>
+                    <h2 className="text-gray-800 text-4xl font-extrabold py-2 mb-4">
+                      Criar Conta
+                    </h2>
+                    <form className="w-full">
+                      <div className="flex flex-col gap-2">
+                        <Input
+                          id="signUpUsername"
+                          label="Apelido"
+                          placeholder="johndoe"
+                          value={signUpUsername}
+                          setValue={setSignUpUsername}
+                        />
+                        <Input
+                          id="email"
+                          label="E-mail"
+                          placeholder="johndoe@email.com"
+                          value={email}
+                          setValue={setEmail}
+                        />
+                        <PasswordInput
+                          id="signUpPassword"
+                          label="Senha"
+                          placeholder=""
+                          value={signUpPassword}
+                          setValue={setSignUpPassword}
+                        />
+                        <PasswordInput
+                          id="confirmPassword"
+                          label="Confirmar Senha"
+                          placeholder=""
+                          value={confirmPassword}
+                          setValue={setConfirmPassword}
+                        />
+                      </div>
+                      <PasswordRules
+                        password1={signUpPassword}
+                        password2={confirmPassword}
+                      />
+                      <SubmitSignInSignOut />
+                    </form>
+                  </>
+                ) : (
+                  <>
+                    <h2 className="text-gray-800 text-4xl font-extrabold py-2 mb-4">
+                      Fazer Login
+                    </h2>
+                    <form className="w-full">
+                      <div className="flex flex-col gap-2">
+                        <Input
+                          id="signInUsername"
+                          label="Apelido"
+                          placeholder="johndoe"
+                          value={signInUsername}
+                          setValue={setSignInUsername}
+                        />
+                        <PasswordInput
+                          id="signInPassword"
+                          label="Confirmar Senha"
+                          placeholder=""
+                          value={signInPassword}
+                          setValue={setSignInPassword}
+                        />
+                      </div>
+                      <SubmitSignInSignOut />
+                    </form>
+                  </>
+                )}
               </>
             ) : (
               <h2 className="text-gray-800 text-4xl font-extrabold py-2 mb-4">
-                {user.username}
+                {user.getUsername}
               </h2>
             )}
           </div>
@@ -196,8 +225,115 @@ const User = () => {
   );
 };
 
-const Radio = () => {
+const radioOuterVariants = {
+  unchecked: {
+    outlineColor: "#fff",
+  },
+  checked: {
+    outlineColor: "#22c55e",
+    transition: {
+      duration: 0.1,
+    },
+  },
+};
+
+const radioInnerVariants = {
+  unchecked: {
+    scale: 0,
+    backgroundColor: "#fff",
+  },
+  checked: {
+    scale: 1,
+    backgroundColor: "#22c55e",
+    transition: {
+      duration: 0.1,
+    },
+  },
+};
+
+const Radio = ({
+  radioType,
+  setRadioType,
+}: {
+  radioType: "signup" | "signin";
+  setRadioType: (radioType: "signup" | "signin") => void;
+}) => {
   return (
-    <div className="size-3 rounded-full outline outline-2 outline-offset-2 cursor-pointer outline-red-500 bg-red-500"></div>
+    <div className="mb-4 flex gap-3">
+      <label
+        htmlFor="signup"
+        className="flex gap-2 items-center cursor-pointer"
+        onClick={() => setRadioType("signup")}
+      >
+        <motion.div
+          initial="checked"
+          animate={`${radioType === "signup" ? "checked" : "unchecked"}`}
+          variants={radioOuterVariants}
+          className="relative size-[0.85rem] rounded-full outline outline-1 outline-offset-2 bg-white"
+        >
+          <input
+            type="radio"
+            name="action_type"
+            id="signup"
+            value="signup"
+            defaultChecked
+            hidden
+          />
+          <motion.div
+            initial="checked"
+            animate={`${radioType === "signup" ? "checked" : "unchecked"}`}
+            variants={radioInnerVariants}
+            className="absolute inset-0 rounded-full"
+          />
+        </motion.div>
+        <span>Cadastrar</span>
+      </label>
+      <label
+        htmlFor="signin"
+        className="flex gap-2 items-center cursor-pointer"
+        onClick={() => setRadioType("signin")}
+      >
+        <motion.div
+          initial="checked"
+          animate={`${radioType === "signin" ? "checked" : "unchecked"}`}
+          variants={radioOuterVariants}
+          className="relative size-[0.85rem] rounded-full outline outline-1 outline-offset-2 bg-white"
+        >
+          <input
+            type="radio"
+            name="action_type"
+            id="signin"
+            value="signin"
+            hidden
+          />
+          <motion.div
+            initial="unchecked"
+            animate={`${radioType === "signin" ? "checked" : "unchecked"}`}
+            variants={radioInnerVariants}
+            transition={{ ease: "circInOut" }}
+            className="absolute inset-0 rounded-full"
+          />
+        </motion.div>
+        <span>Fazer login</span>
+      </label>
+    </div>
+  );
+};
+
+const SubmitSignInSignOut = () => {
+  return (
+    <motion.button
+      whileTap={{ scale: 1 }}
+      whileHover={{ scale: 1.02 }}
+      transition={{
+        type: "spring",
+        bounce: 0.5,
+        duration: 0.5,
+      }}
+      className="ml-auto flex justify-center items-center w-1/2 px-8 font-extrabold h-12 text-lg rounded-xl outline-none text-white bg-blue-700"
+      onClick={() => console.log("Confirmar")}
+    >
+      Confirmar
+    </motion.button>
   );
 };

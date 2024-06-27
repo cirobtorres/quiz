@@ -53,7 +53,10 @@ export default function PasswordInput({
           value={value}
           onChange={handleOnChange}
           className={!options ? designA[0] : designB[0]}
-          style={{ borderBottom: value ? "1px solid #f59e0b" : "" }}
+          style={{
+            borderBottom:
+              options?.alternateDesign && value ? "1px solid #f59e0b" : "",
+          }}
         />
         <button
           type="button"

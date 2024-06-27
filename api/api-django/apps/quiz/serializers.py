@@ -24,4 +24,3 @@ class AnswerSerializer(ModelSerializer):
         model = AnswerModel
         fields = 'id', 'question_id', 'text', 'is_correct', 
 
-
