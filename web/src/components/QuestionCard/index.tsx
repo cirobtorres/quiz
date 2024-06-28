@@ -2,8 +2,6 @@ import Question from "@/models/Question";
 import Countdown from "../Countdown";
 import Answer from "@/models/Answer";
 
-const responseOptions = ["A", "B", "C", "D"];
-
 export default function QuestionCard({
   question,
   questions,
@@ -15,40 +13,35 @@ export default function QuestionCard({
   setQuestion: (question: Question) => void;
   nextQuestion: () => void;
 }) {
+  const updateQuestion = (answerId: number) => {
+    const updatedQuestion = question.onClick(answerId);
+    setQuestion(updatedQuestion);
+  };
+
+  const updateQuestions = (answerId: number) => {
+    // Recreates questions.currect with updated values from previous answered questions
+    // This is important so we can style QuestionIndex component
+    questions.map((innerQuestion, index, arr) => {
+      if (innerQuestion.getId === question.getId) {
+        return arr.splice(index, 1, innerQuestion.onClick(answerId))[0];
+      }
+      return innerQuestion;
+    });
+  };
+
   const flipCards = (answerId: number) => {
     if (!question.getAnswered) {
-      const solveQuestion = question.onClick(answerId);
-      setQuestion(solveQuestion);
-      // The code below recreates questions.currect with updated values from previous answered questions
-      // This is important so we can style QuestionIndex component
-      questions.map((innerQuestion, index, arr) => {
-        if (innerQuestion.getId === question.getId) {
-          return arr.splice(index, 1, innerQuestion.onClick(answerId))[0];
-        }
-        return innerQuestion;
-      });
+      updateQuestion(answerId);
+      updateQuestions(answerId);
     } else {
-      questions.map((innerQuestion, index, arr) => {
-        if (innerQuestion.getId === question.getId) {
-          return arr.splice(
-            index,
-            1,
-            new Question(
-              question.getId,
-              question.getQuizId,
-              question.getText,
-              question.getShuffledAnswers,
-              false
-            )
-          )[0];
-        }
-        return innerQuestion;
-      });
+      updateQuestions(0);
     }
   };
 
   const skipFunction = () => {
-    flipCards(0); // The id passed to this function within skipFunction won't matter
+    if (!question.getAnswered) {
+      flipCards(0); // The id passed to this function must be an invalid answerId
+    }
     nextQuestion();
   };
 
@@ -65,11 +58,11 @@ export default function QuestionCard({
         </div>
       </header>
       <div className="w-1/2 grid grid-cols-2 gap-3">
-        {question.getShuffledAnswers.map((answer: any, index: number) => (
+        {question.getShuffledAnswers.map((answer: Answer, index: number) => (
           <Response
-            key={`${index}-${answer.id}`}
+            key={`${index}-${answer.getId}`}
             answer={answer}
-            option={responseOptions[index]}
+            option={["A", "B", "C", "D"][index]}
             flip={flipCards}
           />
         ))}

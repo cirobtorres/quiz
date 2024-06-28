@@ -61,4 +61,11 @@ class UserScoreSerializer(ModelSerializer):
         fields = 'quiz', 'user', 'total', 'corrects', 'get_score_percentage', 'created_at', 
         read_only_fields = 'get_score_percentage', 'created_at', 
 
+    def save(self, **kwargs):
+        obj = super().save(**kwargs)
+
+        # Do something here
+        
+        return obj
+
 

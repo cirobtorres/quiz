@@ -139,8 +139,10 @@ class CompleteQuizView(APIView, UserPermissions, UserUtilities):
             )
 
         if all([score_serializer.is_valid() for score_serializer in score_serializers]):
+            scoreIds = []
             for score_serializer in score_serializers:
-                score_serializer.save()
+                instance = score_serializer.save()
+                scoreIds.append(instance.pk)
 
             score_percentage = sum(
                 [
@@ -167,6 +169,7 @@ class CompleteQuizView(APIView, UserPermissions, UserUtilities):
             return Response(
                 data={
                     'score': {
+                        'scoreIds': scoreIds,
                         'scorePercentage': round(score_percentage),
                         'totalQuestions': total,
                         'correctAnswers': corrects,

@@ -10,7 +10,9 @@ const config: Config = {
   darkMode: "selector",
   theme: {
     extend: {
-      backgroundImage: {},
+      backgroundImage: {
+        quiz: "linear-gradient(45deg, rgba(2,0,36,1) 0%, rgba(121,9,96,1) 35%, rgba(0,212,255,1) 100%)",
+      },
       textColor: {
         crimson: "var(--crimson)",
       },

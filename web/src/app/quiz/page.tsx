@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import { redirect, useRouter } from "next/navigation";
-import { randomizeBackground } from "@/functions";
 import getQuestions from "@/libs/getQuestions";
 import Loading from "@/components/Loading";
 import QuestionCard from "@/components/QuestionCard";
@@ -10,6 +9,22 @@ import useUser from "@/hooks/useUser";
 import Question from "@/models/Question";
 import Skip from "@/components/Skip";
 import QuestionIndex from "@/components/QuestionIndex";
+import postScore from "@/libs/postScore";
+
+type ScoreRequest = {
+  quizId: number;
+  totalQuestions: number;
+  correctAnswers: number;
+};
+
+type ScoreResponse = {
+  score: {
+    scoreIds: number[];
+    scorePercentage: number;
+    totalQuestions: number;
+    correctAnswers: number;
+  };
+};
 
 export default function QuizPage() {
   const { user, loading: userLoading } = useUser();
@@ -18,11 +33,9 @@ export default function QuizPage() {
     redirect("/");
   }
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const questions = useRef<Question[]>([]);
   const [question, setQuestion] = useState<Question | null>(null);
-  const backgrounds = randomizeBackground();
-  const [background, setBackground] = useState(backgrounds[0]);
   const router = useRouter();
 
   const loadingQuestions = async () => {
@@ -40,14 +53,38 @@ export default function QuizPage() {
     }
   };
 
-  const navToScore = async () => {
-    // const score = [
-    //   {},
-    //   {},
-    //   {},
-    // ]
-    // const scoreId = await sendScore();
-    // router.push(`/quiz/score/${scoreId ?? null}`);
+  const navToScore = async (scores: ScoreRequest[]) => {
+    const responseScore: ScoreResponse = await postScore(scores);
+
+    let scoreIds = "";
+    responseScore.score.scoreIds.forEach((id) => {
+      scoreIds += `/${id}`;
+    });
+
+    router.push(`/quiz/score${scoreIds}`);
+  };
+
+  const calculateScore = () => {
+    const scores: Score[] = [];
+
+    questions.current.map((question) => {
+      const scoreIndex = scores.findIndex(
+        (score) => score.quizId === question.getQuizId
+      );
+      const quizNotSavedYet = scoreIndex === -1;
+      if (quizNotSavedYet) {
+        scores.push({
+          quizId: question.getQuizId,
+          totalQuestions: 1,
+          correctAnswers: question.getSelected ? 1 : 0,
+        });
+      } else {
+        scores[scoreIndex].totalQuestions += 1;
+        scores[scoreIndex].correctAnswers += question.getSelected ? 1 : 0;
+      }
+    });
+
+    navToScore(scores);
   };
 
   const nextQuestion = () => {
@@ -55,10 +92,9 @@ export default function QuizPage() {
       questions.current.findIndex(
         (innerQuestion) => innerQuestion.getId === question?.getId
       ) + 1;
-    setBackground(backgrounds[nextIndex]);
     if (questions.current[nextIndex])
       return setQuestion(questions.current[nextIndex]);
-    navToScore();
+    calculateScore();
   };
 
   useEffect(() => {
@@ -70,10 +106,7 @@ export default function QuizPage() {
   ) : (
     <main
       key={question.getId}
-      className="fixed w-screen h-screen flex flex-col items-center"
-      style={{
-        backgroundImage: String(background),
-      }}
+      className="fixed w-screen h-screen flex flex-col items-center bg-quiz"
     >
       <QuestionCard
         question={question}

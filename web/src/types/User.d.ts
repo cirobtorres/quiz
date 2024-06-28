@@ -10,3 +10,9 @@ type UserProps = {
   created_at: Date;
   updated_at: Date;
 };
+
+type Score = {
+  quizId: number;
+  totalQuestions: number;
+  correctAnswers: number;
+};
