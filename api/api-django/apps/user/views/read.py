@@ -1,7 +1,7 @@
 from django.http import HttpRequest
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.status import HTTP_200_OK, HTTP_401_UNAUTHORIZED
+from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST, HTTP_401_UNAUTHORIZED
 from rest_framework.parsers import MultiPartParser
 from rest_framework.pagination import PageNumberPagination
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -13,6 +13,7 @@ from .tools import UserUtilities, UserPermissions
 class UserLoginView(UserUtilities, TokenObtainPairView):
     def post(self, request: HttpRequest, *args, **kwargs):
         try:
+           # If user does not exists -> 401 Unauthorized
             response = super().post(request, *args, **kwargs)
             return response
         except AuthenticationFailed as e:
@@ -49,4 +50,22 @@ class UserListView(APIView, UserUtilities):
         user_queryset = self.get_queryset(order_by=('-total_score', 'username'))
         data = self.paginate(request, user_queryset, **kwargs)
         return Response(**data)
+
+
+class UserCredentialsVerify(APIView, UserUtilities):
+    http_method_names = ['post']
+
+    def post(self, request: HttpRequest) -> Response:
+        username = request.data.get('username')
+        email = request.data.get('email')
+
+        if username:
+            if self.exists(username=username):
+                return Response(data={'message': 'Username already in use'}, status=HTTP_400_BAD_REQUEST)
+            return Response(data={'message': None}, status=HTTP_200_OK)
+
+        if email:
+            if self.exists(email=email):
+                return Response(data={'message': 'E-mail already in use'}, status=HTTP_400_BAD_REQUEST)
+            return Response(data={'message': None}, status=HTTP_200_OK)
 

@@ -79,7 +79,7 @@ export function InlineQuiz({
   return (
     <Link
       href={link}
-      className="flex flex-col items-start w-full min-w-52 h-full max-h-60 min-h-14 p-3 shadow-darker rounded-r-full overflow-hidden cursor-pointer"
+      className="flex flex-col items-start w-full max-w-[36rem] min-w-96 hover:max-w-[40rem] transition-all h-full max-h-60 min-h-14 p-3 shadow-darker rounded-r-full overflow-hidden cursor-pointer"
       style={{
         backgroundColor: options?.theme ?? "#1e293b",
       }}

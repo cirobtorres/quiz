@@ -76,24 +76,4 @@ class URLsUserTestCase(APITestCase):
             url_expected,
             url_reversed,
         )
-    
-    def test_complete_quiz_url(self):
-        url_expected = self.app_name + 'complete-quiz'
-        url_reversed = rest_reverse(viewname='user:complete-quiz')
-
-        self.assertEqual(
-            url_expected,
-            url_reversed,
-        )
-    
-    def test_list_scores_url(self):
-        url_expected = self.app_name + 'list-scores'
-        url_reversed = rest_reverse(viewname='user:list-scores')
-
-        self.assertEqual(
-            url_expected,
-            url_reversed,
-        )
-
-
 

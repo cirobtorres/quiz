@@ -77,8 +77,8 @@ class UserUtilities(UserToken):
     partial_score_model = PartialScoreModel
     validator = UserValidator
 
-    def exists(self, username) -> bool:
-        return self.user_model.objects.filter(username=username).exists()
+    def exists(self, **kwargs) -> bool:
+        return self.user_model.objects.filter(**kwargs).exists()
 
     def get_object(self, **kwargs) -> QuizUser:
         """

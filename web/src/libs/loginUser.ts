@@ -1,3 +1,5 @@
+import { UnauthorizedException } from "../exceptions/badcredentials.exceptions";
+
 export default async function loginUser({
   email,
   password,
@@ -13,7 +15,8 @@ export default async function loginUser({
     body: JSON.stringify({ email, password }),
   });
   if (!response.ok) {
-    throw new Error(`Failed signIn: ${response.statusText} ${response.status}`);
+    if (response.status === 401) throw new UnauthorizedException();
+    throw new Error(`${response.status} ${response.statusText}`);
   }
   return await response.json();
 }

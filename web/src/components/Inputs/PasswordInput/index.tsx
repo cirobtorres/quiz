@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 
-export default function PasswordInput({
+export default function LoginPasswordInput({
   id,
   label,
   value,
@@ -31,15 +31,15 @@ export default function PasswordInput({
   };
 
   const designA = [
-    `peer w-full rounded-xl p-4 text-slate-900 outline-none focus:ring-0 placeholder:text-transparent focus:placeholder:text-slate-400 active:placeholder:text-slate-400`,
-    `absolute right-3 top-1/2 -translate-y-1/2 text-xl text-slate-900 outline-none`,
-    `text-amber-500 absolute start-[10px] top-[14px] z-10 origin-[0] -translate-y-[1.1rem] scale-75 transform pointer-events-none px-2 text-lg duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-black peer-placeholder-shown:scale-100 peer-focus:top-[14px] peer-focus:-translate-y-[1.1rem] peer-focus:text-amber-500 peer-focus:scale-75 peer-focus:px-2 rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4`,
+    `peer w-full rounded-xl p-4 text-slate-800 outline-none focus:ring-0 placeholder:text-transparent focus:placeholder:text-slate-400 active:placeholder:text-slate-400`,
+    `absolute right-3 top-1/2 -translate-y-1/2 text-xl text-slate-800 outline-none`,
+    `text-emerald-600 absolute start-[10px] top-[14px] z-10 origin-[0] -translate-y-[1.1rem] scale-75 transform pointer-events-none px-2 text-lg duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-slate-800 peer-placeholder-shown:scale-100 peer-focus:top-[14px] peer-focus:-translate-y-[1.1rem] peer-focus:text-emerald-600 peer-focus:scale-75 peer-focus:px-2 rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4`,
   ];
 
   const designB = [
-    `peer w-full pt-6 pb-2 text-pink-500 border-b border-white focus:border-amber-500 active:border-amber-500 bg-transparent outline-none focus:ring-0 placeholder:text-transparent focus:placeholder:text-pink-500 active:placeholder:text-pink-500`,
-    `absolute right-3 top-1/2 -translate-y-1/2 text-xl text-white outline-none`,
-    `text-amber-500 absolute start-0 top-[14px] z-10 origin-[0] -translate-y-[1.1rem] scale-75 transform pointer-events-none text-lg duration-300 peer-placeholder-shown:top-[65%] peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-white peer-placeholder-shown:scale-100 peer-focus:top-[14px] peer-focus:-translate-y-[1.1rem] peer-focus:text-amber-500 peer-focus:scale-75 rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4`,
+    `peer w-full pt-6 pb-2 text-slate-800 border-b border-slate-800 focus:border-emerald-600 active:border-emerald-600 bg-transparent outline-none focus:ring-0 placeholder:text-transparent focus:placeholder:text-slate-400 active:placeholder:text-slate-400`,
+    `absolute right-3 top-1/2 -translate-y-1/2 text-xl text-slate-800 outline-none`,
+    `text-emerald-600 absolute start-0 top-[14px] z-10 origin-[0] -translate-y-[1.1rem] scale-75 transform pointer-events-none text-lg duration-300 peer-placeholder-shown:top-[65%] peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-slate-800 peer-placeholder-shown:scale-100 peer-focus:top-[14px] peer-focus:-translate-y-[1.1rem] peer-focus:text-emerald-600 peer-focus:scale-75 rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4`,
   ];
 
   return (
@@ -55,16 +55,20 @@ export default function PasswordInput({
           className={!options ? designA[0] : designB[0]}
           style={{
             borderBottom:
-              options?.alternateDesign && value ? "1px solid #f59e0b" : "",
+              options?.alternateDesign && value ? "1px solid #10b981" : "", // Tailwind emerald 600 equivalent
           }}
         />
         <button
           type="button"
-          className={!options ? designA[1] : designB[1]}
+          className={`${!options ? designA[1] : designB[1]}`}
           tabIndex={-1}
           onClick={handleTypeSwitch}
         >
-          {type === "password" ? <IoEyeOffOutline /> : <IoEyeOutline />}
+          {type === "password" ? (
+            <IoEyeOffOutline className="text-slate-800" />
+          ) : (
+            <IoEyeOutline className="text-slate-800" />
+          )}
         </button>
         <label htmlFor={id} className={!options ? designA[2] : designB[2]}>
           {label}

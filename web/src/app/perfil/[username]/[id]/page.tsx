@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Input from "../../../../components/Input";
+import Input from "../../../../components/Inputs/LoginInput";
 
 export default function ProfilePage() {
   const [username, setUsername] = useState("");

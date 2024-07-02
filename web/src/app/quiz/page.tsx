@@ -55,13 +55,8 @@ export default function QuizPage() {
 
   const navToScore = async (scores: ScoreRequest[]) => {
     const responseScore: ScoreResponse = await postScore(scores);
-
-    let scoreIds = "";
-    responseScore.score.scoreIds.forEach((id) => {
-      scoreIds += `/${id}`;
-    });
-
-    router.push(`/quiz/score${scoreIds}`);
+    console.log(responseScore);
+    // router.push("/quiz/score");
   };
 
   const calculateScore = () => {

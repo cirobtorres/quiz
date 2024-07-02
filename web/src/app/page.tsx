@@ -4,9 +4,11 @@ import { Suspense, useState } from "react";
 import { FaStar } from "react-icons/fa";
 import Avatar from "@/components/Avatar";
 import { motion } from "framer-motion";
-import Input from "../components/Input";
+import Input from "../components/Inputs/LoginInput";
 import QuizCard, { InlineQuiz } from "@/components/QuizCard";
-import PasswordInput, { PasswordRules } from "../components/PasswordInput";
+import PasswordInput, {
+  PasswordRules,
+} from "../components/Inputs/PasswordInput";
 import useUser from "@/hooks/useUser";
 import Loading from "@/components/Loading";
 
@@ -41,8 +43,8 @@ export default function HomePage() {
         </div>
       </header>
       <main className="w-full flex flex-col justify-center mb-auto">
-        <div className="flex justify-between my-2 z-50">
-          <div className="flex-1 mr-20">
+        <div className="flex justify-between gap-4 my-2 z-50">
+          <div className="flex-1">
             <h2 className="text-gray-800 text-4xl font-extrabold py-2 mb-4">
               QUIZ rápido
             </h2>

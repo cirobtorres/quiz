@@ -14,5 +14,6 @@ urlpatterns = [
     re_path(route=r'^token-verify/?$',view=TokenVerifyView.as_view(),name='token-verify'), # access-token (on body)
     re_path(route=r'^update/?$',view=views.UserUpdateView.as_view(),name='update'), # -> access-token
     re_path(route=r'^get-data/?$',view=views.UserDataView.as_view(),name='get-data'), # -> access-token
+    re_path(route=r'^verify-credentials/?$',view=views.UserCredentialsVerify.as_view(),name='verify-credentials'), 
     re_path(route=r'^delete/?$',view=views.UserDeleteView.as_view(),name='delete'),  # -> access-token
 ]

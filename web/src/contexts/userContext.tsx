@@ -92,7 +92,7 @@ export function UserProvider(props: any): JSX.Element {
       const token = await loginUser({ email, password });
       await session(token);
     } catch (error) {
-      throw new Error(`Error during login. ${error}`);
+      throw error;
     } finally {
       setLoading(false);
     }

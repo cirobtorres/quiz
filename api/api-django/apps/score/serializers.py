@@ -19,6 +19,7 @@ class TotalScoreSerializer(ModelSerializer):
         fields = 'id', 'scores', 'user', 'get_score', 'get_total', 'get_corrects', 
         read_only_fields = 'get_score', 
 
+    scores = PartialScoreSerializer(many=True)
     get_score = SerializerMethodField() 
     get_total = SerializerMethodField() 
     get_corrects = SerializerMethodField() 
