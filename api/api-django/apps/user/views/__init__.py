@@ -1,3 +1,5 @@
-from .authentication import UserRegisterView, UserLoginView
-from .authenticated import UserUpdateView, UserDataView, UserDeleteView, CompleteQuizView 
-from .unauthenticated import UserListView, ScoreListView
+from .tools import UserPermissions, UserUtilities
+from .create import UserRegisterView
+from .read import UserLoginView, UserDataView, UserListView
+from .update import UserUpdateView
+from .delete import UserDeleteView

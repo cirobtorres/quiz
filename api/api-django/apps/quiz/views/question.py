@@ -73,7 +73,6 @@ class QuestionView(APIView, QuestionTools):
             # print('-x' * 35 + '-\n', e.__class__.__name__, ': ', e, '\n', '*' * 70, '\n', sep='') 
             return Response(data={'message': 'Question not found'}, status=HTTP_404_NOT_FOUND)
         
-        question_model.quiz_id = request.data.get('quiz_id')
         question_model.text = request.data.get('question_text')
 
         question_model.save()

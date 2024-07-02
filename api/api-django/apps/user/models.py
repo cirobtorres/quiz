@@ -47,9 +47,9 @@ class UserModel(AbstractBaseUser, PermissionsMixin):
     def __str__(self) -> str:
         return self.username
     
-    def get_total_score(self) -> float:
-        scores = self.score.all()
-        sum_scores = sum(score.get_score_percentage() for score in scores)
+    def get_score(self) -> float:
+        scores = self.total_score.all()
+        sum_scores = sum(score.get_score() for score in scores)
         quizes_completed = scores.count()
 
         if quizes_completed > 0:
@@ -58,22 +58,7 @@ class UserModel(AbstractBaseUser, PermissionsMixin):
             return 0.0
 
 
-class ScoreModel(models.Model):
-    quiz = models.ForeignKey(to=QuizModel, related_name='score', on_delete=models.CASCADE, null=True)
-    user = models.ForeignKey(to=UserModel, related_name='score', on_delete=models.CASCADE, null=True)
-    total = models.PositiveIntegerField(default=0) # Total questions 
-    corrects = models.PositiveIntegerField(default=0) # Total correct questions 
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self) -> str:
-        return f'Corrects: {self.get_score_percentage()} Quiz: {self.quiz}'
-
-    def get_score_percentage(self) -> float | None:
-        return (self.corrects / self.total * 100) if self.total > 0 else None
-
-
-class UserSettings(models.Model):
+class UserSettingsModel(models.Model):
     quiz = models.ManyToManyField(to=QuizModel)
     user = models.OneToOneField(to=UserModel, related_name='settings', on_delete=models.CASCADE, null=True)
     quiz_size = models.PositiveIntegerField(default=10) # Number of questions per quiz

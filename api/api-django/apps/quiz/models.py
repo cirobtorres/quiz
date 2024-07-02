@@ -1,6 +1,7 @@
 from random import seed, shuffle
 from django.db import models
 from django.utils.text import slugify
+from django.contrib.auth import get_user_model
 
 
 class QuizModel(models.Model):
@@ -50,3 +51,5 @@ class AnswerModel(models.Model):
 
     def __str__(self) -> str:
         return self.text
+
+

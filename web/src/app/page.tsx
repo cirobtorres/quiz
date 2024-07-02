@@ -21,11 +21,6 @@ export default function HomePage() {
   const [radioType, setRadioType] = useState<"signup" | "signin">("signup");
   return (
     <>
-      <div className="relative w-screen opacity-10">
-        <svg viewBox="0 0 500 500" className="absolute top-0 left-0">
-          <path d="M0,100 C150,200 350,0 500,100 L500,00 L0,0 Z"></path>
-        </svg>
-      </div>
       <header className="w-full relative py-4 mb-12">
         <div className="relative">
           <h1 className="text-gray-800 text-7xl font-extrabold">

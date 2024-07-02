@@ -6,17 +6,16 @@ from django.http import HttpRequest
 from rest_framework.permissions import BasePermission
 from rest_framework.status import (
     HTTP_200_OK, 
-    HTTP_201_CREATED, 
-    HTTP_400_BAD_REQUEST, 
     HTTP_401_UNAUTHORIZED, 
     HTTP_404_NOT_FOUND, 
     HTTP_500_INTERNAL_SERVER_ERROR
 )
 from rest_framework.pagination import PageNumberPagination
 from rest_framework_simplejwt.tokens import AccessToken
-from ..models import ScoreModel
-from ..serializers import UserSerializer, UserScoreSerializer
+from ..serializers import UserSerializer
 from ..validators import UserValidator
+from ...score.serializers import TotalScoreSerializer, PartialScoreSerializer
+from ...score.models import TotalScoreModel, PartialScoreModel
 
 
 class QuizUser(TypedDict):
@@ -43,15 +42,24 @@ class UserToken:
             return access_token
         except Exception as e:
             return {}
+    
+    def extract_payload(self):
+        header = self.request.META
+        authorization = header['HTTP_AUTHORIZATION']
+        _, token = authorization.split(' ') # bearer, token
+
+        user = self.validate_token(token)
+
+        return user.payload
 
 
-class UserPermissions(UserToken, BasePermission): 
+class UserPermissions(BasePermission): 
     def has_permission(self, request: HttpRequest, view):
         header = request.META
         authorization = header['HTTP_AUTHORIZATION']
         _, token = authorization.split(' ') # bearer, token
 
-        user = self.validate_token(token)
+        user = UserToken.validate_token(token)
         
         if user:
             return True
@@ -63,8 +71,10 @@ class UserUtilities(UserToken):
     pagination_class = PageNumberPagination
     user_serializer = UserSerializer
     user_model = get_user_model()
-    score_serializer = UserScoreSerializer
-    score_model = ScoreModel
+    total_score_serializer = TotalScoreSerializer
+    partial_score_serializer = PartialScoreSerializer
+    total_score_model = TotalScoreModel
+    partial_score_model = PartialScoreModel
     validator = UserValidator
 
     def exists(self, username) -> bool:
@@ -103,15 +113,6 @@ class UserUtilities(UserToken):
                 return queryset.order_by(*order_by)  # if tuple
             return queryset.order_by(order_by)  # if string
         return queryset
-    
-    def extract_payload(self):
-        header = self.request.META
-        authorization = header['HTTP_AUTHORIZATION']
-        _, token = authorization.split(' ') # bearer, token
-
-        user = self.validate_token(token)
-
-        return user.payload
     
     def get_user(self):
         user_model = self.extract_payload()
@@ -152,8 +153,8 @@ class UserUtilities(UserToken):
             if isinstance(queryset.first(), self.user_model):
                 serializer = self.user_serializer(results, many=True)
 
-            elif isinstance(queryset.first(), self.score_model):
-                serializer = self.score_serializer(results, many=True)
+            elif isinstance(queryset.first(), self.total_score_model):
+                serializer = self.total_score_serializer(results, many=True)
 
             else:
                 return {

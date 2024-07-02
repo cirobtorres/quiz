@@ -18,8 +18,9 @@ from django.conf import settings
 from django.urls import path, include
 
 urlpatterns = [
-    path(route='api/quiz/', view=include('apps.quiz.urls')),
     path(route='api/user/', view=include('apps.user.urls')),
+    path(route='api/quiz/', view=include('apps.quiz.urls')),
+    path(route='api/score/', view=include('apps.score.urls')),
 ]
 
 if settings.DEBUG:
