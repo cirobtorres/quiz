@@ -8,8 +8,8 @@ import useUser from "../../hooks/useUser";
 import PasswordInput, {
   PasswordRules,
 } from "../../components/Inputs/PasswordInput";
-import RegisterUsernameInput from "../../components/Inputs/RegisterUsernameInput";
-import RegisterEmailInput from "../../components/Inputs/RegisterEmailInput";
+import { UsernameInputD } from "../../components/Inputs/UsernameInputs";
+import { EmailInputD } from "../../components/Inputs/EmailInputs";
 
 export default function SignupPage() {
   const [username, setUsername] = useState("");
@@ -35,7 +35,9 @@ export default function SignupPage() {
       if (
         email.indexOf("@") === -1 ||
         isValid(username) ||
-        isValid(password1)
+        isValid(password1) ||
+        usernameError ||
+        emailError
       ) {
         return;
       }
@@ -58,7 +60,7 @@ export default function SignupPage() {
       </header>
       <main className="w-full flex flex-col justify-center items-fenter gap-3">
         <form className="w-full flex flex-col justify-center items-fenter gap-3">
-          <RegisterUsernameInput
+          <UsernameInputD
             id="username"
             label="Apelido"
             placeholder="johndoe"
@@ -67,7 +69,7 @@ export default function SignupPage() {
             error={usernameError}
             setError={setUsernameError}
           />
-          <RegisterEmailInput
+          <EmailInputD
             id="email"
             label="E-mail"
             placeholder="johndoe@email.com"

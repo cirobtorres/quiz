@@ -29,7 +29,7 @@ export default function Body({
 
 const Wave = () => {
   return (
-    <div className="relative opacity-10">
+    <div className="relative opacity-10 -z-10">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 1440 320"

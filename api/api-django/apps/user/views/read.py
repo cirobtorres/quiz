@@ -47,7 +47,7 @@ class UserListView(APIView, UserUtilities):
     http_method_names = ['get']
 
     def get(self, request: HttpRequest, **kwargs) -> Response:
-        user_queryset = self.get_queryset(order_by=('-total_score', 'username'))
+        user_queryset = self.get_queryset(order_by=('-id', 'username'))
         data = self.paginate(request, user_queryset, **kwargs)
         return Response(**data)
 

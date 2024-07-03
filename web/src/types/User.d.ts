@@ -3,7 +3,7 @@ type UserProps = {
   email: string;
   username: string;
   email: string;
-  avatar: string | null;
+  get_avatar_url: string | null;
   get_total_score: number;
   is_active: boolean;
   last_login: Date;

@@ -68,11 +68,15 @@ export class User {
   }
 
   static create(obj: UserProps) {
+    console.log(
+      "----------------------------------------------------------------------------------------",
+      obj.get_avatar_url
+    );
     return new User(
       obj.id,
       obj.email,
       obj.username,
-      obj.avatar,
+      obj.get_avatar_url,
       obj.get_total_score,
       obj.is_active,
       obj.last_login,

@@ -30,7 +30,7 @@ export default function QuizPage() {
   const { user, loading: userLoading } = useUser();
 
   if (!user && !userLoading) {
-    redirect("/");
+    redirect("/entrar");
   }
 
   const [loading, setLoading] = useState(true);

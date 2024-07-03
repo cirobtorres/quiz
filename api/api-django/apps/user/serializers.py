@@ -1,5 +1,5 @@
 from django.contrib.auth import get_user_model
-from rest_framework.serializers import ModelSerializer
+from rest_framework.serializers import ModelSerializer, SerializerMethodField
 from rest_framework.validators import ValidationError
 from .validators import UserValidator
 
@@ -7,11 +7,16 @@ from .validators import UserValidator
 class UserSerializer(ModelSerializer):
     class Meta:
         model = get_user_model()
-        fields = 'id', 'email', 'username', 'password', 'avatar', 'get_score', 'is_active', 'is_staff', 'last_login', 'created_at', 'updated_at', 
-        read_only_fields = 'id', 'get_score', 'is_active', 'is_staff', 'last_login', 'created_at', 'updated_at', 
-        extra_kwargs = { 'password': { 'write_only': True } }
+        fields = 'id', 'email', 'username', 'password', 'avatar', 'get_avatar_url', 'get_score', 'is_active', 'last_login', 'created_at', 'updated_at', 
+        read_only_fields = 'id', 'get_score', 'is_active', 'last_login', 'created_at', 'updated_at', 
+        extra_kwargs = { 'password': { 'write_only': True }, 'avatar': { 'write_only': True } }
     
-    def is_valid(self, *, raise_exception=False):        
+    get_avatar_url = SerializerMethodField()
+
+    def get_avatar_url(self, instance):
+        return instance.get_avatar_url()
+    
+    def is_valid(self, *, raise_exception=False): 
         try:
             UserValidator(self.initial_data)
         except ValidationError as e:

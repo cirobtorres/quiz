@@ -8,18 +8,19 @@ import refreshSession from "../libs/refreshSession";
 import loginUser from "../libs/loginUser";
 import registerUser from "../libs/registerUser";
 import { User } from "@/models/User";
+import { updateUser } from "../libs/updateUser";
 
 interface UserContextProps {
   user: User | null;
   loading: boolean;
-  login?: (username: string, password: string) => Promise<void>;
-  logout?: () => Promise<void>;
-  register?: (
+  login: (username: string, password: string) => Promise<void>;
+  logout: () => Promise<void>;
+  register: (
     username: string,
     email: string,
     password: string
   ) => Promise<void>;
-  update?: (userData: FormData) => Promise<void>;
+  update: (userData: FormData) => Promise<void>;
 }
 
 interface TokenProps {
@@ -125,7 +126,16 @@ export function UserProvider(props: any): JSX.Element {
     }
   };
 
-  const update = async () => {};
+  const update = async (userData: FormData) => {
+    try {
+      setLoading(true);
+      const updatedTokens = await updateUser(userData);
+      await session(updatedTokens);
+    } catch (error) {
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const refreshToken = async () => {
     setLoading(true);

@@ -86,7 +86,7 @@ export const PasswordRules = ({
   password2: string;
 }) => {
   return (
-    <div className="grid grid-cols-3 gap-1 h-[5.5rem] py-4">
+    <div className="w-full grid grid-cols-3 gap-1 h-[5.5rem] py-4">
       {password1 && (
         <>
           <span

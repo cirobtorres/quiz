@@ -38,7 +38,7 @@ class UserModel(AbstractBaseUser, PermissionsMixin):
 
     username = models.CharField(max_length=32, unique=True)
     email = models.EmailField(max_length=255, unique=True)
-    avatar = models.ImageField(upload_to='images/', blank=True, null=True)
+    avatar = models.ImageField(upload_to='', blank=True, null=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -56,6 +56,11 @@ class UserModel(AbstractBaseUser, PermissionsMixin):
             return round(sum_scores / quizes_completed, 1)
         else:
             return 0.0
+    
+    def get_avatar_url(self) -> str:
+        if self.avatar:
+            return self.avatar.url
+        return None
 
 
 class UserSettingsModel(models.Model):

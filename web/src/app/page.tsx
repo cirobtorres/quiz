@@ -1,25 +1,36 @@
 "use client";
 
-import { Suspense, useState } from "react";
+import { useState } from "react";
 import { FaStar } from "react-icons/fa";
 import Avatar from "@/components/Avatar";
 import { motion } from "framer-motion";
-import Input from "../components/Inputs/LoginInput";
 import QuizCard, { InlineQuiz } from "@/components/QuizCard";
 import PasswordInput, {
   PasswordRules,
 } from "../components/Inputs/PasswordInput";
 import useUser from "@/hooks/useUser";
 import Loading from "@/components/Loading";
+import { UsernameInputB } from "../components/Inputs/UsernameInputs";
+import { EmailInputA, EmailInputB } from "../components/Inputs/EmailInputs";
 
 export default function HomePage() {
   const { user, loading } = useUser();
   const [signUpUsername, setSignUpUsername] = useState("");
-  const [signInUsername, setSignInUsername] = useState("");
+  const [signInEmail, setSignInEmail] = useState("");
   const [email, setEmail] = useState("");
   const [signUpPassword, setSignUpPassword] = useState("");
   const [signInPassword, setSignInPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [signUpUsernameError, setSignUpUsernameError] = useState<{
+    message: string;
+    type: string;
+    status: number;
+  } | null>(null);
+  const [emailError, setEmailError] = useState<{
+    message: string;
+    type: string;
+    status: number;
+  } | null>(null);
   const [radioType, setRadioType] = useState<"signup" | "signin">("signup");
   return (
     <>
@@ -96,19 +107,23 @@ export default function HomePage() {
                     </h2>
                     <form className="w-full">
                       <div className="flex flex-col gap-2">
-                        <Input
+                        <UsernameInputB
                           id="signUpUsername"
                           label="Apelido"
                           placeholder="johndoe"
                           value={signUpUsername}
                           setValue={setSignUpUsername}
+                          error={signUpUsernameError}
+                          setError={setSignUpUsernameError}
                         />
-                        <Input
+                        <EmailInputB
                           id="email"
                           label="E-mail"
                           placeholder="johndoe@email.com"
                           value={email}
                           setValue={setEmail}
+                          error={emailError}
+                          setError={setEmailError}
                         />
                         <PasswordInput
                           id="signUpPassword"
@@ -137,14 +152,14 @@ export default function HomePage() {
                     <h2 className="text-gray-800 text-4xl font-extrabold py-2 mb-4">
                       Fazer Login
                     </h2>
-                    <form className="w-full">
+                    <form className="w-full flex flex-col gap-2">
                       <div className="flex flex-col gap-2">
-                        <Input
+                        <EmailInputA
                           id="signInUsername"
-                          label="Apelido"
-                          placeholder="johndoe"
-                          value={signInUsername}
-                          setValue={setSignInUsername}
+                          label="E-mail"
+                          placeholder="johndoe@email.com"
+                          value={signInEmail}
+                          setValue={setSignInEmail}
                         />
                         <PasswordInput
                           id="signInPassword"

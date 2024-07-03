@@ -247,7 +247,7 @@ const SignedInAvatarBox = ({
         className="w-3/4 flex mx-auto gap-1 m-4"
       >
         <Link
-          href="/"
+          href={`/perfil/${user.getUsername}/${user.getId}`}
           className="w-full flex-1 flex justify-center gap-2 p-4 rounded-l-full bg-gray-200 hover:bg-gray-100" // group
         >
           Perfil{" "}

@@ -19,13 +19,13 @@ load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-DATA_DIR = BASE_DIR.parent / 'data' / 'web'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = False or os.getenv('DEBUG')
+DATA_DIR = BASE_DIR.parent.parent / 'data' / 'web' if not DEBUG else BASE_DIR.parent.parent / 'web' / 'public' 
 
 ALLOWED_HOSTS = [h.strip() for h in os.getenv('ALLOWED_HOSTS', '').split(',') if h.strip()]
 
@@ -160,8 +160,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-MEDIA_URL = 'media/'
-MEDIA_ROOT = os.path.join(DATA_DIR, 'static', 'media')
+MEDIA_URL = 'media/' if not DEBUG else 'images/user/examplesDevMode/' # Here is the url path where django ImageField points towards to 
+MEDIA_ROOT = os.path.join(DATA_DIR, 'static', 'media') if not DEBUG else os.path.join(DATA_DIR, 'images', 'user', 'examplesDevMode') # Here is the path where django ImageField effectively saves the file
 
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(DATA_DIR, 'static')

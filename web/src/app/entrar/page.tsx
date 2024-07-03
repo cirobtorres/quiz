@@ -3,11 +3,11 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { isValid } from "../../functions";
-import LoginInput from "../../components/Inputs/LoginInput";
 import PasswordInput from "../../components/Inputs/PasswordInput";
 import SubmitButton from "../../components/SubmitButton";
 import useUser from "../../hooks/useUser";
 import { UnauthorizedException } from "../../exceptions/badcredentials.exceptions";
+import { UsernameInputC } from "../../components/Inputs/UsernameInputs";
 
 export default function SigninPage() {
   const [email, setEmail] = useState("");
@@ -43,13 +43,12 @@ export default function SigninPage() {
       </header>
       <main className="w-full flex flex-col justify-center items-fenter gap-3">
         <form className="w-full flex flex-col justify-center items-fenter gap-3">
-          <LoginInput
+          <UsernameInputC
             id="email"
             label="E-mail"
             placeholder="johndoe@email.com"
             value={email}
             setValue={setEmail}
-            options={{ alternateDesign: true }}
           />
           <PasswordInput
             id="password"

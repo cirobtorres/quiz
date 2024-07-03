@@ -18,16 +18,18 @@ class UserUpdateView(APIView, UserUtilities):
     def put(self, request: HttpRequest) -> Response:
         user_model = self.get_user()
 
+        body = request.data.dict().copy()
+
         try:
-            # for field in request.body:
-            #     if request.body[field] == "":
-            #         del request.body[field]
+            for field in request.data:
+                if body[field] == "":
+                    del body[field]
             
-            body_str = request.data.get('json')
-            body_json = json.loads(body_str)
-            for field in body_json:
-                if body_json[field] == '':
-                    del body_json[field]
+            # body_str = request.data.get('json')
+            # body = json.loads(body_str)
+            # for field in body:
+            #     if body[field] == '':
+            #         del body[field]
 
         except Exception as e:
             # print('-x' * 35 + '-\n', e.__class__.__name__, ': ', e, '\n', '*' * 70, '\n', sep='') 
@@ -42,7 +44,7 @@ class UserUpdateView(APIView, UserUtilities):
             # print('-x' * 35 + '-\n', e.__class__.__name__, ': ', e, '\n', '*' * 70, '\n', sep='') 
             user_serializer = self.user_serializer(instance=user_model)
         
-        user_serializer = self.user_serializer(instance=user_model, data=body_json, partial=True)
+        user_serializer = self.user_serializer(instance=user_model, data=body, partial=True)
         
         if user_serializer.is_valid():
             user_serializer.save()

@@ -2,6 +2,7 @@ from re import search
 from typing import NewType
 from collections import defaultdict
 from django.contrib.auth import get_user_model
+from django.db.models import Q
 from rest_framework.validators import ValidationError as DRFValidationError
 
 
@@ -20,10 +21,11 @@ class UserValidator:
         self.clean()
     
     def clean(self) -> None:
-        # return True
         self.clean_email()
         self.clean_username()
-        self.clean_password()
+        
+        if(self.data.get('password')):
+            self.clean_password()
 
         if self.errors:
             raise self.error_class(self.errors)
@@ -37,10 +39,15 @@ class UserValidator:
     
     def clean_username(self) -> username:
         pattern = r'[^A-Za-z0-9_]'
-        username = self.data.get('username')
-        if username: # Username is optional to UserUpdateView
-            if self.user_model.objects.filter(username=username).exists():
-                self.errors['username'].append('Este usuário já esá em uso')
+        if self.data.get('username'): # Username is optional to UserUpdateView
+            username = self.data.get('username')
+            if self.data.get('id'):
+                id = self.data.get('id')
+                if self.user_model.objects.filter(~Q(id=id), username=username).exists(): # Username is unique, it is not allowed for different user: ~Q(id=id) = different id
+                    self.errors['username'].append('Este usuário já esá em uso')
+            else :
+                if self.user_model.objects.filter(username=username).exists(): # Same username is valid to a same user: ~Q(id=id) = different id
+                    self.errors['username'].append('Este usuário já esá em uso')
             if len(username) < 4 or len(username) > 12:
                 self.errors['username'].append('Nome de usuário não pode ser menor que 4 nem maior que 12 caracteres')
             if search(pattern, username):
