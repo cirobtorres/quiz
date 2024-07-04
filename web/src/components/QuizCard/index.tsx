@@ -4,10 +4,11 @@ import Link from "next/link";
 interface QuizCardProps {
   image?: { src: string; alt: string };
   title: string;
-  description: string;
+  description?: string;
   link: string;
   options?: {
     theme?: string;
+    border?: string;
     titleColor?: string;
     textColor?: string;
     titleAlign?: string;
@@ -25,7 +26,7 @@ export default function Quiz({
   return (
     <Link
       href={link}
-      className="flex flex-col w-full max-w-96 min-w-52 h-full max-h-60 shadow-darker rounded-xl overflow-hidden cursor-pointer"
+      className="flex flex-col w-full max-w-72 min-w-52 h-[30rem] max-h-[30rem] shadow-darker rounded-xl overflow-hidden cursor-pointer"
     >
       {image && (
         <>
@@ -79,9 +80,10 @@ export function InlineQuiz({
   return (
     <Link
       href={link}
-      className="flex flex-col items-start w-full max-w-[36rem] min-w-96 hover:max-w-[40rem] transition-all h-full max-h-60 min-h-14 p-3 shadow-darker rounded-r-full overflow-hidden cursor-pointer"
+      className="flex flex-col justify-center items-start size-32 p-3 shadow-darker rounded-full overflow-hidden cursor-pointer"
       style={{
         backgroundColor: options?.theme ?? "#1e293b",
+        border: options?.border ?? "",
       }}
     >
       <h2

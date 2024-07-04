@@ -7,7 +7,7 @@ import PasswordInput from "../../components/Inputs/PasswordInput";
 import SubmitButton from "../../components/SubmitButton";
 import useUser from "../../hooks/useUser";
 import { UnauthorizedException } from "../../exceptions/badcredentials.exceptions";
-import { UsernameInputC } from "../../components/Inputs/UsernameInputs";
+import { UsernameInputA } from "../../components/Inputs/UsernameInputs";
 
 export default function SigninPage() {
   const [email, setEmail] = useState("");
@@ -37,13 +37,15 @@ export default function SigninPage() {
   };
 
   return (
-    <div className="w-1/2 flex flex-col bg-slate-200 p-4 rounded-xl">
-      <header className="w-full mb-4">
-        <h1 className="text-slate-900 text-3xl font-extrabold">Login</h1>
+    <div className="fixed top-0 bottom-0 right-0 w-1/2 flex flex-col justify-center bg-slate-200 py-8">
+      <header className="w-1/2 mx-auto mb-4">
+        <h1 className="text-slate-900 text-3xl text-center font-extrabold">
+          Login
+        </h1>
       </header>
-      <main className="w-full flex flex-col justify-center items-fenter gap-3">
+      <main className="w-1/2 mx-auto flex flex-col justify-center items-fenter gap-3">
         <form className="w-full flex flex-col justify-center items-fenter gap-3">
-          <UsernameInputC
+          <UsernameInputA
             id="email"
             label="E-mail"
             placeholder="johndoe@email.com"
@@ -56,7 +58,6 @@ export default function SigninPage() {
             placeholder=""
             value={password}
             setValue={setPassword}
-            options={{ alternateDesign: true }}
           />
           <div className="flex items-center h-8">
             {error ? <span className="text-red-500">{error}</span> : null}

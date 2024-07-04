@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FaGear } from "react-icons/fa6";
 import { motion, Variants } from "framer-motion";
 import { IoExitOutline } from "react-icons/io5";
@@ -45,8 +45,24 @@ export default function Avatar() {
   const [isOpen, setIsOpen] = useState(false);
   const userAvatarSize = 3.5; // rem
   const { user } = useUser();
+  const dropdown = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!isOpen) return; // Add a event listener only when the SignedInAvatarBox/SignedOutAvatarBox is opened
+    function handleClick(event: MouseEvent) {
+      if (
+        dropdown.current &&
+        !dropdown.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    }
+    window.addEventListener("click", handleClick);
+    return () => window.removeEventListener("click", handleClick); // Clean up
+  }, [isOpen]);
+
   return (
-    <div className="h-full flex flex-row items-center">
+    <div ref={dropdown} className="h-full flex flex-row items-center">
       {user ? (
         <SignedInAvatar
           userAvatarSize={userAvatarSize}
@@ -83,11 +99,7 @@ const SignedInAvatar = ({
       className="relative flex items-center shadow-darker rounded-full"
     >
       <div
-        className={`rounded-full ${
-          user.getAvatar
-            ? "bg-gradient-to-tr from-pink-500 to-yellow-500"
-            : "bg-white"
-        } p-[2px]`}
+        className={"rounded-full"} // ${user.getAvatar ? "bg-gradient-to-tr from-pink-500 to-yellow-500" : "bg-white"} p-[2px]
         style={{
           width: `${userAvatarSize}rem`,
           height: `${userAvatarSize}rem`,
@@ -134,7 +146,7 @@ const SignedOutAvatar = ({
       className="relative flex items-center shadow-darker rounded-full"
     >
       <div
-        className="rounded-full p-[2px] bg-white"
+        className="rounded-full text-white bg-black" // p-[2px]
         style={{
           width: `${userAvatarSize}rem`,
           height: `${userAvatarSize}rem`,
@@ -247,7 +259,7 @@ const SignedInAvatarBox = ({
         className="w-3/4 flex mx-auto gap-1 m-4"
       >
         <Link
-          href={`/perfil/${user.getUsername}/${user.getId}`}
+          href={`/perfil/${user.getUsername}`}
           className="w-full flex-1 flex justify-center gap-2 p-4 rounded-l-full bg-gray-200 hover:bg-gray-100" // group
         >
           Perfil{" "}

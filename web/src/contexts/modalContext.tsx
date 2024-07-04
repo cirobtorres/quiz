@@ -14,7 +14,7 @@ interface ModalContextProps {
 
 const ModalContext = createContext<ModalContextProps>({} as ModalContextProps);
 
-export function ModalProvider(props: any): JSX.Element {
+export function ModalProvider(props: any) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [title, setTitle] = useState<string | null>(null);
   const [body, setBody] = useState<string | null>(null);

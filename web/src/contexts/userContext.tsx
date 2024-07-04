@@ -35,7 +35,7 @@ interface DecodedTokenProps extends JwtPayload {
 
 const UserContext = createContext<UserContextProps>({} as UserContextProps);
 
-export function UserProvider(props: any): JSX.Element {
+export function UserProvider(props: any) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 

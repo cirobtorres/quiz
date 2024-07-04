@@ -11,11 +11,7 @@ const DarkModeContext = createContext<DarkModeContextProps>(
   {} as DarkModeContextProps
 );
 
-export function DarkModeProvider({
-  children,
-}: {
-  children: React.ReactNode;
-}): JSX.Element {
+export function DarkModeProvider({ children }: { children: React.ReactNode }) {
   const [theme, switchTheme] = useState("");
 
   const setTheme = () => {

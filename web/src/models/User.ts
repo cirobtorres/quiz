@@ -1,8 +1,11 @@
+import { UserSettings } from "./UserSettings";
+
 export class User {
   private id: number;
   private email: string;
   private username: string;
   private avatar?: string | null;
+  private settings: UserSettings;
   private score: number;
   private isActive: boolean;
   private lastLogin: Date;
@@ -14,6 +17,7 @@ export class User {
     email: string,
     username: string,
     avatar: string | null = null,
+    settings: UserSettings,
     score: number,
     isActive: boolean,
     lastLogin: Date,
@@ -24,6 +28,7 @@ export class User {
     this.email = email;
     this.username = username;
     this.avatar = avatar;
+    this.settings = settings;
     this.score = score;
     this.isActive = isActive;
     this.lastLogin = lastLogin;
@@ -47,6 +52,10 @@ export class User {
     return this.avatar;
   }
 
+  get getSettings() {
+    return this.settings;
+  }
+
   get getScore() {
     return this.score;
   }
@@ -67,21 +76,30 @@ export class User {
     return this.updatedAt;
   }
 
+  set setEmail(email: string) {
+    this.email = email;
+  }
+
+  set setUsername(username: string) {
+    this.username = username;
+  }
+
+  set setAvatar(avatar: string | null) {
+    this.avatar = avatar;
+  }
+
   static create(obj: UserProps) {
-    console.log(
-      "----------------------------------------------------------------------------------------",
-      obj.get_avatar_url
-    );
     return new User(
       obj.id,
       obj.email,
       obj.username,
       obj.get_avatar_url,
+      UserSettings.create(obj.settings),
       obj.get_total_score,
       obj.is_active,
       obj.last_login,
-      obj.created_at,
-      obj.updated_at
+      new Date(obj.created_at),
+      new Date(obj.updated_at)
     );
   }
 }

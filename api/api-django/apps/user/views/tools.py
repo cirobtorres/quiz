@@ -12,6 +12,7 @@ from rest_framework.status import (
 )
 from rest_framework.pagination import PageNumberPagination
 from rest_framework_simplejwt.tokens import AccessToken
+from ..models import UserSettingsModel
 from ..serializers import UserSerializer
 from ..validators import UserValidator
 from ...score.serializers import TotalScoreSerializer, PartialScoreSerializer
@@ -71,6 +72,7 @@ class UserUtilities(UserToken):
     pagination_class = PageNumberPagination
     user_serializer = UserSerializer
     user_model = get_user_model()
+    user_settings_model = UserSettingsModel
     total_score_serializer = TotalScoreSerializer
     partial_score_serializer = PartialScoreSerializer
     total_score_model = TotalScoreModel

@@ -8,8 +8,11 @@ import useUser from "../../hooks/useUser";
 import PasswordInput, {
   PasswordRules,
 } from "../../components/Inputs/PasswordInput";
-import { UsernameInputD } from "../../components/Inputs/UsernameInputs";
-import { EmailInputD } from "../../components/Inputs/EmailInputs";
+import {
+  UsernameInputB,
+  UsernameInputD,
+} from "../../components/Inputs/UsernameInputs";
+import { EmailInputB, EmailInputD } from "../../components/Inputs/EmailInputs";
 
 export default function SignupPage() {
   const [username, setUsername] = useState("");
@@ -54,13 +57,15 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="w-1/2 flex flex-col bg-slate-200 p-4 rounded-xl">
-      <header className="w-full mb-4">
-        <h1 className="text-slate-900 text-3xl font-extrabold">Cadastrar</h1>
+    <div className="fixed top-0 bottom-0 left-0 w-1/2 flex flex-col justify-center bg-slate-200 py-8">
+      <header className="w-1/2 mx-auto mb-4">
+        <h1 className="text-slate-900 text-3xl text-center font-extrabold">
+          Cadastrar
+        </h1>
       </header>
-      <main className="w-full flex flex-col justify-center items-fenter gap-3">
+      <main className="w-1/2 mx-auto flex flex-col justify-center items-fenter gap-3">
         <form className="w-full flex flex-col justify-center items-fenter gap-3">
-          <UsernameInputD
+          <UsernameInputB
             id="username"
             label="Apelido"
             placeholder="johndoe"
@@ -69,7 +74,7 @@ export default function SignupPage() {
             error={usernameError}
             setError={setUsernameError}
           />
-          <EmailInputD
+          <EmailInputB
             id="email"
             label="E-mail"
             placeholder="johndoe@email.com"
@@ -84,7 +89,6 @@ export default function SignupPage() {
             placeholder=""
             value={password1}
             setValue={setPassword1}
-            options={{ alternateDesign: true }}
           />
           <PasswordInput
             id="password2"
@@ -92,7 +96,6 @@ export default function SignupPage() {
             placeholder=""
             value={password2}
             setValue={setPassword2}
-            options={{ alternateDesign: true }}
           />
           <PasswordRules password1={password1} password2={password2} />
           <div className="flex">

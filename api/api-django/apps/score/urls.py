@@ -5,5 +5,5 @@ app_name = 'score'
 
 urlpatterns = [
     re_path(route=r'^create-score/?$',view=views.ScoreCompleteView.as_view(),name='create-score'), # -> access-token
-    re_path(route=r'^list-scores/?$',view=views.ScoreListView.as_view(),name='list-scores'), 
+    re_path(route=r'^list-scores/?(?:(?P<pk>\d+))?/?$',view=views.ScoreListView.as_view(),name='list-scores'), 
 ]

@@ -30,6 +30,16 @@ class QuizUserManager(BaseUserManager):
         return self.create_user(username, email, password, **extra_fields)
 
 
+class UserSettingsModel(models.Model):
+    quiz = models.ManyToManyField(to=QuizModel)
+    quiz_size = models.PositiveIntegerField(default=10) # Number of questions per quiz
+    time_to_answer = models.PositiveIntegerField(default=30)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self) -> str:
+        return f'User: {self.user.username}'
+
+
 class UserModel(AbstractBaseUser, PermissionsMixin):
     objects = QuizUserManager()
 
@@ -39,6 +49,7 @@ class UserModel(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=32, unique=True)
     email = models.EmailField(max_length=255, unique=True)
     avatar = models.ImageField(upload_to='', blank=True, null=True)
+    settings = models.OneToOneField(to=UserSettingsModel, related_name='user', on_delete=models.CASCADE, null=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -61,15 +72,4 @@ class UserModel(AbstractBaseUser, PermissionsMixin):
         if self.avatar:
             return self.avatar.url
         return None
-
-
-class UserSettingsModel(models.Model):
-    quiz = models.ManyToManyField(to=QuizModel)
-    user = models.OneToOneField(to=UserModel, related_name='settings', on_delete=models.CASCADE, null=True)
-    quiz_size = models.PositiveIntegerField(default=10) # Number of questions per quiz
-    time_to_answer = models.PositiveIntegerField(default=30)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self) -> str:
-        return f'User: {self.user}'
 

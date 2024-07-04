@@ -22,13 +22,16 @@ class UserUpdateView(APIView, UserUtilities):
 
         try:
             for field in request.data:
-                if body[field] == "":
+                if body[field] in ["", "is_active", "is_staff"]: # Security
                     del body[field]
-            
-            # body_str = request.data.get('json')
-            # body = json.loads(body_str)
+
+            # body_querydict = request.data
+            # body_dict = body_querydict.dict()
+            # body = {}
+            # for key, value in body_dict.items():
+            #     body.update(json.loads(value))
             # for field in body:
-            #     if body[field] == '':
+            #     if body[field] in ["", "is_active", "is_staff"]: # Security
             #         del body[field]
 
         except Exception as e:

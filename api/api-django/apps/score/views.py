@@ -1,7 +1,7 @@
 from django.http import HttpRequest
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.status import HTTP_201_CREATED, HTTP_400_BAD_REQUEST 
+from rest_framework.status import HTTP_200_OK, HTTP_201_CREATED, HTTP_400_BAD_REQUEST 
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.pagination import PageNumberPagination
 from ..quiz.models import QuizModel
@@ -57,7 +57,12 @@ class ScoreListView(APIView, UserUtilities):
     pagination_class = PageNumberPagination
     http_method_names = ['get',]
 
-    def get(self, request: HttpRequest, **kwargs) -> Response:
+    def get(self, request: HttpRequest, pk: int = None, **kwargs) -> Response:
+        if pk:
+            score_model = self.total_score_model.objects.get(pk=pk)
+            score_serializer = self.total_score_serializer(instance=score_model)
+            return Response(data=score_serializer.data, status=HTTP_200_OK)
+        
         score_queryset = self.total_score_model.objects.all().order_by('id')
         data = self.paginate(request, score_queryset, **kwargs)
         return Response(**data)

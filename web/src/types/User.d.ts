@@ -3,6 +3,7 @@ type UserProps = {
   email: string;
   username: string;
   email: string;
+  settings: UserSettingsProps;
   get_avatar_url: string | null;
   get_total_score: number;
   is_active: boolean;
@@ -11,8 +12,10 @@ type UserProps = {
   updated_at: Date;
 };
 
-type Score = {
-  quizId: number;
-  totalQuestions: number;
-  correctAnswers: number;
+type UserSettingsProps = {
+  id: number;
+  quiz: number[];
+  quiz_size: number;
+  time_to_answer: number;
+  updated_at: Date;
 };

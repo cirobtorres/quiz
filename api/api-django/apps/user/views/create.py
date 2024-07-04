@@ -22,6 +22,7 @@ class UserRegisterView(APIView, UserUtilities):
 
         if user_serializer.is_valid():
             user_serializer.save()
+
             return Response(data={'message': 'User created', }, status=HTTP_201_CREATED)
 
         return Response(data={'message': user_serializer.errors}, status=HTTP_400_BAD_REQUEST)
