@@ -11,14 +11,15 @@ from rest_framework.status import (
 )
 from ..serializers import QuizSerializer
 from ..models import QuizModel
+from .tools import QuizTools
 
 
-class QuizView(APIView):
+class QuizView(APIView, QuizTools):
     quiz_serializer = QuizSerializer
     quiz_model = QuizModel
     http_method_names = ['get', 'post', 'put', 'delete', ]
 
-    def get(self, request: HttpRequest, pk: str = None) -> Response:
+    def get(self, request: HttpRequest, pk: str = None, **kwargs) -> Response:
         if pk:
             try:
                 quiz_model = self.quiz_model.objects.get(pk=pk)
@@ -27,17 +28,16 @@ class QuizView(APIView):
                 return Response(data={'message': 'Quiz not found'}, status=HTTP_404_NOT_FOUND)
             quiz_serializer = self.quiz_serializer(instance=quiz_model)
             return Response(data=quiz_serializer.data, status=HTTP_200_OK)
-
-        quiz_model = self.quiz_model.objects.all()
-        quiz_serializer = self.quiz_serializer(instance=quiz_model, many=True)
-
-        return Response(data=quiz_serializer.data, status=HTTP_200_OK)
+        
+        quiz_queryset = self.get_queryset(order_by=('-id', 'subject'))
+        data = self.paginate(request, quiz_queryset, **kwargs)
+        return Response(**data)
 
     def post(self, request: HttpRequest) -> Response:
-        quiz_subject = request.data.get('subject')
+        body = request.data.dict().copy()
 
         try :
-            quiz = self.quiz_model(subject=quiz_subject)
+            quiz = self.quiz_model(**body)
             quiz.save()
         except IntegrityError as e:
             # print('-x' * 35 + '-\n', e.__class__.__name__, ': ', e, '\n', '*' * 70, '\n', sep='') 

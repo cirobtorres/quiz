@@ -101,19 +101,15 @@ class UserUtilities(UserToken):
             >>> get_queryset(order_by='id')
         
         Ex: Sorting by multiple fields:
-
-        Correct:
             >>> get_queryset(order_by=('id', 'username', 'last_login'))
-
-        Wrong (FieldError):
-            >>> get_queryset(order_by=['id', 'username', 'last_login']) 
+            >>> get_queryset(order_by=['id', 'username', 'last_login'])
         """
         queryset = self.user_model.objects.all()
         if kwargs.get('order_by'):
             order_by = kwargs.get('order_by')
-            if type(order_by) == tuple:
-                return queryset.order_by(*order_by)  # if tuple
-            return queryset.order_by(order_by)  # if string
+            if hasattr(order_by, '__iter__'):
+                return queryset.order_by(*tuple(order_by)) 
+            return queryset.order_by(order_by) 
         return queryset
     
     def get_user(self):
@@ -151,7 +147,7 @@ class UserUtilities(UserToken):
 
             results = paginator.paginate_queryset(queryset, request)
 
-            # This method is not intended to be used with combined querysets (querysets of multiple models)
+            # This method is not intended to be used with combined querysets (querysets of multiple models at once)
             if isinstance(queryset.first(), self.user_model):
                 serializer = self.user_serializer(results, many=True)
 
@@ -204,8 +200,4 @@ class UserUtilities(UserToken):
             },
             'status': HTTP_200_OK
         }
-
-
-
-
 

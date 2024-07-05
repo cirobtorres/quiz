@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = False or os.getenv('DEBUG')
-DATA_DIR = BASE_DIR.parent.parent / 'data' / 'web' if not DEBUG else BASE_DIR.parent.parent / 'web' / 'public' 
+DATA_DIR = BASE_DIR.parent.parent / 'data' / 'web'
 
 ALLOWED_HOSTS = [h.strip() for h in os.getenv('ALLOWED_HOSTS', '').split(',') if h.strip()]
 
@@ -161,14 +161,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-MEDIA_URL = 'media/' if not DEBUG else 'images/user/examplesDevMode/' # Here is the url path where django ImageField points towards to 
-MEDIA_ROOT = os.path.join(DATA_DIR, 'static', 'media') if not DEBUG else os.path.join(DATA_DIR, 'images', 'user', 'examplesDevMode') # Here is the path where django ImageField effectively saves the file
+MEDIA_ROOT = os.path.join(DATA_DIR, 'static', 'media') # Path where django ImageField saves 
+MEDIA_URL = 'media/' # URL path where django ImageField points towards to 
 
-STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(DATA_DIR, 'static')
+STATIC_URL = 'static/'
 
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+

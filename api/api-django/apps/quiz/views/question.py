@@ -19,6 +19,7 @@ class QuestionView(APIView, QuestionTools):
         Returns a single question, if passed a primary key as an argument, or a list of questions if no primary key is given.
 
         Possible URLs:
+            - http://127.0.0.1:8000/api/quiz -> all quizes
             - http://127.0.0.1:8000/api/quiz/question -> 10 random questions from all quizes
             - http://127.0.0.1:8000/api/quiz/question?size=5 -> 5 random questions from all quizes
             - http://127.0.0.1:8000/api/quiz/question?quiz=1 -> 10 random questions from quiz=1

@@ -25,21 +25,12 @@ class UserUpdateView(APIView, UserUtilities):
                 if body[field] in ["", "is_active", "is_staff"]: # Security
                     del body[field]
 
-            # body_querydict = request.data
-            # body_dict = body_querydict.dict()
-            # body = {}
-            # for key, value in body_dict.items():
-            #     body.update(json.loads(value))
-            # for field in body:
-            #     if body[field] in ["", "is_active", "is_staff"]: # Security
-            #         del body[field]
-
         except Exception as e:
             # print('-x' * 35 + '-\n', e.__class__.__name__, ': ', e, '\n', '*' * 70, '\n', sep='') 
             return Response(data={'message': 'Invalid fetched data', }, status=HTTP_400_BAD_REQUEST)
 
         try:
-            not_valid = user_model.get('invalid')
+            not_valid = user_model.get('invalid') 
             if not_valid:
                 return Response(**not_valid)
         

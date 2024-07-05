@@ -14,18 +14,7 @@ from ..models import AnswerModel
 
 
 class AnswerView(APIView, AnswerTools):
-    # http_method_names = ['get', 'post', 'put', ]
     http_method_names = ['post', 'put', ]
-
-    # def get(self, request: HttpRequest, pk: str = None) -> Response:
-    #     """Returns a single answer based on its given id"""
-    #     try:
-    #         answer_model = self.get_object(pk=pk)
-    #     except ObjectDoesNotExist as e:
-    #         # print('-x' * 35 + '-\n', e.__class__.__name__, ': ', e, '\n', '*' * 70, '\n', sep='') 
-    #         return Response(data={'message': 'Answer not found'}, status=HTTP_404_NOT_FOUND)
-    #     answer_serializer = self.answer_serializer(instance=answer_model)
-    #     return Response(data=answer_serializer.data, status=HTTP_200_OK)
 
     def post(self, request: HttpRequest) -> Response:
         """

@@ -1,29 +1,48 @@
+from django.conf import settings
 from random import seed, shuffle
+from datetime import datetime
 from django.db import models
 from django.utils.text import slugify
-from django.contrib.auth import get_user_model
+
+
+DEBUG = settings.DEBUG
 
 
 class QuizModel(models.Model):
     subject = models.CharField(max_length=65)
+    description = models.CharField(max_length=155)
+    image = models.ImageField(upload_to='quiz' if not DEBUG else 'quiz/devMode', blank=True, null=True)
     slug = models.SlugField(max_length=255, unique=True)
+    theme = models.CharField(max_length=20)
     private = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     
     def __str__(self):
         return self.subject
     
     def save(self, *args, **kwargs):
         self.slug = slugify(self.subject)
-        super(QuizModel, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
+    
+    def get_image_url(self) -> str:
+        if self.image:
+            return self.image.url
+        return None
 
 
 class QuestionModel(models.Model):
     quiz = models.ForeignKey(to=QuizModel, related_name="questions", on_delete=models.CASCADE, null=True, blank=True)
     text = models.CharField(max_length=400) # TODO: change max_length to 135 in the future
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.text
+    
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        self.quiz.updated_at = self.updated_at
+        self.quiz.save()
     
     def get_shuffled_answers(self, seed_number: int = None) -> 'list[AnswerModel]':
         """
@@ -52,5 +71,4 @@ class AnswerModel(models.Model):
 
     def __str__(self) -> str:
         return self.text
-
 

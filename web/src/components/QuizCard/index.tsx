@@ -5,7 +5,6 @@ interface QuizCardProps {
   image?: { src: string; alt: string };
   title: string;
   description?: string;
-  link: string;
   options?: {
     theme?: string;
     border?: string;
@@ -16,18 +15,14 @@ interface QuizCardProps {
   };
 }
 
-export default function Quiz({
+export default function QuizCard({
   image,
   title,
   description,
-  link,
   options,
 }: QuizCardProps) {
   return (
-    <Link
-      href={link}
-      className="flex flex-col w-full max-w-72 min-w-52 h-[30rem] max-h-[30rem] shadow-darker rounded-xl overflow-hidden cursor-pointer"
-    >
+    <section className="flex flex-col w-full max-w-72 min-w-52 h-[30rem] max-h-[30rem] shadow-darker rounded-xl overflow-hidden cursor-pointer transition-all duration-200 hover:-translate-y-1">
       {image && (
         <>
           <div className="relative flex-[2_2_0] p-3 bg-slate-500">
@@ -67,19 +62,13 @@ export default function Quiz({
           </p>
         )}
       </div>
-    </Link>
+    </section>
   );
 }
 
-export function InlineQuiz({
-  title,
-  description,
-  link,
-  options,
-}: QuizCardProps) {
+export function InlineQuiz({ title, description, options }: QuizCardProps) {
   return (
-    <Link
-      href={link}
+    <section
       className="flex flex-col justify-center items-start size-32 p-3 shadow-darker rounded-full overflow-hidden cursor-pointer"
       style={{
         backgroundColor: options?.theme ?? "#1e293b",
@@ -104,6 +93,6 @@ export function InlineQuiz({
           {description}
         </p>
       )}
-    </Link>
+    </section>
   );
 }

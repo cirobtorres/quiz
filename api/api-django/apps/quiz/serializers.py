@@ -5,7 +5,22 @@ from .models import QuizModel, QuestionModel, AnswerModel
 class QuizSerializer(ModelSerializer):
     class Meta:
         model = QuizModel
-        fields = 'id', 'subject', 'slug', 'private', 'created_at', 
+        fields = (
+            'id', 
+            'subject', 
+            'description', 
+            'get_image_url', 
+            'slug', 
+            'theme', 
+            'private', 
+            'created_at', 
+            'updated_at', 
+        )
+
+    get_image_url = SerializerMethodField()
+
+    def get_image_url(self, instance):
+        return instance.get_image_url()
 
 
 class QuestionSerializer(ModelSerializer):

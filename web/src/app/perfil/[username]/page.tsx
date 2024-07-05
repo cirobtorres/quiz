@@ -39,7 +39,7 @@ export default function ProfilePage() {
     <div className="w-[80%] my-8">
       <button
         className={`w-40 py-3 px-8 rounded-t-xl ${
-          switchPage === "Profile" ? "bg-slate-200" : "bg-slate-400"
+          switchPage === "Profile" ? "bg-slate-200" : "bg-slate-600"
         }
       `}
         onClick={() => setSwitchPage("Profile")}
@@ -48,7 +48,7 @@ export default function ProfilePage() {
       </button>
       <button
         className={`w-40 py-3 px-8 rounded-t-xl ${
-          switchPage === "Quiz" ? "bg-slate-200" : "bg-slate-400"
+          switchPage === "Quiz" ? "bg-slate-200" : "bg-slate-600"
         }
       `}
         onClick={() => setSwitchPage("Quiz")}
@@ -72,7 +72,7 @@ export default function ProfilePage() {
 
 const GrayFolderBackground = () => {
   return (
-    <div className="absolute inset-0 rounded-xl rounded-tl-none bg-slate-400 -z-10" />
+    <div className="absolute inset-0 rounded-xl rounded-tl-none bg-slate-600 -z-10" />
   );
 };
 
@@ -248,20 +248,19 @@ const UserQuizSettingsPage = () => {
           <h2 className="text-2xl font-extrabold text-slate-800">
             Seus quizes salvos
           </h2>
-          <div
-            className={`
-            w-full h-full rounded-xl overflow-auto bg-white 
-            [&>div:not(:last-child)]:border-b [&_div:not(:last-child)]:border-slate-200
-          `}
-          >
-            <QuizListItem />
-            <QuizListItem />
-            <QuizListItem />
-            <QuizListItem />
-            <QuizListItem />
-            <QuizListItem />
-            <QuizListItem />
-            <QuizListItem />
+          <div className={`w-full h-full overflow-auto p-1`}>
+            <div className="[&>div:not(:last-child)]:border-b [&_div:not(:last-child)]:border-slate-100 overflow-hidden">
+              <QuizListItem />
+              <QuizListItem />
+              <QuizListItem />
+              <QuizListItem />
+              <QuizListItem />
+              <QuizListItem />
+              <QuizListItem />
+              <QuizListItem />
+              <QuizListItem />
+              <QuizListItem />
+            </div>
           </div>
           <Pagination />
         </div>

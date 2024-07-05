@@ -1,27 +1,23 @@
 import os
 import json
-from datetime import datetime
+from django.core.files import File
 from random import shuffle, seed
-from typing import List, Dict, Union, TypedDict, Iterable, NewType
+from typing import List, Dict, Union, TypedDict, Iterable
 
 from django.utils.text import slugify
-from django.db.models import QuerySet
 
 from ..models import QuestionModel, AnswerModel, QuizModel
 
 
 __doc__ = """This module contains functions to start an empty database with questions and answers."""
 __all__ = [
-    'get_list_of_paths',
-    'convert_list_of_json_to_dict',
-    'save_dict_to_database',
-    'populate_database',
+    'get_list_of_paths', 
+    'convert_list_of_json_to_dict', 
+    'save_image_from_path', 
+    'save_questions', 
+    'save_quiz', 
+    'populate_database', 
 ]
-
-
-class Quiz(TypedDict):
-    subject: str
-    slug: str
 
 
 class Answer(TypedDict):
@@ -32,6 +28,15 @@ class Answer(TypedDict):
 class Question(TypedDict):
     question_text: str
     answers: List[Answer]
+
+
+class Quiz(TypedDict):
+    subject: str
+    description: str
+    image_path: str
+    theme: str
+    slug: str
+    questions: List[Question]
 
 
 def get_list_of_paths(**kwargs: str | tuple[str]) -> list[str]:
@@ -62,19 +67,28 @@ def get_list_of_paths(**kwargs: str | tuple[str]) -> list[str]:
 def convert_list_of_json_to_dict(json_path) -> dict[str]:
     """Converts a list of ".json" files into a list of dictionaries."""
 
-    list_from_json: list[dict] = list()
+    list_from_json: list[dict] = []
 
     for json_file in json_path:
         with open(file=json_file, mode='r', encoding='utf-8') as file:
             try:
                 list_from_json.append(json.load(file))
-            except:
-                pass
+            except json.JSONDecodeError as e:
+                print(f"Error decoding JSON from file {json_file}: {e}")
 
     return list_from_json
 
 
-def save_question_to_database(quiz: int | Quiz, questions: Question | Iterable[Question], **kwargs) -> None:
+def save_image_from_path(instance, image_path):
+    if os.path.exists(image_path):
+        with open(image_path, 'rb') as f:
+            django_file = File(f)
+            instance.image.save(os.path.basename(image_path), django_file, save=True)
+    else:
+        print(f'Image path does not exist: {image_path}')
+
+
+def save_questions(quiz: int | Quiz, questions: Question | List[Question], **kwargs) -> None:
     """
     Saves "questions" to database. 
     "questions" must be of a "Question" type or an iterable (list or dict) of "Question" types.
@@ -108,7 +122,7 @@ def save_question_to_database(quiz: int | Quiz, questions: Question | Iterable[Q
         save_question(questions)
 
 
-def save_questions_and_quiz_to_database(data: Union[Quiz, List[Question]], **kwargs) -> None:
+def save_quiz(data: Quiz, **kwargs) -> None:
     """
     Saves "questions" to the database by creating a "quiz" object when not yet saved. 
     "questions" must be of a "Question" type or an iterable (list or dict) of "Question" types. 
@@ -124,12 +138,19 @@ def save_questions_and_quiz_to_database(data: Union[Quiz, List[Question]], **kwa
     quiz_queryset = QuizModel.objects.filter(slug=quiz_slug)
 
     if not quiz_queryset.exists():
-        quiz = QuizModel.objects.create(**quiz_dict)
-        quiz.save()
+        quiz_image = quiz_dict.pop('image_file_name')
+        if quiz_image:
+            abs_path = 'api-django\\apps\\quiz\\questions\\quiz_images'
+            path = os.path.join(os.getcwd(), abs_path, quiz_image)
+            quiz = QuizModel(**quiz_dict)
+            save_image_from_path(quiz, path)
+            quiz.save()
+        else:
+            print('No image path provided for quiz')
     else:
-        quiz = QuizModel.objects.get(slug=quiz_slug)
+        quiz = quiz_queryset.get()
 
-    save_question_to_database(quiz, questions_list, **kwargs)
+    save_questions(quiz, questions_list, **kwargs)
 
 
 def populate_database(**kwargs) -> None:
@@ -150,5 +171,5 @@ def populate_database(**kwargs) -> None:
     dict_obj = convert_list_of_json_to_dict(paths)
 
     for item in dict_obj:
-        save_questions_and_quiz_to_database(item)
+        save_quiz(item)
 

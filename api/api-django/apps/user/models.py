@@ -1,6 +1,10 @@
+from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
 from ..quiz.models import QuizModel
+
+
+DEBUG = settings.DEBUG
 
 
 class QuizUserManager(BaseUserManager):
@@ -48,7 +52,7 @@ class UserModel(AbstractBaseUser, PermissionsMixin):
 
     username = models.CharField(max_length=32, unique=True)
     email = models.EmailField(max_length=255, unique=True)
-    avatar = models.ImageField(upload_to='', blank=True, null=True)
+    avatar = models.ImageField(upload_to='user/avatar' if not DEBUG else 'user/devMode', blank=True, null=True)
     settings = models.OneToOneField(to=UserSettingsModel, related_name='user', on_delete=models.CASCADE, null=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
