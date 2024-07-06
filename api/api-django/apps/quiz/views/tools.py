@@ -28,6 +28,8 @@ class QuizTools:
             >>> get_queryset(order_by=('id', 'subject', 'updated_at'))
             >>> get_queryset(order_by=['id', 'subject', 'updated_at'])
         """
+        if not self.quiz_model.objects.exists():
+            populate_database()
         queryset = self.quiz_model.objects.all()
         if kwargs.get('order_by'):
             order_by = kwargs.get('order_by')
@@ -110,8 +112,6 @@ class QuestionTools:
         return self.question_model.objects.get(**kwargs)
 
     def get_queryset(self, quiz: list[int] = None, size: int = None) -> QuerySet[QuestionModel]:
-        if not self.question_model.objects.exists():
-            populate_database()
         if quiz:
             return self.question_model.objects.filter(quiz__id__in=quiz).order_by('?')[:size or 10]
         return self.question_model.objects.order_by('?')[:size or 10]

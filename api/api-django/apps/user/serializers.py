@@ -28,6 +28,8 @@ class UserSerializer(ModelSerializer):
             'password', 
             'avatar', 
             'settings', 
+            'total_score',
+            'get_last_score_id',
             'get_avatar_url', 
             'get_score', 
             'is_active', 
@@ -42,10 +44,14 @@ class UserSerializer(ModelSerializer):
         }
     
     get_avatar_url = SerializerMethodField()
+    get_last_score_id = SerializerMethodField()
     settings = UserSettingsSerializer(required=False)
 
     def get_avatar_url(self, instance):
         return instance.get_avatar_url()
+
+    def get_last_score_id(self, instance):
+        return instance.get_last_score_id()
     
     def is_valid(self, *, raise_exception=False): 
         try:

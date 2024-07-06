@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = False or os.getenv('DEBUG')
-DATA_DIR = BASE_DIR.parent.parent / 'data' / 'web'
+DATA_DIR = BASE_DIR.parent.parent / 'data' / 'web' if not DEBUG else BASE_DIR.parent.parent / 'web' / 'public' 
 
 ALLOWED_HOSTS = [h.strip() for h in os.getenv('ALLOWED_HOSTS', '').split(',') if h.strip()]
 
@@ -161,8 +161,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-MEDIA_ROOT = os.path.join(DATA_DIR, 'static', 'media') # Path where django ImageField saves 
-MEDIA_URL = 'media/' # URL path where django ImageField points towards to 
+# Path where django ImageField saves 
+MEDIA_ROOT = os.path.join(DATA_DIR, 'static', 'media') if not DEBUG else DATA_DIR
+
+# URL path where django ImageField points towards to 
+MEDIA_URL = 'media/' if not DEBUG else 'images/' 
 
 STATIC_ROOT = os.path.join(DATA_DIR, 'static')
 STATIC_URL = 'static/'

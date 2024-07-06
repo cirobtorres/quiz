@@ -20,17 +20,20 @@ class TotalScoreModel(models.Model):
     def __str__(self) -> str: 
         return f'TotalScoreModel id= {self.id}, Score: {self.get_score()} Quizes: {self.scores}' 
     
-    def get_score(self) -> float | None:
+    def get_score(self) -> float:
+        if self.get_total() > 0:
+            return 100 * self.get_corrects() / self.get_total()
+        return 0
+    
+    def get_total(self) -> float:
         scores = self.scores.all()
         if scores:
-            return sum(score.get_score() for score in scores) / self.scores.count()
-        return None
+            return sum(score.total for score in scores) if scores.count() > 0 else None
+        return 0
     
-    def get_total(self) -> float | None:
+    def get_corrects(self) -> float:
         scores = self.scores.all()
-        return sum(score.total for score in scores) if scores.count() > 0 else None
-    
-    def get_corrects(self) -> float | None:
-        scores = self.scores.all()
-        return sum(score.corrects for score in scores) if scores.count() > 0 else None
+        if scores:
+            return sum(score.corrects for score in scores) if scores.count() > 0 else None
+        return 0
 

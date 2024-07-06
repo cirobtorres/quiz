@@ -18,7 +18,7 @@ export default function Body({
       className={`${theme} ${fontFamily} min-h-svh bg-gradient-to-tr from-slate-400 to-slate-200`}
     >
       <UpperWave />
-      <div className="w-full max-w-webpage mx-auto h-full min-h-screen flex flex-col justify-center items-center">
+      <div className="w-full mx-auto h-full min-h-screen flex flex-col justify-center items-center">
         {children}
       </div>
       {pathname === "/" ? <Footer /> : null}

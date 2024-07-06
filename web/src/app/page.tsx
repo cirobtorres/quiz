@@ -1,17 +1,28 @@
 import { FaStar } from "react-icons/fa";
 import Avatar from "@/components/Avatar";
-import { InlineQuiz } from "@/components/QuizCard";
+import QuizCard from "@/components/QuizCard";
 import Link from "next/link";
-import QuizCardGrid from "../components/QuizGrid";
+import getQuiz from "@/libs/getQuiz";
+import { Suspense } from "react";
+import Loading from "@/components/Loading";
+import Presentation from "@/components/Presentation";
 
-export default function HomePage() {
+export default async function HomePage() {
   return (
     <>
       <HomePageHeader />
       <main className="w-full flex flex-col justify-center mb-auto">
         <Presentation />
-        {/* <QuizBalloons /> */}
-        <QuizCardGrid />
+        <QuizBalloons />
+        <Suspense
+          fallback={
+            <div className="max-w-webpage mx-auto flex justify-center items-center">
+              <Loading />
+            </div>
+          }
+        >
+          <QuizCardGrid />
+        </Suspense>
       </main>
     </>
   );
@@ -19,7 +30,7 @@ export default function HomePage() {
 
 const HomePageHeader = () => {
   return (
-    <header className="w-full relative py-4 mb-20">
+    <header className="w-full max-w-webpage relative py-4 mb-20">
       <div className="relative">
         <h1 className="bg-gradient-to-r from-slate-950 to-slate-600 bg-clip-text">
           <span className="text-transparent text-7xl font-extrabold font-sans">
@@ -43,87 +54,89 @@ const HomePageHeader = () => {
   );
 };
 
-const Presentation = () => {
-  return (
-    <article className="w-1/2 flex flex-col gap-4 mb-10">
-      <div>
-        <h2 className="text-4xl font-extrabold text-slate-800">
-          Cadastre-se para criar quizes totalmente personalizados e
-          compartilhá-los com outras pessoas!
-        </h2>
-      </div>
-      <div>
-        <p className="text-xl text-slate-800">
-          O quiz é composto por questões que têm quatro alternativas de resposta
-          cada, e que devem ser respondidas dentro de um limite pré-determinado
-          de tempo.
-        </p>
-      </div>
-      <div className="flex gap-4">
-        <Link
-          href="/entrar"
-          className="flex-1 text-xl text-center text-slate-800 p-4 rounded-full bg-slate-200 transition-all hover:bg-slate-300"
-        >
-          Entrar
-        </Link>
-        <Link
-          href="/criar-conta"
-          className="flex-1 text-xl text-center text-slate-100 p-4 rounded-full bg-slate-800"
-        >
-          Criar Conta
-        </Link>
-      </div>
-    </article>
-  );
-};
-
-const QuizBalloons = () => {
-  return (
-    <div className="flex justify-between gap-4 mb-12 mx-20">
-      <InlineQuiz
-        title="Quiz Rápido!"
-        options={{
-          theme: "#93c5fd",
-          border: "6px solid #3b82f6",
-          titleAlign: "text-center",
-          textAlign: "text-center",
-        }}
-      />
-      <InlineQuiz
-        title="Sem limite de tempo!"
-        options={{
-          theme: "#fda4af",
-          border: "6px solid #f43f5e",
-          titleAlign: "text-center",
-          textAlign: "text-center",
-        }}
-      />
-      <InlineQuiz
-        title="Quiz Rápido!"
-        options={{
-          theme: "#bef264",
-          border: "6px solid #84cc16",
-          titleAlign: "text-center",
-          textAlign: "text-center",
-        }}
-      />
-      <InlineQuiz
-        title="Configurar"
-        options={{
-          theme: "#fde047",
-          border: "6px solid #eab308",
-          titleAlign: "text-center",
-          textAlign: "text-center",
-        }}
-      />
-    </div>
-  );
-};
-
 const User = () => {
   return (
     <div className="absolute flex items-center justify-center right-40 top-1/2 -translate-y-1/2 gap-8 z-[999]">
       <Avatar />
     </div>
+  );
+};
+
+const QuizBalloons = () => {
+  return (
+    <section className="w-full py-20 mb-12 bg-slate-300">
+      <div className="max-w-webpage mx-auto">
+        <div className="mb-10">
+          <h2 className="text-5xl text-center font-extrabold text-slate-800">
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iusto sit
+            earum rerum impedit tenetur? Ullam sunt dolorem amet porro.
+          </h2>
+        </div>
+        <div className="flex justify-between gap-4">
+          <Link
+            href="/quiz"
+            className="flex-1 p-8 rounded-xl transition-all duration-200 hover:-translate-y-1 hover:bg-slate-400"
+          >
+            <h3 className="text-2xl text-center font-extrabold text-slate-800">
+              Quiz rápido
+            </h3>
+            <span>
+              Jogue um quiz com questões aleatórias de diversos temas com limite
+              de tempo de resposta de 30 segundos para cada questão.
+            </span>
+          </Link>
+          <Link
+            href="/"
+            className="flex-1 p-8 rounded-xl transition-all duration-200 hover:-translate-y-1 hover:bg-slate-400"
+          >
+            <h3 className="text-2xl text-center font-extrabold text-slate-800">
+              Quiz sem limite de tempo
+            </h3>
+            <span>
+              Jogue um quiz com questões aleatórias de diversos temas sem limite
+              de tempo de resposta!
+            </span>
+          </Link>
+          <Link
+            href="/"
+            className="flex-1 p-8 rounded-xl transition-all duration-200 hover:-translate-y-1 hover:bg-slate-400"
+          >
+            <h3 className="text-2xl text-center font-extrabold text-slate-800">
+              Configurar quiz
+            </h3>
+            <span>
+              Configure e salve um quiz com suas preferências e escolha os temas
+              de questão, o limite de tempo de resposta, o número de questões e
+              mais!
+            </span>
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const QuizCardGrid = async () => {
+  await new Promise((resolve) => setTimeout(resolve, 6000));
+  const quizArray: QuizAPI = await getQuiz();
+  return (
+    <section className="max-w-webpage mx-auto my-2">
+      <div className="grid grid-cols-4 gap-4">
+        {quizArray.results.map((quiz) => {
+          return (
+            <QuizCard
+              key={quiz.id}
+              image={{
+                src: quiz.get_image_url,
+                alt: quiz.slug,
+              }}
+              title={quiz.subject}
+              description={quiz.description}
+              theme={quiz.theme}
+            />
+          );
+        })}
+      </div>
+    </section>
   );
 };

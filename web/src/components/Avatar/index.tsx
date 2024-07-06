@@ -208,7 +208,7 @@ const SignedInAvatarBox = ({
         left: left,
       }}
       layout
-      className="w-96 absolute top-[140%] rounded-3xl bg-gradient-to-bl from-gray-200 to-gray-300"
+      className="w-96 absolute top-[140%] rounded-3xl bg-slate-200"
     >
       <motion.div variants={itemVariants} className="flex p-2">
         <span className="flex-1 ml-10 text-center">{user.getEmail}</span>
@@ -256,11 +256,11 @@ const SignedInAvatarBox = ({
       </motion.div>
       <motion.div
         variants={itemVariants}
-        className="w-3/4 flex mx-auto gap-1 m-4"
+        className="w-3/4 flex mx-auto gap-1 m-4 mb-12"
       >
         <Link
           href={`/perfil/${user.getUsername}`}
-          className="w-full flex-1 flex justify-center gap-2 p-4 rounded-l-full bg-gray-200 hover:bg-gray-100" // group
+          className="w-full flex-1 flex justify-center gap-2 p-4 rounded-l-full border border-slate-300 transition-all duration-200 bg-slate-300 hover:bg-slate-200" // group
         >
           Perfil{" "}
           <div className="w-6 h-6 relative">
@@ -277,22 +277,22 @@ const SignedInAvatarBox = ({
         <button
           type="button"
           onClick={handleLogout}
-          className="w-full flex-1 flex items-center gap-2 text-center p-4 rounded-r-full bg-gray-200 hover:bg-gray-100"
+          className="w-full flex-1 flex items-center gap-2 text-center p-4 rounded-r-full border border-slate-300 transition-all duration-200 bg-slate-300 hover:bg-slate-200"
         >
           <IoExitOutline size={25} /> Sair
         </button>
       </motion.div>
-      <motion.div
+      {/* <motion.div
         variants={itemVariants}
         className="w-3/4 mx-auto flex gap-1 pb-4 text-xs"
       >
-        <button className="flex-1 p-1 text-right hover:bg-white">
+        <button className="flex-1 p-1 rounded text-right bg-slate-200 hover:bg-slate-100">
           Política de privacidade
         </button>
-        <button className="flex-1 p-1 text-left hover:bg-white">
+        <button className="flex-1 p-1 rounded text-left bg-slate-200 hover:bg-slate-100">
           Termos de serviço
         </button>
-      </motion.div>
+      </motion.div> */}
     </motion.div>
   );
 };

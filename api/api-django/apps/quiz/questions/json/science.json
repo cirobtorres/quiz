@@ -1,0 +1,32 @@
+{
+  "quiz": {
+    "subject": "Ciência",
+    "description": "Astrofísica, biologia, ",
+    "image_file_name": "science-1183x887.png",
+    "theme": "#172554",
+    "slug": "ciencia"
+  },
+  "questions": [
+    {
+      "question_text": "",
+      "answers": [
+        {
+          "text": "",
+          "is_correct": true
+        },
+        {
+          "text": "",
+          "is_correct": false
+        },
+        {
+          "text": "",
+          "is_correct": false
+        },
+        {
+          "text": "",
+          "is_correct": false
+        }
+      ]
+    }
+  ]
+}

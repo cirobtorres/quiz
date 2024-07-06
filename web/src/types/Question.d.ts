@@ -16,6 +16,7 @@ type QuizProps = {
   id: number;
   subject: string;
   description: string;
+  image: any;
   get_image_url: string;
   slug: string;
   theme: string;

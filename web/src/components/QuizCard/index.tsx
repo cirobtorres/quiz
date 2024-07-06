@@ -5,94 +5,44 @@ interface QuizCardProps {
   image?: { src: string; alt: string };
   title: string;
   description?: string;
-  options?: {
-    theme?: string;
-    border?: string;
-    titleColor?: string;
-    textColor?: string;
-    titleAlign?: string;
-    textAlign?: string;
-  };
+  theme: string;
 }
 
 export default function QuizCard({
   image,
   title,
   description,
-  options,
+  theme,
 }: QuizCardProps) {
   return (
-    <section className="flex flex-col w-full max-w-72 min-w-52 h-[30rem] max-h-[30rem] shadow-darker rounded-xl overflow-hidden cursor-pointer transition-all duration-200 hover:-translate-y-1">
-      {image && (
-        <>
-          <div className="relative flex-[2_2_0] p-3 bg-slate-500">
-            <Image
-              src={image.src}
-              alt={image.alt}
-              fill
-              sizes="(max-width: 768px) 100vw, 33vw"
-              className="absolute object-cover"
-            ></Image>
-          </div>
-          <hr />
-        </>
-      )}
-      <div
-        className="flex-1 p-3"
-        style={{
-          backgroundColor: options?.theme ?? "#1e293b",
-        }}
-      >
-        <h2
-          className={`${options?.titleAlign} font-extrabold text-xl`}
-          style={{
-            color: options?.titleColor ?? "#fff",
-          }}
-        >
-          {title}
-        </h2>
-        {description && (
-          <p
-            className={`${options?.textAlign} text-sm`}
-            style={{
-              color: options?.textColor ?? "#fff",
-            }}
-          >
-            {description}
-          </p>
+    <Link href="quiz">
+      <article className="flex flex-col w-full max-w-72 min-w-52 h-[30rem] max-h-[30rem] shadow-darker rounded-xl overflow-hidden cursor-pointer transition-all duration-200 hover:-translate-y-1">
+        {image && (
+          <>
+            <div className="relative flex-[2_2_0] p-3 bg-slate-500">
+              <Image
+                src={image.src}
+                alt={image.alt}
+                fill
+                sizes="(max-width: 768px) 100vw, 33vw"
+                className="absolute object-cover"
+              ></Image>
+            </div>
+            <hr />
+          </>
         )}
-      </div>
-    </section>
-  );
-}
-
-export function InlineQuiz({ title, description, options }: QuizCardProps) {
-  return (
-    <section
-      className="flex flex-col justify-center items-start size-32 p-3 shadow-darker rounded-full overflow-hidden cursor-pointer"
-      style={{
-        backgroundColor: options?.theme ?? "#1e293b",
-        border: options?.border ?? "",
-      }}
-    >
-      <h2
-        className={`${options?.titleAlign} font-extrabold text-xl uppercase`}
-        style={{
-          color: options?.titleColor ?? "#fff",
-        }}
-      >
-        {title}
-      </h2>
-      {description && (
-        <p
-          className={`${options?.textAlign} text-sm`}
+        <div
+          className="flex-1 p-3"
           style={{
-            color: options?.textColor ?? "#fff",
+            backgroundColor: theme ?? "#1e293b",
           }}
         >
-          {description}
-        </p>
-      )}
-    </section>
+          <h2 className="text-slate-100 font-extrabold text-xl">{title}</h2>
+          {description && (
+            <p className="text-slate-100 text-sm">{description}</p>
+          )}
+        </div>
+      </article>
+    </Link>
   );
 }

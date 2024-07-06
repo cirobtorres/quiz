@@ -7,6 +7,8 @@ export class User {
   private avatar?: string | null;
   private settings: UserSettings;
   private score: number;
+  private scoreIds: number[];
+  private lastScoreId: number;
   private isActive: boolean;
   private lastLogin: Date;
   private createdAt: Date;
@@ -19,6 +21,8 @@ export class User {
     avatar: string | null = null,
     settings: UserSettings,
     score: number,
+    scoreIds: number[],
+    lastScoreId: number,
     isActive: boolean,
     lastLogin: Date,
     createdAt: Date,
@@ -30,6 +34,8 @@ export class User {
     this.avatar = avatar;
     this.settings = settings;
     this.score = score;
+    this.scoreIds = scoreIds;
+    this.lastScoreId = lastScoreId;
     this.isActive = isActive;
     this.lastLogin = lastLogin;
     this.createdAt = createdAt;
@@ -58,6 +64,14 @@ export class User {
 
   get getScore() {
     return this.score;
+  }
+
+  get getScoreIds() {
+    return this.scoreIds;
+  }
+
+  get getLastScoreId() {
+    return this.lastScoreId;
   }
 
   get getIsActive() {
@@ -95,7 +109,9 @@ export class User {
       obj.username,
       obj.get_avatar_url,
       UserSettings.create(obj.settings),
-      obj.get_total_score,
+      obj.get_score,
+      obj.total_score,
+      obj.get_last_score_id,
       obj.is_active,
       obj.last_login,
       new Date(obj.created_at),

@@ -1,7 +1,7 @@
-type Score = {
-  quizId: number;
-  totalQuestions: number;
-  correctAnswers: number;
+type ScoreProps = {
+  quiz_id: number;
+  total_questions: number;
+  correct_answers: number;
 };
 
 type PartialScoreProps = {

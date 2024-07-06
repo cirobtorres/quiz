@@ -6,6 +6,7 @@ class PartialScoreSerializer(ModelSerializer):
     class Meta:
         model = PartialScoreModel
         fields = 'id', 'quiz', 'total', 'corrects', 'get_score', 'created_at', 
+        read_only_fields = 'get_score', 
 
     get_score = SerializerMethodField() 
 

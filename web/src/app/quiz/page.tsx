@@ -11,21 +11,6 @@ import Skip from "@/components/Skip";
 import QuestionIndex from "@/components/QuestionIndex";
 import postScore from "@/libs/postScore";
 
-type ScoreRequest = {
-  quizId: number;
-  totalQuestions: number;
-  correctAnswers: number;
-};
-
-type ScoreResponse = {
-  score: {
-    scoreIds: number[];
-    scorePercentage: number;
-    totalQuestions: number;
-    correctAnswers: number;
-  };
-};
-
 export default function QuizPage() {
   const { user, loading: userLoading } = useUser();
 
@@ -53,28 +38,28 @@ export default function QuizPage() {
     }
   };
 
-  const navToScore = async (scores: ScoreRequest[]) => {
-    const scoreResponse: ScoreResponse = await postScore(scores);
-    router.push(`/quiz/score/${scoreResponse.score.scoreIds}`);
+  const navToScore = async (scores: ScoreProps[]) => {
+    const score: TotalScoreProps = await postScore(scores);
+    router.push("/quiz/score/");
   };
 
   const calculateScore = () => {
-    const scores: Score[] = [];
+    const scores: ScoreProps[] = [];
 
     questions.current.map((question) => {
       const scoreIndex = scores.findIndex(
-        (score) => score.quizId === question.getQuizId
+        (score) => score.quiz_id === question.getQuizId
       );
       const quizNotSavedYet = scoreIndex === -1;
       if (quizNotSavedYet) {
         scores.push({
-          quizId: question.getQuizId,
-          totalQuestions: 1,
-          correctAnswers: question.getSelected ? 1 : 0,
+          quiz_id: question.getQuizId,
+          total_questions: 1,
+          correct_answers: question.getSelected ? 1 : 0,
         });
       } else {
-        scores[scoreIndex].totalQuestions += 1;
-        scores[scoreIndex].correctAnswers += question.getSelected ? 1 : 0;
+        scores[scoreIndex].total_questions += 1;
+        scores[scoreIndex].correct_answers += question.getSelected ? 1 : 0;
       }
     });
 

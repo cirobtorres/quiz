@@ -90,7 +90,7 @@ export const PasswordRules = ({
       {password1 && (
         <>
           <span
-            className="flex justify-center items-center h-full text-white text-xs rounded-md p-1 shadow-xl cursor-pointer"
+            className="flex justify-center items-center text-nowrap h-full text-white text-xs rounded-md p-1 shadow-xl cursor-pointer"
             style={{
               backgroundColor: password1 === password2 ? "#22c55e" : "#ef4444",
             }}
@@ -98,7 +98,7 @@ export const PasswordRules = ({
             Confirmação de Senha
           </span>
           <span
-            className="flex justify-center items-center h-full text-white text-xs rounded-md p-1 shadow-xl cursor-pointer"
+            className="flex justify-center items-center text-nowrap h-full text-white text-xs rounded-md p-1 shadow-xl cursor-pointer"
             style={{
               backgroundColor: password1.length >= 8 ? "#22c55e" : "#ef4444",
             }}
@@ -106,7 +106,7 @@ export const PasswordRules = ({
             &gt; 8 caracteres
           </span>
           <span
-            className="flex justify-center items-center h-full text-white text-xs rounded-md p-1 shadow-xl cursor-pointer"
+            className="flex justify-center items-center text-nowrap h-full text-white text-xs rounded-md p-1 shadow-xl cursor-pointer"
             style={{
               backgroundColor: /[A-Z]/.test(password1) ? "#22c55e" : "#ef4444",
             }}
@@ -114,7 +114,7 @@ export const PasswordRules = ({
             Maiúscula
           </span>
           <span
-            className="flex justify-center items-center h-full text-white text-xs rounded-md p-1 shadow-xl cursor-pointer"
+            className="flex justify-center items-center text-nowrap h-full text-white text-xs rounded-md p-1 shadow-xl cursor-pointer"
             style={{
               backgroundColor: /[a-z]/.test(password1) ? "#22c55e" : "#ef4444",
             }}
@@ -122,7 +122,7 @@ export const PasswordRules = ({
             Minúscula
           </span>
           <span
-            className="flex justify-center items-center h-full text-white text-xs rounded-md p-1 shadow-xl cursor-pointer"
+            className="flex justify-center items-center text-nowrap h-full text-white text-xs rounded-md p-1 shadow-xl cursor-pointer"
             style={{
               backgroundColor: /\d/.test(password1) ? "#22c55e" : "#ef4444",
             }}
@@ -130,7 +130,7 @@ export const PasswordRules = ({
             Dígito
           </span>
           <span
-            className="flex justify-center items-center h-full text-white text-xs rounded-md p-1 shadow-xl cursor-pointer"
+            className="flex justify-center items-center text-nowrap h-full text-white text-xs rounded-md p-1 shadow-xl cursor-pointer"
             style={{
               backgroundColor: /[^\w]/.test(password1) ? "#22c55e" : "#ef4444",
             }}

@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.db import models
+from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
 from ..quiz.models import QuizModel
 
@@ -71,6 +72,12 @@ class UserModel(AbstractBaseUser, PermissionsMixin):
             return round(sum_scores / quizes_completed, 1)
         else:
             return 0.0
+    
+    def get_last_score_id(self) -> int | None:
+        try:
+            return self.total_score.latest('id').id
+        except ObjectDoesNotExist as e:
+            return None
     
     def get_avatar_url(self) -> str:
         if self.avatar:
