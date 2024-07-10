@@ -24,8 +24,8 @@ class URLsUserTestCase(APITestCase):
         )
     
     def test_token_access_url(self):
-        url_expected = self.app_name + 'token-access'
-        url_reversed = rest_reverse(viewname='user:token-access')
+        url_expected = self.app_name + 'login-access'
+        url_reversed = rest_reverse(viewname='user:login-access')
 
         self.assertEqual(
             url_expected,
@@ -33,8 +33,8 @@ class URLsUserTestCase(APITestCase):
         )
     
     def test_token_refresh_url(self):
-        url_expected = self.app_name + 'token-refresh'
-        url_reversed = rest_reverse(viewname='user:token-refresh')
+        url_expected = self.app_name + 'login-refresh'
+        url_reversed = rest_reverse(viewname='user:login-refresh')
 
         self.assertEqual(
             url_expected,

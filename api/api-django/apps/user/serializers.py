@@ -37,8 +37,8 @@ class UserSerializer(ModelSerializer):
         read_only_fields = (
             'id', 
             'avatar', 
-            'get_score', 
-            'is_active', 
+            'get_score_percentage', 
+            'get_last_score_id', 
             'last_login', 
             'created_at', 
             'updated_at', 
@@ -51,4 +51,28 @@ class UserSerializer(ModelSerializer):
 
     def get_last_score_id(self, instance):
         return instance.get_last_score_id()
+
+
+class UserListSerializer(ModelSerializer):
+    class Meta:
+        model = get_user_model()
+        fields = (
+            'id', 
+            'email', 
+            'username', 
+            'avatar', # One-to-Many
+            'settings', # One-to-Many
+            'scores', # Mant-to-many
+            'is_active', 
+            'last_login', 
+            'created_at', 
+            'updated_at', 
+        )
+        read_only_fields = (
+            'id', 
+            'avatar', 
+            'last_login', 
+            'created_at', 
+            'updated_at', 
+        )
 

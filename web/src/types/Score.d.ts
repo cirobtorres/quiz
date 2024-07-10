@@ -9,7 +9,7 @@ type PartialScoreProps = {
   quiz: number;
   total: number;
   corrects: number;
-  created_at: Date;
+  created_at: string;
 };
 
 type TotalScoreProps = {

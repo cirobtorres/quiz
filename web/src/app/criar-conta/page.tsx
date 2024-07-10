@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { isValid } from "../../functions";
-import SubmitButton from "../../components/SubmitButton";
+import { motion } from "framer-motion";
 import useUser from "../../hooks/useUser";
 import PasswordInput, {
   PasswordRules,
@@ -104,6 +104,26 @@ export default function SignupPage() {
     </div>
   );
 }
+
+const SubmitButton = ({
+  text,
+  onSubmit,
+}: {
+  text: string;
+  onSubmit: (event: React.MouseEvent<HTMLElement>) => void;
+}) => {
+  return (
+    <motion.button
+      whileTap={{ scale: 1 }}
+      whileHover={{ scale: 1.02 }}
+      transition={{ type: "spring", bounce: 0.5, duration: 0.5 }}
+      className="flex-1 mx-auto w-full max-w-[50%] font-extrabold h-12 text-lg rounded-xl outline-none text-white bg-blue-700"
+      onClick={(event) => onSubmit(event)}
+    >
+      {text}
+    </motion.button>
+  );
+};
 
 const RedirectButton = () => {
   const router = useRouter();

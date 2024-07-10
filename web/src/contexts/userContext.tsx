@@ -5,7 +5,7 @@ import { JwtPayload, jwtDecode } from "jwt-decode";
 import Cookies from "js-cookie";
 import getUserData from "../libs/getUserData";
 import refreshSession from "../libs/refreshSession";
-import loginUser from "../libs/loginUser";
+import loginUser, { logoutUser } from "../libs/loginUser";
 import registerUser from "../libs/registerUser";
 import User from "@/models/User";
 import { updateUser } from "../libs/updateUser";
@@ -104,6 +104,7 @@ export function UserProvider(props: any) {
   const logout = async () => {
     try {
       setLoading(true);
+      await logoutUser();
       await session(null);
     } catch (error) {
       throw new Error(`Error during logout. ${error}`);

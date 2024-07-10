@@ -8,9 +8,9 @@ type UserProps = {
   get_score_percentage: number;
   get_last_score_id: number;
   is_active: boolean;
-  last_login: Date;
-  created_at: Date;
-  updated_at: Date;
+  last_login: string;
+  created_at: string;
+  updated_at: string;
 };
 
 type UserSettingsProps = {
@@ -18,5 +18,5 @@ type UserSettingsProps = {
   quiz: number[];
   quiz_size: number;
   time_to_answer: number;
-  updated_at: Date;
+  updated_at: string;
 };

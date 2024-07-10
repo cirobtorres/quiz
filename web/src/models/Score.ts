@@ -10,13 +10,13 @@ class PartialScore {
     quizId: number,
     total: number,
     corrects: number,
-    createdAt: Date
+    createdAt: string
   ) {
     this.id = id;
     this.quizId = quizId;
     this.total = total;
     this.corrects = corrects;
-    this.createdAt = createdAt;
+    this.createdAt = new Date(createdAt);
   }
 
   get getId() {

@@ -19,28 +19,28 @@ export default class User {
     id: number,
     email: string,
     username: string,
-    avatar: MediaApp | null = null,
-    settings: UserSettings,
+    avatar: MediaProps | null = null,
+    settings: UserSettingsProps,
     scores: number[],
     scorePercentage: number,
     lastScoreId: number,
     isActive: boolean,
-    lastLogin: Date,
-    createdAt: Date,
-    updatedAt: Date
+    lastLogin: string,
+    createdAt: string,
+    updatedAt: string
   ) {
     this.id = id;
     this.email = email;
     this.username = username;
-    this.avatar = avatar;
-    this.settings = settings;
+    this.avatar = avatar ? MediaApp.create(avatar) : null;
+    this.settings = UserSettings.create(settings);
     this.scores = scores;
     this.scorePercentage = scorePercentage;
     this.lastScoreId = lastScoreId;
     this.isActive = isActive;
-    this.lastLogin = lastLogin;
-    this.createdAt = createdAt;
-    this.updatedAt = updatedAt;
+    this.lastLogin = new Date(lastLogin);
+    this.createdAt = new Date(createdAt);
+    this.updatedAt = new Date(updatedAt);
   }
 
   get getId() {
@@ -100,37 +100,19 @@ export default class User {
   }
 
   static create(obj: UserProps) {
-    try {
-      return new User(
-        obj.id,
-        obj.email,
-        obj.username,
-        MediaApp.create(obj.avatar),
-        UserSettings.create(obj.settings),
-        obj.scores,
-        obj.get_score_percentage,
-        obj.get_last_score_id,
-        obj.is_active,
-        obj.last_login,
-        new Date(obj.created_at),
-        new Date(obj.updated_at)
-      );
-    } catch (error) {
-      // obj.avatar = null -> TypeError (user has no avatar)
-    }
     return new User(
       obj.id,
       obj.email,
       obj.username,
-      null,
-      UserSettings.create(obj.settings),
+      obj.avatar,
+      obj.settings,
       obj.scores,
       obj.get_score_percentage,
       obj.get_last_score_id,
       obj.is_active,
       obj.last_login,
-      new Date(obj.created_at),
-      new Date(obj.updated_at)
+      obj.created_at,
+      obj.updated_at
     );
   }
 }

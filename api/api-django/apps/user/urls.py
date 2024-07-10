@@ -9,8 +9,9 @@ app_name = 'user'
 urlpatterns = [
     re_path(route=r'^list/?$',view=views.UserListView.as_view(),name='list'),
     re_path(route=r'^register/?$',view=views.UserRegisterView.as_view(),name='register'),
-    re_path(route=r'^token-access/?$', view=views.UserLoginView.as_view(), name='token-access'), # login
-    re_path(route=r'^token-refresh/?$',view=TokenRefreshView.as_view(),name='token-refresh'), # refresh-token
+    re_path(route=r'^logout/?$', view=views.UserLogoutView.as_view(), name='logout'), # login
+    re_path(route=r'^login-access/?$', view=views.UserLoginView.as_view(), name='login-access'), # login
+    re_path(route=r'^login-refresh/?$',view=TokenRefreshView.as_view(),name='login-refresh'), # refresh-token
     re_path(route=r'^token-verify/?$',view=TokenVerifyView.as_view(),name='token-verify'), # access-token (on body)
     re_path(route=r'^update/?$',view=views.UserUpdateView.as_view(),name='update'), # -> access-token
     re_path(route=r'^get-data/?$',view=views.UserDataView.as_view(),name='get-data'), # -> access-token

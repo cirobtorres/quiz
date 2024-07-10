@@ -19,8 +19,8 @@ export default class Quiz {
     slug: string,
     theme: string,
     isPrivate: boolean,
-    createdAt: Date,
-    updatedAt: Date
+    createdAt: string,
+    updatedAt: string
   ) {
     this.id = id;
     this.subject = subject;
@@ -29,8 +29,8 @@ export default class Quiz {
     this.slug = slug;
     this.theme = theme;
     this.isPrivate = isPrivate;
-    this.createdAt = createdAt;
-    this.updatedAt = updatedAt;
+    this.createdAt = new Date(createdAt);
+    this.updatedAt = new Date(updatedAt);
   }
 
   get getId() {

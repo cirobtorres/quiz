@@ -55,7 +55,7 @@ export default function AvatarNavBar({
               <FaCamera
                 className={`
                   absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 pointer-events-none text-transparent 
-                  group-hover:opacity-75 group-hover:text-white group-hover:text-opacity-75 transition ease-in duration-300 text-3xl
+                  group-hover:opacity-75 group-hover:text-white group-hover:text-opacity-75 transition ease-in duration-300 text-6xl
                 `}
               />
             </>
@@ -185,7 +185,7 @@ const ImageModal = ({
             <Loading />
           </div>
         )}
-        <div className="flex flex-col gap-3 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 rounded-[2rem] p-8 border border-white shadow-xl bg-slate-400">
+        <div className="flex flex-col gap-3 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 rounded-[2rem] p-8 border border-white shadow-xl bg-slate-200">
           <div className="flex justify-between items-center">
             <span className="text-xl font-sans uppercase text-slate-800">
               Foto de Perfil
@@ -233,9 +233,16 @@ const ImageModal = ({
               />
             )}
           </div>
-          <div className="flex gap-1">
+          {user.getAvatar && (
+            <div className="mx-auto">
+              <span className="text-xs text-slate-600">
+                Última troca em {user.getAvatar.getUpdatedAt}
+              </span>
+            </div>
+          )}
+          <div className="flex flex-col gap-1">
             <button
-              className="font-extrabold py-2 w-full rounded-xl text-blue-950 bg-blue-500 cursor-pointer"
+              className="font-extrabold py-2 w-full rounded-xl text-white bg-blue-500 cursor-pointer"
               onClick={saveImage}
               disabled={loadingModal}
               style={{

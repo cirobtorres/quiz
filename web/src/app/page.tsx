@@ -14,7 +14,8 @@ export default async function HomePage() {
       <HomePageHeader />
       <main className="w-full flex flex-col justify-center mb-auto">
         <Presentation />
-        <QuizBalloons />
+        <QuickQuizCards />
+        <Forum />
         <Suspense
           fallback={
             <div className="max-w-webpage mx-auto flex justify-center items-center">
@@ -63,9 +64,9 @@ const User = () => {
   );
 };
 
-const QuizBalloons = () => {
+const QuickQuizCards = () => {
   return (
-    <section className="w-full py-20 mb-12 bg-slate-300">
+    <section className="w-full py-20">
       <div className="max-w-webpage mx-auto">
         <div className="mb-10">
           <h2 className="text-5xl text-center font-extrabold text-slate-800">
@@ -106,12 +107,32 @@ const QuizBalloons = () => {
               Configurar quiz
             </h3>
             <span>
-              Configure e salve um quiz com suas preferências e escolha os temas
-              de questão, o limite de tempo de resposta, o número de questões e
-              mais!
+              Configure e salve um quiz com suas preferências e escolha o número
+              e os temas das questões, o limite de tempo e mais!
             </span>
           </Link>
         </div>
+      </div>
+    </section>
+  );
+};
+
+const Forum = () => {
+  return (
+    <section className="w-full py-20 mb-20 bg-slate-300">
+      <div className="w-full max-w-webpage mx-auto">
+        <div className="mb-10">
+          <h2 className="text-5xl text-center font-extrabold text-slate-800">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam
+            repellat porro est quas sunt, ullam nostrum totam doloribus
+          </h2>
+        </div>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto
+          qui facere fugit fuga amet doloribus ducimus esse est dolor voluptatum
+          dolore itaque harum aliquam voluptatem pariatur modi mollitia, fugiat
+          id!
+        </p>
       </div>
     </section>
   );
@@ -122,6 +143,11 @@ const QuizCardGrid = async () => {
   const quizArray: QuizAPI = await getQuiz();
   return (
     <section className="max-w-webpage mx-auto my-2">
+      <div className="mb-10">
+        <h2 className="text-5xl text-center font-extrabold text-slate-800">
+          Quiz da comunidade!
+        </h2>
+      </div>
       <div className="grid grid-cols-4 gap-4">
         {quizArray.results.map((quiz) => {
           const quizModel = Quiz.create(quiz);

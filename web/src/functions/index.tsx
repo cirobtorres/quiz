@@ -14,3 +14,9 @@ export const randomizeBackground = () => {
     "linear-gradient(75deg, rgba(176,221,21,1) 0%, rgba(133,243,247,1) 100%)",
   ].sort(() => randomizer() - 5);
 };
+
+export const dateFormater = (dateObj: Date) => {
+  return `${dateObj.getDate()}/${("0" + (dateObj.getMonth() + 1)).slice(
+    -2
+  )}/${dateObj.getFullYear()}`;
+};

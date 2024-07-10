@@ -4,12 +4,13 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { isValid } from "../../functions";
 import PasswordInput from "../../components/Inputs/PasswordInput";
-import SubmitButton from "../../components/SubmitButton";
+import { motion } from "framer-motion";
 import useUser from "../../hooks/useUser";
 import { UnauthorizedException } from "../../exceptions/badcredentials.exceptions";
 import { UsernameInputA } from "../../components/Inputs/UsernameInputs";
 
 export default function SigninPage() {
+  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -18,6 +19,7 @@ export default function SigninPage() {
 
   const handleSignInSubmit = async (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
+    setLoading(true);
     try {
       if (isValid(email) || isValid(password)) {
         return;
@@ -31,6 +33,7 @@ export default function SigninPage() {
       }
       throw error;
     } finally {
+      setLoading(false);
       // setEmail("");
       // setPassword("");
     }
@@ -63,7 +66,11 @@ export default function SigninPage() {
             {error ? <span className="text-red-500">{error}</span> : null}
           </div>
           <div className="flex">
-            <SubmitButton text="Entrar" onSubmit={handleSignInSubmit} />
+            <SubmitButton
+              text="Entrar"
+              loading={loading}
+              onSubmit={handleSignInSubmit}
+            />
           </div>
         </form>
         <RedirectButton />
@@ -71,6 +78,29 @@ export default function SigninPage() {
     </div>
   );
 }
+
+const SubmitButton = ({
+  text,
+  loading,
+  onSubmit,
+}: {
+  text: string;
+  loading: boolean;
+  onSubmit: (event: React.MouseEvent<HTMLElement>) => void;
+}) => {
+  return (
+    <motion.button
+      disabled={loading}
+      whileTap={{ scale: 1 }}
+      whileHover={{ scale: 1.02 }}
+      transition={{ type: "spring", bounce: 0.5, duration: 0.5 }}
+      className="flex-1 mx-auto w-full max-w-[50%] font-extrabold h-12 text-lg rounded-xl outline-none text-white bg-blue-700"
+      onClick={(event) => onSubmit(event)}
+    >
+      {text}
+    </motion.button>
+  );
+};
 
 const RedirectButton = () => {
   const router = useRouter();

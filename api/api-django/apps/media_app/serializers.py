@@ -15,6 +15,8 @@ class UserImageSerializer(ModelSerializer):
             'type', 
             'width', 
             'height', 
+            'updated_at', 
+            'created_at', 
         )
         read_only_fields = (
             'id', 
@@ -23,6 +25,8 @@ class UserImageSerializer(ModelSerializer):
             'secure_url', 
             'url', 
             'type', 
+            'updated_at', 
+            'created_at', 
         ) 
 
 
@@ -39,6 +43,8 @@ class QuizImageSerializer(ModelSerializer):
             'type', 
             'width', 
             'height', 
+            'updated_at', 
+            'created_at', 
         )
         read_only_fields = (
             'id', 
@@ -47,5 +53,7 @@ class QuizImageSerializer(ModelSerializer):
             'secure_url', 
             'url', 
             'type', 
+            'updated_at', 
+            'created_at', 
         )
 

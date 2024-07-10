@@ -1,3 +1,5 @@
+import { dateFormater } from "@/functions";
+
 export default class MediaApp {
   private id: number;
   private assetId: string;
@@ -8,6 +10,8 @@ export default class MediaApp {
   private type: string;
   private width: number;
   private height: number;
+  private updatedAt: Date;
+  private createdAt: Date;
 
   constructor(
     id: number,
@@ -18,7 +22,9 @@ export default class MediaApp {
     url: string,
     type: string,
     width: number,
-    height: number
+    height: number,
+    updatedAt: string,
+    createdAt: string
   ) {
     this.id = id;
     this.assetId = assetId;
@@ -29,6 +35,8 @@ export default class MediaApp {
     this.type = type;
     this.width = width;
     this.height = height;
+    this.updatedAt = new Date(updatedAt);
+    this.createdAt = new Date(createdAt);
   }
 
   get getId() {
@@ -67,6 +75,14 @@ export default class MediaApp {
     return this.height;
   }
 
+  get getUpdatedAt() {
+    return dateFormater(this.updatedAt);
+  }
+
+  get getCreatedAt() {
+    return this.createdAt;
+  }
+
   static create(obj: MediaProps) {
     return new MediaApp(
       obj.id,
@@ -77,7 +93,9 @@ export default class MediaApp {
       obj.url,
       obj.type,
       obj.width,
-      obj.height
+      obj.height,
+      obj.updated_at,
+      obj.created_at
     );
   }
 }

@@ -8,4 +8,6 @@ type MediaProps = {
   type: string;
   width: number;
   height: number;
+  updated_at: string;
+  created_at: string;
 };

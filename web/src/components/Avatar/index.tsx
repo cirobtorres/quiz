@@ -194,10 +194,8 @@ const SignedInAvatarBox = ({
   const width = `${signedInAvatarBoxWidth}rem`;
 
   const handleLogout = () => {
-    if (logout) {
-      logout();
-      setIsOpen(false);
-    }
+    logout();
+    setIsOpen(false);
   };
 
   return (
@@ -276,13 +274,14 @@ const SignedInAvatarBox = ({
             />
           </div>
         </Link>
-        <button
+        <Link
           type="button"
+          href="/"
           onClick={handleLogout}
           className="w-full flex-1 flex items-center gap-2 text-center p-4 rounded-r-full border border-slate-300 transition-all duration-200 bg-slate-300 hover:bg-slate-200"
         >
           <IoExitOutline size={25} /> Sair
-        </button>
+        </Link>
       </motion.div>
     </motion.div>
   );

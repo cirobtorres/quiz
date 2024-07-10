@@ -1,24 +1,55 @@
 from django.http import HttpRequest
+from django.contrib.auth import authenticate, login, logout
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST, HTTP_401_UNAUTHORIZED
 from rest_framework.parsers import MultiPartParser
 from rest_framework.pagination import PageNumberPagination
 from rest_framework_simplejwt.views import TokenObtainPairView
-from rest_framework_simplejwt.exceptions import AuthenticationFailed
+from rest_framework_simplejwt.exceptions import AuthenticationFailed, TokenError
 from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework_simplejwt.tokens import RefreshToken
 from .tools import UserUtilities, UserPermissions
+from ..serializers import UserListSerializer
 
 
-class UserLoginView(UserUtilities, TokenObtainPairView):
+class UserLoginView(TokenObtainPairView):
+    http_method_names = ['post',]
+
     def post(self, request: HttpRequest, *args, **kwargs):
-        try:
-           # If user does not exists -> 401 Unauthorized
-            response = super().post(request, *args, **kwargs)
-            return response
+        try: # TokenObtainPairView: if user does not exists -> 401 Unauthorized
+            email, password = request.data.values()
+            user = authenticate(email=email, password=password) # -> user | None
+
+            if user is not None:
+                login(request, user)
+                # From now on, request.user.is_authenticated = True 
+
+                response = super().post(request, *args, **kwargs) 
+                # Django authentication is now passed on to simple-JWT tokens through request
+                # Now, request.user is no longer considered annonymous, and last_login is automatically updated
+
+                return response
+            
+            return Response(data={'message': 'Invalid username or password'}, status=HTTP_400_BAD_REQUEST)
+        
         except AuthenticationFailed as e:
             # print('-x' * 35 + '-\n', e, '\n', '*' * 70, '\n', sep='') 
-            return Response({'message': 'Invalid username or password', }, status=HTTP_401_UNAUTHORIZED)
+            return Response(data={'message': 'Invalid token', }, status=HTTP_401_UNAUTHORIZED)
+
+
+class UserLogoutView(APIView):
+    permission_classes = [UserPermissions]
+    http_method_names = ['post',]
+
+    def post(self, request: HttpRequest):
+        try:
+            token = RefreshToken(request.data.get('refresh')) # Raise a TokenError 
+            token.blacklist()
+            logout(request) # Doesn't throw an error
+            return Response(data={'message': 'User logged out'}, status=HTTP_200_OK)
+        except TokenError as e:
+            return Response(data={'message': 'Invalid or expired token'}, status=HTTP_401_UNAUTHORIZED)
 
 
 class UserDataView(APIView, UserUtilities):
@@ -47,9 +78,43 @@ class UserListView(APIView, UserUtilities):
     http_method_names = ['get']
 
     def get(self, request: HttpRequest, **kwargs) -> Response:
+        # user_queryset = self.get_queryset(order_by=('-id', 'username'))
+        # data = self.paginate(request, user_queryset, **kwargs)
+        # return Response(**data)
+    
         user_queryset = self.get_queryset(order_by=('-id', 'username'))
-        data = self.paginate(request, user_queryset, **kwargs)
-        return Response(**data)
+            
+        page = request.query_params.get('page', 1)
+        page_size = request.query_params.get('page_size', 10)
+
+        paginator = self.pagination_class()
+        paginator.page_size = page_size
+
+        results = paginator.paginate_queryset(user_queryset, request)
+
+        serializer = UserListSerializer(results, many=True)
+
+        return Response(data={
+                'results': serializer.data,
+                'paginator': {
+                    'current': int(page),
+                    'first': 1,
+                    'last': int(paginator.page.paginator.count),
+                    'page_size': int(paginator.page_size),
+                    'total_pages': paginator.page.paginator.num_pages,
+                    'previous': (
+                        paginator.get_previous_link()
+                        if paginator.get_previous_link() else None
+                    ),
+                    'next': (
+                        paginator.get_next_link()
+                        if paginator.get_next_link() else None
+                    ),
+                },
+                'error': False, 
+            }, 
+            status=HTTP_200_OK
+        )
 
 
 class UserCredentialsVerify(APIView, UserUtilities):
