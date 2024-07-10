@@ -6,6 +6,7 @@ import { Suspense, useEffect, useState } from "react";
 import useUser from "../../../hooks/useUser";
 import getScore from "../../../libs/getScore";
 import TotalScore from "@/models/Score";
+import Link from "next/link";
 
 export default function ScorePage() {
   const { user, loading } = useUser();
@@ -15,12 +16,15 @@ export default function ScorePage() {
   }
 
   return (
-    <main className="w-screen h-screen flex justify-center items-center bg-quiz">
+    <main className="w-screen h-screen flex flex-col justify-center items-center bg-quiz">
       {user && (
         <Suspense fallback={<Loading />}>
           <Scores scoreId={user.getLastScoreId} />
         </Suspense>
       )}
+      <Link href="/" className="">
+        Voltar
+      </Link>
     </main>
   );
 }
@@ -77,9 +81,11 @@ const Scores = ({ scoreId }: { scoreId: number }) => {
             options={{ textColor: "#500724", circleColor: "#ec4899" }}
           />
         </div>
-        <span className="text-3xl text-slate-100 font-extrabold">
-          {scoreText(score.getScorePercentage)}
-        </span>
+        <div className="mb-8">
+          <span className="text-3xl text-slate-100 font-extrabold">
+            {scoreText(score.getScorePercentage)}
+          </span>
+        </div>
       </div>
     )
   );
