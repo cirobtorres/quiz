@@ -2,10 +2,10 @@ type UserProps = {
   id: number;
   email: string;
   username: string;
-  get_avatar_url: string;
+  avatar: MediaProps;
   settings: UserSettingsProps;
-  get_score: number;
-  total_score: number[];
+  scores: number[];
+  get_score_percentage: number;
   get_last_score_id: number;
   is_active: boolean;
   last_login: Date;

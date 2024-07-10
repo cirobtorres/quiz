@@ -1,5 +1,6 @@
 from rest_framework.serializers import ModelSerializer, SerializerMethodField
 from .models import QuizModel, QuestionModel, AnswerModel
+from ..media_app.serializers import QuizImageSerializer
 
 
 class QuizSerializer(ModelSerializer):
@@ -9,18 +10,15 @@ class QuizSerializer(ModelSerializer):
             'id', 
             'subject', 
             'description', 
-            'get_image_url', 
+            'cover', 
             'slug', 
             'theme', 
-            'private', 
+            'is_private', 
             'created_at', 
             'updated_at', 
         )
 
-    get_image_url = SerializerMethodField()
-
-    def get_image_url(self, instance):
-        return instance.get_image_url()
+    cover = QuizImageSerializer(required=False)
 
 
 class QuestionSerializer(ModelSerializer):

@@ -7,13 +7,15 @@ from typing import List, Dict, Union, TypedDict, Iterable
 from django.utils.text import slugify
 
 from ..models import QuestionModel, AnswerModel, QuizModel
+from ...media_app.models import QuizImageModel
 
 
 __doc__ = """This module contains functions to start an empty database with questions and answers."""
 __all__ = [
     'get_list_of_paths', 
     'convert_list_of_json_to_dict', 
-    'save_image_from_path', 
+    'save_image_to_path', 
+    'save_image_to_cloudinary', 
     'save_questions', 
     'save_quiz', 
     'populate_database', 
@@ -79,13 +81,30 @@ def convert_list_of_json_to_dict(json_path) -> dict[str]:
     return list_from_json
 
 
-def save_image_from_path(instance, image_path):
+def save_image_to_path(instance, image_path):
     if os.path.exists(image_path):
         with open(image_path, 'rb') as f:
             django_file = File(f)
             instance.image.save(os.path.basename(image_path), django_file, save=True)
     else:
         print(f'Image path does not exist: {image_path}')
+
+def save_image_to_cloudinary(path_to_image):
+    cloudinary_image = QuizImageModel.save_image(path_to_image)
+    cover = QuizImageModel()
+
+    cover.asset_id = cloudinary_image.get('asset_id')
+    cover.public_id = cloudinary_image.get('public_id')
+    cover.filename = cloudinary_image.get('original_filename')
+    cover.secure_url = cloudinary_image.get('secure_url')
+    cover.url = cloudinary_image.get('url')
+    cover.type = cloudinary_image.get('format')
+    cover.width = cloudinary_image.get('width')
+    cover.height = cloudinary_image.get('height')
+
+    cover.save()
+    
+    return cover
 
 
 def save_questions(quiz: int | Quiz, questions: Question | List[Question], **kwargs) -> None:
@@ -137,18 +156,27 @@ def save_quiz(data: Quiz, **kwargs) -> None:
     quiz_slug = quiz_dict.get('slug', slugify(quiz_dict.get('subject')))
     quiz_queryset = QuizModel.objects.filter(slug=quiz_slug)
 
-    if not quiz_queryset.exists():
+    if quiz_queryset.exists():
+        quiz = quiz_queryset.get()
+        
+    else:
         quiz_image = quiz_dict.pop('image_file_name')
+        
         if quiz_image:
             abs_path = 'api-django\\apps\\quiz\\questions\\quiz_images'
-            path = os.path.join(os.getcwd(), abs_path, quiz_image)
+            path_to_image = os.path.join(os.getcwd(), abs_path, quiz_image)
             quiz = QuizModel(**quiz_dict)
-            save_image_from_path(quiz, path)
+            
+            # Save to folder 
+            # save_image_to_path(quiz, path_to_image) 
+            # quiz.save() 
+            
+            # Save to cloudinary 
+            cover = save_image_to_cloudinary(path_to_image)
+            quiz.cover = cover
             quiz.save()
         else:
             print('No image path provided for quiz')
-    else:
-        quiz = quiz_queryset.get()
 
     save_questions(quiz, questions_list, **kwargs)
 

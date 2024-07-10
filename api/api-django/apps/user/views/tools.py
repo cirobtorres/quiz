@@ -3,6 +3,7 @@ from typing import TypedDict, NewType, Dict, Any
 from django.contrib.auth import get_user_model
 from django.db.models import QuerySet
 from django.http import HttpRequest
+from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.permissions import BasePermission
 from rest_framework.status import (
     HTTP_200_OK, 
@@ -31,7 +32,7 @@ class QuizUser(TypedDict):
     updated_at: datetime
 
 
-class UserToken:
+class UserPermissions(BasePermission): 
     @staticmethod
     def validate_token(token) -> AccessToken: 
         """
@@ -45,22 +46,22 @@ class UserToken:
             return {}
     
     def extract_payload(self):
-        header = self.request.META
-        authorization = header['HTTP_AUTHORIZATION']
-        _, token = authorization.split(' ') # bearer, token
-
-        user = self.validate_token(token)
-
-        return user.payload
-
-
-class UserPermissions(BasePermission): 
+        try:
+            header = self.request.META
+            authorization = header['HTTP_AUTHORIZATION']
+            _, token = authorization.split(' ') # bearer, token
+            user = self.validate_token(token)
+            return user.payload
+        
+        except KeyError as e:
+            return None
+    
     def has_permission(self, request: HttpRequest, view):
         header = request.META
         authorization = header['HTTP_AUTHORIZATION']
         _, token = authorization.split(' ') # bearer, token
 
-        user = UserToken.validate_token(token)
+        user = self.validate_token(token)
         
         if user:
             return True
@@ -68,7 +69,7 @@ class UserPermissions(BasePermission):
         return False
 
 
-class UserUtilities(UserToken):
+class UserUtilities(UserPermissions):
     pagination_class = PageNumberPagination
     user_serializer = UserSerializer
     user_model = get_user_model()
@@ -114,9 +115,12 @@ class UserUtilities(UserToken):
     
     def get_user(self):
         user_model = self.extract_payload()
-        user_id = user_model.get('user_id', None)
 
-        if not user_id:
+        try:
+            user_id = user_model.get('user_id')
+            return self.get_object(pk=user_id)
+        
+        except AttributeError as e:
             return {
                 'invalid': {
                     'data': {'message': 'Invalid token'}, 
@@ -124,10 +128,8 @@ class UserUtilities(UserToken):
                     'error': True, 
                 }
             }
-
-        try:
-            return self.get_object(pk=user_id)
-        except self.user_model.DoesNotExist:
+        
+        except ObjectDoesNotExist as e:
             return {
                 'invalid': {
                     'data': {'message': 'User not found'}, 

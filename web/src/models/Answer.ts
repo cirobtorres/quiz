@@ -32,7 +32,7 @@ export default class Answer {
     return this.flipped;
   }
 
-  static create(obj: AnswerAPI) {
+  static create(obj: AnswerProps) {
     return new Answer(obj.id, obj.text, obj.is_correct);
   }
 }

@@ -3,6 +3,7 @@ from random import seed, shuffle
 from datetime import datetime
 from django.db import models
 from django.utils.text import slugify
+from ..media_app.models import QuizImageModel
 
 
 DEBUG = settings.DEBUG
@@ -11,10 +12,10 @@ DEBUG = settings.DEBUG
 class QuizModel(models.Model):
     subject = models.CharField(max_length=65)
     description = models.CharField(max_length=155)
-    image = models.ImageField(upload_to='quiz' if not DEBUG else 'quiz/devMode', blank=True, null=True)
+    cover = models.ForeignKey(to=QuizImageModel, on_delete=models.CASCADE,  blank=True, null=True)
     slug = models.SlugField(max_length=255, unique=True)
     theme = models.CharField(max_length=20)
-    private = models.BooleanField(default=False)
+    is_private = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
@@ -24,11 +25,6 @@ class QuizModel(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.subject)
         super().save(*args, **kwargs)
-    
-    def get_image_url(self) -> str:
-        if self.image:
-            return self.image.url
-        return None
 
 
 class QuestionModel(models.Model):

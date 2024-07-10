@@ -8,9 +8,7 @@ export default async function getQuestions(params?: {
     },
   });
   if (!response.ok) {
-    throw new Error(
-      `Failed during getQuestions: ${response.statusText} ${response.status}`
-    );
+    throw new Error(`${response.statusText} ${response.status}`);
   }
   return response.json();
 }

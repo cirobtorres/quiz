@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 import useUser from "../../../hooks/useUser";
 import getScore from "../../../libs/getScore";
+import TotalScore from "@/models/Score";
 
 export default function ScorePage() {
   const { user, loading } = useUser();
@@ -44,11 +45,12 @@ const scoreText = (scoreTotal: number) => {
 };
 
 const Scores = ({ scoreId }: { scoreId: number }) => {
-  const [score, setScore] = useState<TotalScoreProps | null>(null);
+  const [score, setScore] = useState<TotalScore | null>(null);
 
   const getScoreData = async () => {
     const scoreData = await getScore(scoreId);
-    setScore(scoreData);
+    const score = TotalScore.create(scoreData);
+    setScore(score);
   };
 
   useEffect(() => {
@@ -58,25 +60,25 @@ const Scores = ({ scoreId }: { scoreId: number }) => {
   return (
     score && (
       <div className="flex flex-col gap-4 items-center">
-        <div key={score.id} className="grid grid-cols-3 gap-4">
+        <div key={score.getId} className="grid grid-cols-3 gap-4">
           <ScoreCircle
             text="Questões"
-            value={score.get_total}
+            value={score.getTotalQuestions}
             options={{ textColor: "#172554", circleColor: "#3b82f6" }}
           />
           <ScoreCircle
             text="Corretas"
-            value={score.get_corrects}
+            value={score.getCorrectAnswers}
             options={{ textColor: "#3b0764", circleColor: "#a855f7" }}
           />
           <ScoreCircle
             text="Score Total"
-            value={`${score.get_score.toFixed(1)}%`}
+            value={`${score.getScorePercentage.toFixed(1)}%`}
             options={{ textColor: "#500724", circleColor: "#ec4899" }}
           />
         </div>
         <span className="text-3xl text-slate-100 font-extrabold">
-          {scoreText(score.get_score)}
+          {scoreText(score.getScorePercentage)}
         </span>
       </div>
     )

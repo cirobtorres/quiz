@@ -3,9 +3,8 @@ export default async function getQuiz() {
     method: "GET",
     headers: { "Content-Type": "application/json" },
   });
-  if (!response.ok)
-    throw new Error(
-      `Failed getting quiz objects: ${response.status} ${response.statusText}`
-    );
+  if (!response.ok) {
+    throw new Error(`${response.statusText} ${response.status}`);
+  }
   return await response.json();
 }

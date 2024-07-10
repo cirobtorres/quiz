@@ -18,9 +18,10 @@ from django.conf import settings
 from django.urls import path, re_path, include
 
 urlpatterns = [
-    path(route='api/user/', view=include('apps.user.urls')),
+    re_path(route=r'api/user/?', view=include('apps.user.urls')),
     re_path(route=r'api/quiz/?', view=include('apps.quiz.urls')),
-    path(route='api/score/', view=include('apps.score.urls')),
+    re_path(route=r'api/score/?', view=include('apps.score.urls')),
+    re_path(route=r'api/media-app/?', view=include('apps.media_app.urls')),
 ]
 
 if settings.DEBUG:
@@ -35,3 +36,4 @@ if settings.DEBUG:
         path(route='api-admin/', view=admin.site.urls),
         path(route='api-auth/', view=include('rest_framework.urls')),
     ]
+

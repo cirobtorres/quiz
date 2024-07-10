@@ -9,7 +9,7 @@ from ..quiz.models import QuizModel
 from ..user.views import UserUtilities, UserPermissions
 
 
-class ScoreView(APIView, UserPermissions, UserUtilities):
+class ScoreView(APIView, UserUtilities):
     authentication_classes = [JWTAuthentication]
     permission_classes = [UserPermissions]
     pagination_class = PageNumberPagination

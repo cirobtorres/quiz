@@ -33,8 +33,8 @@ class UserValidator:
     def clean_email(self) -> email:
         email = self.data.get('email')
         if email: # Email is optional to UserUpdateView
-            # TODO: code here ...
-            pass
+            if not search(r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$", email):
+                self.errors['email'].append('E-mail inválido')
         return email
     
     def clean_username(self) -> username:
@@ -70,5 +70,4 @@ class UserValidator:
             if not search(r'(?=.*[!@#$%&?*^~,.+=\-;:<>\[\]{}\(\)|/\\])', password):
                 self.errors['password'].append('A senha deve conter ao menos um caractere especial')
         return password
-
 

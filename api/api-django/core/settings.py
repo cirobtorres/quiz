@@ -8,44 +8,54 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
+
+# Deployment checklist
+# See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 """
 
 import os
+import cloudinary
 from pathlib import Path
 from datetime import timedelta
 from dotenv import load_dotenv
 
 load_dotenv()
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# Build paths inside the project like this: BASE_DIR / 'subdir'
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
-
 SECRET_KEY = os.getenv('SECRET_KEY')
-DEBUG = False or os.getenv('DEBUG')
+DEBUG = os.getenv('DEBUG') == 'True'
 DATA_DIR = BASE_DIR.parent.parent / 'data' / 'web' if not DEBUG else BASE_DIR.parent.parent / 'web' / 'public' 
 
 ALLOWED_HOSTS = [h.strip() for h in os.getenv('ALLOWED_HOSTS', '').split(',') if h.strip()]
 
 AUTH_USER_MODEL = 'user.UserModel'
 
+cloudinary.config(
+    cloud_name=os.getenv('CLOUDINARY_NAME'), 
+    api_key=os.getenv('CLOUDINARY_API_KEY'), 
+    api_secret=os.getenv('CLOUDINARY_API_SECRET'), 
+    secure=os.getenv('DEBUG') == 'True'
+)
+
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'corsheaders',
-    'rest_framework',
-    'rest_framework_simplejwt',
-    'rest_framework_simplejwt.token_blacklist',
-    'apps.user',
-    'apps.quiz',
-    'apps.score',
-]
+    'django.contrib.admin', 
+    'django.contrib.auth', 
+    'django.contrib.contenttypes', 
+    'django.contrib.sessions', 
+    'django.contrib.messages', 
+    'django.contrib.staticfiles', 
+    'cloudinary', 
+    'corsheaders', 
+    'rest_framework', 
+    'rest_framework_simplejwt', 
+    'rest_framework_simplejwt.token_blacklist', 
+    'apps.user', 
+    'apps.media_app', 
+    'apps.quiz', 
+    'apps.score', 
+] 
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -114,8 +124,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
-# Database
-# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
+# https://docs.djangoproject.com/en/5.0/ref/settings/#databases 
 
 DATABASES = {
     'default': {
@@ -132,7 +141,6 @@ DATABASES = {
     # }
 }
 
-# Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -150,29 +158,25 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# Internationalization
-# https://docs.djangoproject.com/en/5.0/topics/i18n/
+# Internationalization 
+# https://docs.djangoproject.com/en/5.0/topics/i18n/ 
 
 LANGUAGE_CODE = 'pt-br'
 TIME_ZONE = 'America/Sao_Paulo'
 USE_I18N = True
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.0/howto/static-files/
+# Static files (CSS, JavaScript, Images) 
+# https://docs.djangoproject.com/en/5.0/howto/static-files/ 
 
-# Path where django ImageField saves 
-MEDIA_ROOT = os.path.join(DATA_DIR, 'static', 'media') if not DEBUG else DATA_DIR
-
-# URL path where django ImageField points towards to 
-MEDIA_URL = 'media/' if not DEBUG else 'images/' 
+MEDIA_ROOT = os.path.join(DATA_DIR, 'static', 'media') if not DEBUG else DATA_DIR # Path where django ImageField saves 
+MEDIA_URL = 'media/' if not DEBUG else 'images/' # URL path where django ImageField points towards to 
 
 STATIC_ROOT = os.path.join(DATA_DIR, 'static')
 STATIC_URL = 'static/'
 
-
 # Default primary key field type
-# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
+# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 

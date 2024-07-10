@@ -1,4 +1,4 @@
-export class UserSettings {
+export default class UserSettings {
   private id: number;
   private quizIds: number[]; // Many to many field
   private quizSize: number; // Number of questions

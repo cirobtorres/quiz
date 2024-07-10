@@ -39,7 +39,7 @@ export default function SigninPage() {
   return (
     <div className="fixed top-0 bottom-0 right-0 w-1/2 flex flex-col justify-center bg-slate-200 py-8">
       <header className="w-1/2 mx-auto mb-4">
-        <h1 className="text-slate-900 text-3xl text-center font-extrabold">
+        <h1 className="text-slate-900 text-4xl text-center font-extrabold font-sans uppercase">
           Login
         </h1>
       </header>

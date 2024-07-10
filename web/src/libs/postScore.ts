@@ -10,7 +10,7 @@ export default async function postScore(score: ScoreProps[]) {
     body: JSON.stringify({ score }),
   });
   if (!response.ok) {
-    throw response.statusText;
+    throw new Error(`${response.statusText} ${response.status}`);
   }
   return await response.json();
 }

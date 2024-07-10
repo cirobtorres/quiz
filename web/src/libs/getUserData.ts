@@ -15,9 +15,7 @@ export default async function getUserData({
     },
   });
   if (!response.ok) {
-    throw new Error(
-      `Failed user data: ${response.statusText} ${response.status}`
-    );
+    throw new Error(`${response.statusText} ${response.status}`);
   }
   return await response.json();
 }

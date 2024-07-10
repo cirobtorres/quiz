@@ -11,9 +11,7 @@ export default async function refreshSession() {
     }),
   });
   if (!response.ok) {
-    throw new Error(
-      `Failed refreshing token: ${response.statusText} ${response.status}`
-    );
+    throw new Error(`${response.statusText} ${response.status}`);
   }
   return response;
 }

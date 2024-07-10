@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 
-export default function LoginPasswordInput({
+export default function PasswordInput({
   id,
   label,
   value,
@@ -43,7 +43,7 @@ export default function LoginPasswordInput({
   ];
 
   return (
-    <div className="flex h-full w-full flex-col">
+    <div className="flex w-full flex-col">
       <div className={"relative"}>
         <input
           id={id}

@@ -1,52 +1,56 @@
 import json
 from django.http import HttpRequest
+from django.core.exceptions import ValidationError
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
-from rest_framework.parsers import MultiPartParser
+from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from .tools import UserUtilities, UserPermissions
+from ..validators import UserValidator
 
 
-class UserUpdateView(APIView, UserUtilities):
-    authentication_classes = [JWTAuthentication]
-    permission_classes = [UserPermissions]
-    parser_classes = (MultiPartParser,)
-    http_method_names = ['put',]
+class UserUpdateView(APIView, UserUtilities): 
+    authentication_classes = [JWTAuthentication] 
+    permission_classes = [UserPermissions] 
+    parser_classes = (MultiPartParser, FormParser, JSONParser,) 
+    http_method_names = ['put',] 
 
-    def put(self, request: HttpRequest) -> Response:
-        user_model = self.get_user()
+    def put(self, request: HttpRequest) -> Response: 
+        user_model = self.get_user() 
 
-        body = request.data.dict().copy()
-
-        try:
-            for field in request.data:
-                if body[field] in ["", "is_active", "is_staff"]: # Security
-                    del body[field]
-
-        except Exception as e:
-            # print('-x' * 35 + '-\n', e.__class__.__name__, ': ', e, '\n', '*' * 70, '\n', sep='') 
-            return Response(data={'message': 'Invalid fetched data', }, status=HTTP_400_BAD_REQUEST)
-
-        try:
+        try: # TODO: rework this method
             not_valid = user_model.get('invalid') 
-            if not_valid:
-                return Response(**not_valid)
+            if not_valid: 
+                return Response(**not_valid) 
         
-        except AttributeError as e:
+        except AttributeError as e: 
             # print('-x' * 35 + '-\n', e.__class__.__name__, ': ', e, '\n', '*' * 70, '\n', sep='') 
-            user_serializer = self.user_serializer(instance=user_model)
-        
-        user_serializer = self.user_serializer(instance=user_model, data=body, partial=True)
-        
-        if user_serializer.is_valid():
-            user_serializer.save()
-            user = user_serializer.instance
-            refresh = RefreshToken.for_user(user)
-            access = AccessToken.for_user(user)
+            pass
 
-            return Response(data={'refresh': str(refresh), 'access': str(access), }, status=HTTP_200_OK)
-    
-        return Response(data={'message': user_serializer.errors, }, status=HTTP_400_BAD_REQUEST)
+        try:
+            UserValidator(request.data)
+
+            for field in request.data: 
+                if request.data[field] in ["", "is_active", "is_staff"]: # Security 
+                    del request.data[field] 
+                try:
+                    if getattr(user_model, field):
+                        setattr(user_model, field, request.data[field])
+                except AttributeError as e:
+                    pass
+
+        except ValidationError as e:
+            # print('-x' * 35 + '-\n', e.__class__.__name__, ': ', e, '\n', '*' * 70, '\n', sep='') 
+            return Response(status=HTTP_400_BAD_REQUEST)
+        
+        user_model.save(commit=False)
+        user_model.set_password(user_model.password)
+        user_model.save()
+
+        refresh = RefreshToken.for_user(user_model) 
+        access = AccessToken.for_user(user_model) 
+
+        return Response(data={'refresh': str(refresh), 'access': str(access), }, status=HTTP_200_OK)
 

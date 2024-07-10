@@ -1,13 +1,14 @@
-import { UserSettings } from "./UserSettings";
+import MediaApp from "./MediaApp";
+import UserSettings from "./UserSettings";
 
-export class User {
+export default class User {
   private id: number;
   private email: string;
   private username: string;
-  private avatar?: string | null;
+  private avatar?: MediaApp | null;
   private settings: UserSettings;
-  private score: number;
-  private scoreIds: number[];
+  private scores: number[];
+  private scorePercentage: number;
   private lastScoreId: number;
   private isActive: boolean;
   private lastLogin: Date;
@@ -18,10 +19,10 @@ export class User {
     id: number,
     email: string,
     username: string,
-    avatar: string | null = null,
+    avatar: MediaApp | null = null,
     settings: UserSettings,
-    score: number,
-    scoreIds: number[],
+    scores: number[],
+    scorePercentage: number,
     lastScoreId: number,
     isActive: boolean,
     lastLogin: Date,
@@ -33,8 +34,8 @@ export class User {
     this.username = username;
     this.avatar = avatar;
     this.settings = settings;
-    this.score = score;
-    this.scoreIds = scoreIds;
+    this.scores = scores;
+    this.scorePercentage = scorePercentage;
     this.lastScoreId = lastScoreId;
     this.isActive = isActive;
     this.lastLogin = lastLogin;
@@ -62,12 +63,12 @@ export class User {
     return this.settings;
   }
 
-  get getScore() {
-    return this.score;
+  get getScores() {
+    return this.scores;
   }
 
-  get getScoreIds() {
-    return this.scoreIds;
+  get getScorePercentage() {
+    return this.scorePercentage;
   }
 
   get getLastScoreId() {
@@ -98,19 +99,33 @@ export class User {
     this.username = username;
   }
 
-  set setAvatar(avatar: string | null) {
-    this.avatar = avatar;
-  }
-
   static create(obj: UserProps) {
+    try {
+      return new User(
+        obj.id,
+        obj.email,
+        obj.username,
+        MediaApp.create(obj.avatar),
+        UserSettings.create(obj.settings),
+        obj.scores,
+        obj.get_score_percentage,
+        obj.get_last_score_id,
+        obj.is_active,
+        obj.last_login,
+        new Date(obj.created_at),
+        new Date(obj.updated_at)
+      );
+    } catch (error) {
+      // obj.avatar = null -> TypeError (user has no avatar)
+    }
     return new User(
       obj.id,
       obj.email,
       obj.username,
-      obj.get_avatar_url,
+      null,
       UserSettings.create(obj.settings),
-      obj.get_score,
-      obj.total_score,
+      obj.scores,
+      obj.get_score_percentage,
       obj.get_last_score_id,
       obj.is_active,
       obj.last_login,

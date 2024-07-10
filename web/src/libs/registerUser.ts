@@ -15,6 +15,6 @@ export default async function registerUser({
     body: JSON.stringify({ username, email, password }),
   });
   if (!response.ok) {
-    throw new Error(`Failed signUp: ${response.statusText} ${response.status}`);
+    throw new Error(`${response.statusText} ${response.status}`);
   }
 }

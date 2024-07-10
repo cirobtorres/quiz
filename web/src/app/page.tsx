@@ -6,6 +6,7 @@ import getQuiz from "@/libs/getQuiz";
 import { Suspense } from "react";
 import Loading from "@/components/Loading";
 import Presentation from "@/components/Presentation";
+import Quiz from "@/models/Quiz";
 
 export default async function HomePage() {
   return (
@@ -117,22 +118,23 @@ const QuizBalloons = () => {
 };
 
 const QuizCardGrid = async () => {
-  await new Promise((resolve) => setTimeout(resolve, 6000));
+  // await new Promise((resolve) => setTimeout(resolve, 6000));
   const quizArray: QuizAPI = await getQuiz();
   return (
     <section className="max-w-webpage mx-auto my-2">
       <div className="grid grid-cols-4 gap-4">
         {quizArray.results.map((quiz) => {
+          const quizModel = Quiz.create(quiz);
           return (
             <QuizCard
-              key={quiz.id}
+              key={quizModel.getId}
               image={{
-                src: quiz.get_image_url,
-                alt: quiz.slug,
+                src: quizModel.getCover.getSecureUrl,
+                alt: quizModel.getSlug,
               }}
-              title={quiz.subject}
-              description={quiz.description}
-              theme={quiz.theme}
+              title={quizModel.getSubject}
+              description={quizModel.getDescription}
+              theme={quizModel.getTheme}
             />
           );
         })}

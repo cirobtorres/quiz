@@ -85,7 +85,7 @@ export default class Question {
     return question;
   }
 
-  static create(obj: QuestionAPI) {
+  static create(obj: QuestionProps) {
     const answers = obj.get_shuffled_answers.map((answer) => {
       return Answer.create(answer);
     });

@@ -8,10 +8,7 @@ import useUser from "../../hooks/useUser";
 import PasswordInput, {
   PasswordRules,
 } from "../../components/Inputs/PasswordInput";
-import {
-  UsernameInputB,
-  UsernameInputD,
-} from "../../components/Inputs/UsernameInputs";
+import { UsernameInputB } from "../../components/Inputs/UsernameInputs";
 import { EmailInputB, EmailInputD } from "../../components/Inputs/EmailInputs";
 
 export default function SignupPage() {
@@ -47,7 +44,7 @@ export default function SignupPage() {
       await register?.(username, email, password1);
       router.push("/");
     } catch (error) {
-      throw new Error(`Error during register: ${error}`);
+      throw error;
     } finally {
       // setUsername("");
       // setEmail("");
@@ -58,8 +55,8 @@ export default function SignupPage() {
 
   return (
     <div className="fixed top-0 bottom-0 left-0 w-1/2 flex flex-col justify-center bg-slate-200 py-8">
-      <header className="w-1/2 mx-auto mb-4">
-        <h1 className="text-slate-900 text-3xl text-center font-extrabold">
+      <header className="w-1/2 mx-auto mb-8">
+        <h1 className="text-slate-900 text-4xl text-center font-extrabold font-sans uppercase">
           Cadastrar
         </h1>
       </header>

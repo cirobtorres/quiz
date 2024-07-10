@@ -23,7 +23,7 @@ export function EmailInputA({
   };
 
   return (
-    <div className={`flex h-full w-full flex-col`}>
+    <div className={`flex w-full flex-col`}>
       <div className={"relative"}>
         <input
           id={id}
@@ -115,7 +115,7 @@ export function EmailInputB({
   };
 
   return (
-    <div className={`flex h-full w-full flex-col`}>
+    <div className={`flex w-full flex-col`}>
       <div className={"relative"}>
         <input
           id={id}
@@ -128,7 +128,7 @@ export function EmailInputB({
           className={`
             w-full rounded-xl p-4 text-slate-800 outline-none 
             focus:ring-0 placeholder:text-transparent peer 
-            focus:placeholder:text-slate-400 active:placeholder:text-slate-400
+            focus:placeholder:text-slate-400 active:placeholder:text-slate-400 
           `}
         />
         <label
@@ -171,7 +171,7 @@ export function EmailInputC({
   };
 
   return (
-    <div className={`flex h-full w-full flex-col`}>
+    <div className={`flex w-full flex-col`}>
       <div className={"relative"}>
         <input
           id={id}
@@ -269,7 +269,7 @@ export function EmailInputD({
   };
 
   return (
-    <div className={`flex h-full w-full flex-col`}>
+    <div className={`flex w-full flex-col`}>
       <div className={"relative"}>
         <input
           id={id}

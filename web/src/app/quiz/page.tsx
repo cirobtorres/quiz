@@ -27,7 +27,7 @@ export default function QuizPage() {
     try {
       setLoading(true);
       const questionArray = await getQuestions({ params: { quiz: 1 } });
-      questions.current = questionArray.map((question: QuestionAPI) => {
+      questions.current = questionArray.map((question: QuestionProps) => {
         return Question.create(question);
       });
       setQuestion(questions.current[0]);
@@ -39,7 +39,8 @@ export default function QuizPage() {
   };
 
   const navToScore = async (scores: ScoreProps[]) => {
-    const score: TotalScoreProps = await postScore(scores);
+    // const score: TotalScoreProps = await postScore(scores);
+    await postScore(scores);
     router.push("/quiz/score/");
   };
 

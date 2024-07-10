@@ -9,37 +9,7 @@ import { IoExitOutline } from "react-icons/io5";
 import { IoIosClose } from "react-icons/io";
 import { FaCamera } from "react-icons/fa";
 import useUser from "../../hooks/useUser";
-import { User } from "@/models/User";
-
-const listVariants = {
-  open: {
-    clipPath: "inset(0% 0% 0% 0% round 10px)",
-    transition: {
-      type: "spring",
-      bounce: 0,
-      duration: 0.7,
-      delayChildren: 0.3,
-      staggerChildren: 0.05,
-    },
-  },
-  closed: {
-    clipPath: "inset(10% 50% 90% 50% round 10px)",
-    transition: {
-      type: "spring",
-      bounce: 0,
-      duration: 0.3,
-    },
-  },
-};
-
-const itemVariants: Variants = {
-  open: {
-    opacity: 1,
-    y: 0,
-    transition: { type: "spring", stiffness: 300, damping: 24 },
-  },
-  closed: { opacity: 0, y: 20, transition: { duration: 0.2 } },
-};
+import User from "@/models/User";
 
 export default function Avatar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -96,10 +66,10 @@ const SignedInAvatar = ({
     <motion.div
       initial={false}
       animate={isOpen ? "open" : "closed"}
-      className="relative flex items-center shadow-darker rounded-full"
+      className="relative flex items-center shadow-xl rounded-full"
     >
       <div
-        className={"rounded-full"} // ${user.getAvatar ? "bg-gradient-to-tr from-pink-500 to-yellow-500" : "bg-white"} p-[2px]
+        className={"rounded-full"} // ${user.getAvatar?.getSecureUrl ? "bg-gradient-to-tr from-pink-500 to-yellow-500" : "bg-white"} p-[2px]
         style={{
           width: `${userAvatarSize}rem`,
           height: `${userAvatarSize}rem`,
@@ -111,7 +81,8 @@ const SignedInAvatar = ({
         >
           <Image
             src={
-              user.getAvatar ?? "/images/user/avatar/1281x1281-user-icon.png"
+              user.getAvatar?.getSecureUrl ??
+              "/images/user/avatar/1281x1281-user-icon.png"
             }
             alt="Imagem to usuário"
             fill
@@ -143,7 +114,7 @@ const SignedOutAvatar = ({
     <motion.div
       initial={false}
       animate={isOpen ? "open" : "closed"}
-      className="relative flex items-center shadow-darker rounded-full"
+      className="relative flex items-center shadow-xl rounded-full"
     >
       <div
         className="rounded-full text-white bg-black" // p-[2px]
@@ -172,6 +143,36 @@ const SignedOutAvatar = ({
       />
     </motion.div>
   );
+};
+
+const listVariants = {
+  open: {
+    clipPath: "inset(0% 0% 0% 0% round 10px)",
+    transition: {
+      type: "spring",
+      bounce: 0,
+      duration: 0.7,
+      delayChildren: 0.3,
+      staggerChildren: 0.05,
+    },
+  },
+  closed: {
+    clipPath: "inset(10% 50% 90% 50% round 10px)",
+    transition: {
+      type: "spring",
+      bounce: 0,
+      duration: 0.3,
+    },
+  },
+};
+
+const itemVariants: Variants = {
+  open: {
+    opacity: 1,
+    y: 0,
+    transition: { type: "spring", stiffness: 300, damping: 24 },
+  },
+  closed: { opacity: 0, y: 20, transition: { duration: 0.2 } },
 };
 
 const SignedInAvatarBox = ({
@@ -226,7 +227,8 @@ const SignedInAvatarBox = ({
         >
           <Image
             src={
-              user.getAvatar ?? "/images/user/avatar/1281x1281-user-icon.png"
+              user.getAvatar?.getSecureUrl ??
+              "/images/user/avatar/1281x1281-user-icon.png"
             }
             alt="Imagem to usuário"
             fill
@@ -259,7 +261,7 @@ const SignedInAvatarBox = ({
         className="w-3/4 flex mx-auto gap-1 m-4 mb-12"
       >
         <Link
-          href={`/perfil/${user.getUsername}`}
+          href={`/${user.getUsername}/perfil`}
           className="w-full flex-1 flex justify-center gap-2 p-4 rounded-l-full border border-slate-300 transition-all duration-200 bg-slate-300 hover:bg-slate-200" // group
         >
           Perfil{" "}
@@ -282,17 +284,6 @@ const SignedInAvatarBox = ({
           <IoExitOutline size={25} /> Sair
         </button>
       </motion.div>
-      {/* <motion.div
-        variants={itemVariants}
-        className="w-3/4 mx-auto flex gap-1 pb-4 text-xs"
-      >
-        <button className="flex-1 p-1 rounded text-right bg-slate-200 hover:bg-slate-100">
-          Política de privacidade
-        </button>
-        <button className="flex-1 p-1 rounded text-left bg-slate-200 hover:bg-slate-100">
-          Termos de serviço
-        </button>
-      </motion.div> */}
     </motion.div>
   );
 };

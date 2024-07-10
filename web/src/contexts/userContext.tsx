@@ -7,7 +7,7 @@ import getUserData from "../libs/getUserData";
 import refreshSession from "../libs/refreshSession";
 import loginUser from "../libs/loginUser";
 import registerUser from "../libs/registerUser";
-import { User } from "@/models/User";
+import User from "@/models/User";
 import { updateUser } from "../libs/updateUser";
 
 interface UserContextProps {
@@ -20,7 +20,8 @@ interface UserContextProps {
     email: string,
     password: string
   ) => Promise<void>;
-  update: (userData: FormData) => Promise<void>;
+  // update: (userData: FormData) => Promise<void>;
+  update: (userData: { username: string; password: string }) => Promise<void>;
 }
 
 interface TokenProps {
@@ -120,18 +121,20 @@ export function UserProvider(props: any) {
       await registerUser({ username, email, password });
       await login(email, password);
     } catch (error) {
-      throw new Error(`Error during register. ${error}`);
+      throw error;
     } finally {
       setLoading(false);
     }
   };
 
-  const update = async (userData: FormData) => {
+  // const update = async (userData: FormData) => {
+  const update = async (userData: { username: string; password: string }) => {
     try {
       setLoading(true);
       const updatedTokens = await updateUser(userData);
       await session(updatedTokens);
     } catch (error) {
+      throw error;
     } finally {
       setLoading(false);
     }

@@ -5,36 +5,50 @@ from .models import PartialScoreModel, TotalScoreModel
 class PartialScoreSerializer(ModelSerializer):
     class Meta:
         model = PartialScoreModel
-        fields = 'id', 'quiz', 'total', 'corrects', 'get_score', 'created_at', 
-        read_only_fields = 'get_score', 
-
-    get_score = SerializerMethodField() 
-
-    def get_score(self, instance): 
-        return instance.get_score() 
+        fields = (
+            'id', 
+            'quiz', 
+            'total', 
+            'corrects', 
+            'created_at', 
+        )
 
 
 class TotalScoreSerializer(ModelSerializer): 
     class Meta: 
         model = TotalScoreModel 
-        fields = 'id', 'scores', 'user', 'get_score', 'get_total', 'get_corrects', 
-        read_only_fields = 'get_score', 
+        fields = (
+            'id', 
+            'scores', 
+            'user', 
+            'get_score_percentage', 
+            'get_total_questions', 
+            'get_correct_answers', 
+        )
+        read_only_fields = (
+            'id', 
+            'scores', 
+            'user', 
+            'get_score_percentage', 
+            'get_total_questions', 
+            'get_correct_answers', 
+        )
 
     scores = PartialScoreSerializer(many=True)
-    get_score = SerializerMethodField() 
-    get_total = SerializerMethodField() 
-    get_corrects = SerializerMethodField() 
+    get_score_percentage = SerializerMethodField() 
+    get_total_questions = SerializerMethodField() 
+    get_correct_answers = SerializerMethodField() 
 
-    def get_score(self, instance):
-        score = instance.get_score()
+    def get_score_percentage(self, instance):
+        score = instance.get_score_percentage()
         return score if score is not None else 0
 
-    def get_total(self, instance):
-        total = instance.get_total()
+    def get_total_questions(self, instance):
+        total = instance.get_total_questions()
         return total if total is not None else 0
 
-    def get_corrects(self, instance):
-        corrects = instance.get_corrects()
+    def get_correct_answers(self, instance):
+        corrects = instance.get_correct_answers()
         return corrects if corrects is not None else 0
 
     def save(self, **kwargs):
