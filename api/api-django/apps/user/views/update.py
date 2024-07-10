@@ -4,7 +4,7 @@ from django.core.exceptions import ValidationError
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
-from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
+from rest_framework.parsers import MultiPartParser, FormParser, JSONParser, FileUploadParser
 from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from .tools import UserUtilities, UserPermissions
@@ -14,7 +14,7 @@ from ..validators import UserValidator
 class UserUpdateView(APIView, UserUtilities): 
     authentication_classes = [JWTAuthentication] 
     permission_classes = [UserPermissions] 
-    parser_classes = (MultiPartParser, FormParser, JSONParser,) 
+    parser_classes = (JSONParser,) 
     http_method_names = ['put',] 
 
     def put(self, request: HttpRequest) -> Response: 

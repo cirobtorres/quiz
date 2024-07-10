@@ -4,13 +4,18 @@ from django.http import HttpRequest
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK, HTTP_201_CREATED, HTTP_404_NOT_FOUND, HTTP_400_BAD_REQUEST
+from rest_framework.parsers import MultiPartParser, FormParser, JSONParser, FileUploadParser
+from rest_framework_simplejwt.authentication import JWTAuthentication
 from .models import UserImageModel, QuizImageModel
 from .serializers import UserImageSerializer, QuizImageSerializer
-from ..user.views import UserUtilities
+from ..user.views import UserUtilities, UserPermissions
 from ..quiz.models import QuizModel
 
 
 class UserImageView(APIView, UserUtilities):
+    # authentication_classes = [JWTAuthentication] 
+    # permission_classes = [UserPermissions] 
+    parser_classes = (MultiPartParser, ) 
     http_method_names = ['post', 'get', 'put', 'delete', ]
 
     def post(self, request: HttpRequest) -> Response: 
@@ -65,6 +70,9 @@ class UserImageView(APIView, UserUtilities):
         
         user_model = self.get_user()
         user_image_model = UserImageModel.objects.get(user=user_model)
+
+        if user_image_model.public_id:
+            UserImageModel.destroy_image(user_image_model.public_id)
 
         user_image_model.asset_id = cloudinary_image.get('asset_id')
         user_image_model.public_id = cloudinary_image.get('public_id')

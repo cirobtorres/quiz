@@ -22,6 +22,7 @@ interface UserContextProps {
   ) => Promise<void>;
   // update: (userData: FormData) => Promise<void>;
   update: (userData: { username: string; password: string }) => Promise<void>;
+  refreshToken: () => Promise<void>;
 }
 
 interface TokenProps {
@@ -162,7 +163,7 @@ export function UserProvider(props: any) {
 
   return (
     <UserContext.Provider
-      value={{ user, loading, login, logout, register, update }}
+      value={{ user, loading, login, logout, register, update, refreshToken }}
     >
       {props.children}
     </UserContext.Provider>
