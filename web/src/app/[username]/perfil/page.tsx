@@ -15,6 +15,7 @@ import Link from "next/link";
 import Loading from "../../../components/Loading";
 import { redirect, useRouter } from "next/navigation";
 import User from "../../../models/User";
+import Breadcrums from "../../../components/Breadcrumbs";
 
 export default function ProfilePage() {
   const { user, loading } = useUser();
@@ -27,30 +28,35 @@ export default function ProfilePage() {
   }, [loading, user, router]);
 
   return (
-    <div className="w-full flex h-full min-h-screen px-2 gap-2 bg-slate-300">
-      <div className="w-full flex flex-col gap-2 my-2">
-        <section className="w-full h-full flex gap-2">
-          <article className="w-full flex flex-col items-center gap-2 bg-slate-100 border border-white p-8 shadow-md rounded-xl">
-            {user ? (
-              <UserProfileFolder user={user} />
-            ) : (
-              <div className="h-full flex justify-between items-center">
-                <Loading />
-              </div>
-            )}
-          </article>
-          <article className="w-full bg-slate-100 border border-white p-8 shadow-md rounded-xl">
-            <div className="w-full mb-4">
-              <h3 className="text-slate-800 font-sans text-3xl font-extrabold uppercase">
-                Seus Quiz
-              </h3>
-            </div>
-            <UserQuizSettingsFolder />
-          </article>
-        </section>
-        <UserScoreFolder />
+    <div className="w-full flex flex-col h-full min-h-screen px-2 bg-slate-300">
+      <div className="py-1">
+        <Breadcrums />
       </div>
-      <FriendsList />
+      <div className="flex gap-2">
+        <div className="w-full flex flex-col gap-2 mb-2">
+          <section className="w-full h-full flex gap-2">
+            <article className="w-full flex flex-col items-center gap-2 bg-slate-100 border border-white p-8 shadow-md rounded-xl">
+              {user ? (
+                <UserProfileFolder user={user} />
+              ) : (
+                <div className="h-full flex justify-between items-center">
+                  <Loading />
+                </div>
+              )}
+            </article>
+            <article className="w-full bg-slate-100 border border-white p-8 shadow-md rounded-xl">
+              <div className="w-full mb-4">
+                <h3 className="text-slate-800 font-sans text-3xl font-extrabold uppercase">
+                  Seus Quiz
+                </h3>
+              </div>
+              <UserQuizSettingsFolder />
+            </article>
+          </section>
+          <UserScoreFolder />
+        </div>
+        <FriendsList />
+      </div>
     </div>
   );
 }
@@ -283,7 +289,7 @@ const ScoreTag = ({ subject, theme }: { subject: string; theme: string }) => {
 
 const FriendsList = () => {
   return (
-    <div className="min-w-[20%] p-8 my-2 bg-slate-100 border border-white rounded-xl shadow-md">
+    <div className="min-w-[20%] p-8 mb-2 bg-slate-100 border border-white rounded-xl shadow-md">
       <div className="w-full mb-4">
         <h3 className="text-slate-800 font-sans text-3xl font-extrabold uppercase">
           Amigos

@@ -182,8 +182,6 @@ const ImageModal = ({
     const cropX = crop.x * scaleX;
     const cropY = crop.y * scaleY;
 
-    console.log(image.naturalWidth, image.naturalHeight, cropX, cropY);
-
     context.translate(-cropX, -cropY);
     context.drawImage(
       image,
