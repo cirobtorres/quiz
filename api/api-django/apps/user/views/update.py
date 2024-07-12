@@ -37,7 +37,10 @@ class UserUpdateView(APIView, UserUtilities):
                     del request.data[field] 
                 try:
                     if getattr(user_model, field):
-                        setattr(user_model, field, request.data[field])
+                        if field == 'password':
+                            user_model.set_password(getattr(user_model, field))
+                        else:
+                            setattr(user_model, field, request.data[field])
                 except AttributeError as e:
                     pass
 
@@ -45,8 +48,6 @@ class UserUpdateView(APIView, UserUtilities):
             # print('-x' * 35 + '-\n', e.__class__.__name__, ': ', e, '\n', '*' * 70, '\n', sep='') 
             return Response(status=HTTP_400_BAD_REQUEST)
         
-        user_model.save(commit=False)
-        user_model.set_password(user_model.password)
         user_model.save()
 
         refresh = RefreshToken.for_user(user_model) 

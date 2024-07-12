@@ -14,7 +14,7 @@ export default function Header() {
 
 const Search = () => {
   return (
-    <form className="flex flex-1 items-center w-full max-w-[40rem]">
+    <form className="flex flex-1 items-center w-full max-w-[40rem] min-w-96">
       <div className="relative h-full w-full rounded-full shadow-md bg-white">
         <button>
           <IoClose className="absolute top-1/2 -translate-y-1/2 left-4 size-5 text-slate-400" />

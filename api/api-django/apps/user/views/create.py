@@ -29,7 +29,6 @@ class UserRegisterView(APIView, UserUtilities):
         
         settings = UserSettingsModel.objects.create()        
         instance = self.user_model(username=username, email=email, password=password, settings=settings)
-        instance.save(commit=False)
         instance.set_password(instance.password)
         instance.save()
 

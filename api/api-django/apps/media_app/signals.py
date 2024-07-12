@@ -1,7 +1,7 @@
 import os
 from django.dispatch import receiver
 from django.db.models.signals import pre_save, pre_delete
-import cloudinary.uploader as cloudinary_api
+import cloudinary.uploader as cloudinary
 from .models import UserImageModel, QuizImageModel
 
 
@@ -55,7 +55,7 @@ def delete_old_cover_before_delete_model(sender, instance, **kwargs) -> None:
         return
 
     try:
-        UserImageModel.destroy_image(quiz_cover.public_id)
+        cloudinary.destroy(quiz_cover.public_id)
         # quiz_cover.delete() # No need because of quiz cascade when he gets deleted 
     except (ValueError, FileNotFoundError):
         pass

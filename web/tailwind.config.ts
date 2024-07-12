@@ -34,6 +34,7 @@ const config: Config = {
         "spin-slow-clockwise": "rotate-slow-clockwise 2s linear infinite",
         "spin-slow-counterclockwise":
           "rotate-slow-counterclockwise 2s linear infinite",
+        "scroll-truncate-text": "scroll-text 20s linear 0s 2 normal",
       },
       keyframes: {
         rotate: {
@@ -81,6 +82,23 @@ const config: Config = {
         "rotate-slow-counterclockwise": {
           to: {
             transform: "rotate(-360deg)",
+          },
+        },
+        "scroll-text": {
+          "0%": {
+            transform: "translateX(0%)",
+          },
+          "40%": {
+            transform: "translateX(-100%)",
+          },
+          "50%": {
+            transform: "translateX(-100%)",
+          },
+          "90%": {
+            transform: "translateX(0%)",
+          },
+          "90%, 100%": {
+            transform: "translateX(0%)",
           },
         },
       },

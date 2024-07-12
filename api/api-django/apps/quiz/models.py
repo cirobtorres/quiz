@@ -12,7 +12,7 @@ DEBUG = settings.DEBUG
 class QuizModel(models.Model):
     subject = models.CharField(max_length=65)
     description = models.CharField(max_length=155)
-    cover = models.ForeignKey(to=QuizImageModel, on_delete=models.CASCADE,  blank=True, null=True)
+    cover = models.ForeignKey(to=QuizImageModel, on_delete=models.SET_NULL,  blank=True, null=True)
     slug = models.SlugField(max_length=255, unique=True)
     theme = models.CharField(max_length=20)
     is_private = models.BooleanField(default=False)
@@ -28,7 +28,7 @@ class QuizModel(models.Model):
 
 
 class QuestionModel(models.Model):
-    quiz = models.ForeignKey(to=QuizModel, related_name="questions", on_delete=models.CASCADE, null=True, blank=True)
+    quiz = models.ForeignKey(to=QuizModel, related_name="questions", on_delete=models.SET_NULL, null=True, blank=True)
     text = models.CharField(max_length=400) # TODO: change max_length to 135 in the future
     updated_at = models.DateTimeField(auto_now=True)
 

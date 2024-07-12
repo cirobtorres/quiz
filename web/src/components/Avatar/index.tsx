@@ -209,7 +209,7 @@ const SignedInAvatarBox = ({
       layout
       className="w-96 absolute top-[140%] rounded-3xl bg-slate-200"
     >
-      <motion.div variants={itemVariants} className="flex p-2">
+      <motion.div variants={itemVariants} className="flex p-2 bg-slate-300">
         <span className="flex-1 ml-10 text-center">{user.getEmail}</span>
         <button onClick={() => setIsOpen(!isOpen)}>
           <IoIosClose strokeWidth={20} size={25} />
@@ -249,14 +249,14 @@ const SignedInAvatarBox = ({
       <motion.div variants={itemVariants} className="flex justify-center">
         <Link
           href="/"
-          className="bg-blue-500 text-white rounded-full w-fit px-4 py-3"
+          className="bg-blue-500 text-white rounded-full w-fit px-4 py-2"
         >
           Pontuação
         </Link>
       </motion.div>
       <motion.div
         variants={itemVariants}
-        className="w-3/4 flex mx-auto gap-1 m-4 mb-12"
+        className="w-3/4 flex mx-auto gap-1 m-4 mb-10"
       >
         <Link
           href={`/${user.getUsername}/perfil`}

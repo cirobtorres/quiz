@@ -2,16 +2,15 @@ import Cookies from "js-cookie";
 
 export const getUserImage = async () => {};
 
-export const postUserImage = async (image: File) => {
+export const postUserImage = async (formData: FormData) => {
   const response = await fetch(
     "http://127.0.0.1:8000/api/media-app/user-image",
     {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
         Authorization: `Bearer ${Cookies.get("accessToken")}`,
       },
-      body: JSON.stringify(image),
+      body: formData,
     }
   );
   if (!response.ok) {
@@ -20,7 +19,7 @@ export const postUserImage = async (image: File) => {
   return await response.json();
 };
 
-export const putUserImage = async (image: FormData) => {
+export const putUserImage = async (formData: FormData) => {
   const response = await fetch(
     "http://127.0.0.1:8000/api/media-app/user-image",
     {
@@ -28,7 +27,7 @@ export const putUserImage = async (image: FormData) => {
       headers: {
         Authorization: `Bearer ${Cookies.get("accessToken")}`,
       },
-      body: image,
+      body: formData,
     }
   );
   if (!response.ok) {

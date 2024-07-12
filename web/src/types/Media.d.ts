@@ -5,7 +5,7 @@ type MediaProps = {
   filename: string;
   secure_url: string;
   url: string;
-  type: string;
+  format: string;
   width: number;
   height: number;
   updated_at: string;

@@ -7,7 +7,7 @@ export default class MediaApp {
   private filename: string;
   private secureUrl: string;
   private url: string;
-  private type: string;
+  private format: string;
   private width: number;
   private height: number;
   private updatedAt: Date;
@@ -20,7 +20,7 @@ export default class MediaApp {
     filename: string,
     secureUrl: string,
     url: string,
-    type: string,
+    format: string,
     width: number,
     height: number,
     updatedAt: string,
@@ -32,7 +32,7 @@ export default class MediaApp {
     this.filename = filename;
     this.secureUrl = secureUrl;
     this.url = url;
-    this.type = type;
+    this.format = format;
     this.width = width;
     this.height = height;
     this.updatedAt = new Date(updatedAt);
@@ -63,8 +63,8 @@ export default class MediaApp {
     return this.url;
   }
 
-  get getType() {
-    return this.type;
+  get getFormat() {
+    return this.format;
   }
 
   get getWidth() {
@@ -91,7 +91,7 @@ export default class MediaApp {
       obj.filename,
       obj.secure_url,
       obj.url,
-      obj.type,
+      obj.format,
       obj.width,
       obj.height,
       obj.updated_at,

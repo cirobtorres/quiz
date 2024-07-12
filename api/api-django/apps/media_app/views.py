@@ -1,3 +1,5 @@
+import cloudinary.uploader as cloudinary
+from cloudinary.utils import cloudinary_url
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpRequest
@@ -12,10 +14,27 @@ from ..user.views import UserUtilities, UserPermissions
 from ..quiz.models import QuizModel
 
 
-class UserImageView(APIView, UserUtilities):
+class CloudinaryUtilities:
+    @staticmethod
+    def save_image(image, public_id = None): 
+        uploaded_image = cloudinary.upload(image, public_id=public_id)
+        return uploaded_image
+    
+    @staticmethod
+    def destroy_image(public_id):
+        response = cloudinary.destroy(public_id)
+        return response.get('result') == 'ok'
+    
+    @staticmethod
+    def return_optimized_image(image):
+        optimize_url, _ = cloudinary_url(image, fetch_format="auto", quality="auto")
+        return optimize_url
+
+
+class UserImageView(APIView, UserUtilities, CloudinaryUtilities):
     # authentication_classes = [JWTAuthentication] 
     # permission_classes = [UserPermissions] 
-    parser_classes = (MultiPartParser, ) 
+    parser_classes = (MultiPartParser, FormParser, JSONParser, ) 
     http_method_names = ['post', 'get', 'put', 'delete', ]
 
     def post(self, request: HttpRequest) -> Response: 
@@ -23,26 +42,35 @@ class UserImageView(APIView, UserUtilities):
         if user_model.avatar is None:
 
             image = request.data.get('image')
-            cloudinary_image = UserImageModel.save_image(image) # public_id will be randomly generated
-            user_image_model = UserImageModel()
+            filename = request.data.get('filename')
 
-            user_image_model.asset_id = cloudinary_image.get('asset_id')
-            user_image_model.public_id = cloudinary_image.get('public_id')
-            user_image_model.filename = cloudinary_image.get('original_filename')
-            user_image_model.secure_url = cloudinary_image.get('secure_url')
-            user_image_model.url = cloudinary_image.get('url')
-            user_image_model.type = cloudinary_image.get('format')
-            user_image_model.width = cloudinary_image.get('width')
-            user_image_model.height = cloudinary_image.get('height')
+            if(image):
+                
+                base64_image = image.split(",")[1]
+                cloudinary_image = self.save_image("data:image/png;base64," + base64_image) # public_id will be randomly generated
 
-            user_image_model.save()
+                user_image_model = UserImageModel()
 
-            user_model.avatar = user_image_model
-            user_model.save()
+                user_image_model.asset_id = cloudinary_image.get('asset_id')
+                user_image_model.public_id = cloudinary_image.get('public_id')
+                user_image_model.filename = filename
+                user_image_model.secure_url = cloudinary_image.get('secure_url')
+                user_image_model.url = cloudinary_image.get('url')
+                user_image_model.format = cloudinary_image.get('format')
+                user_image_model.width = cloudinary_image.get('width')
+                user_image_model.height = cloudinary_image.get('height')
 
-            media_serializer = UserImageSerializer(instance=user_image_model)
+                user_image_model.save()
 
-            return Response(data=media_serializer.data, status=HTTP_201_CREATED)
+                user_model.avatar = user_image_model
+                user_model.save()
+
+                media_serializer = UserImageSerializer(instance=user_image_model)
+
+                return Response(data=media_serializer.data, status=HTTP_201_CREATED)
+            
+            else:
+                return Response(data={'message': 'No image file'}, status=HTTP_400_BAD_REQUEST)
         
         return Response(data={'message': 'User already has an image file'}, status=HTTP_400_BAD_REQUEST)
     
@@ -64,30 +92,44 @@ class UserImageView(APIView, UserUtilities):
         return Response(data=media_serializer.data, status=HTTP_200_OK)
 
 
-    def put(self, request: HttpRequest) -> Response:
-        image = request.data.get('image')
-        cloudinary_image = UserImageModel.save_image(image) # public_id will be randomly generated
-        
+    def put(self, request: HttpRequest) -> Response:        
         user_model = self.get_user()
         user_image_model = UserImageModel.objects.get(user=user_model)
 
         if user_image_model.public_id:
-            UserImageModel.destroy_image(user_image_model.public_id)
+            self.destroy_image(user_image_model.public_id)
 
-        user_image_model.asset_id = cloudinary_image.get('asset_id')
-        user_image_model.public_id = cloudinary_image.get('public_id')
-        user_image_model.filename = cloudinary_image.get('original_filename')
-        user_image_model.secure_url = cloudinary_image.get('secure_url')
-        user_image_model.url = cloudinary_image.get('url')
-        user_image_model.type = cloudinary_image.get('format')
-        user_image_model.width = cloudinary_image.get('width')
-        user_image_model.height = cloudinary_image.get('height')
+            image = request.data.get('image')
+            filename = request.data.get('filename')
 
-        user_image_model.save()
+            if(image):
+                
+                base64_image = image.split(",")[1]
+                cloudinary_image = self.save_image("data:image/png;base64," + base64_image) # public_id will be randomly generated
 
-        media_serializer = UserImageSerializer(instance=user_image_model)
+                user_image_model = UserImageModel()
 
-        return Response(data=media_serializer.data, status=HTTP_201_CREATED)
+                user_image_model.asset_id = cloudinary_image.get('asset_id')
+                user_image_model.public_id = cloudinary_image.get('public_id')
+                user_image_model.filename = filename
+                user_image_model.secure_url = cloudinary_image.get('secure_url')
+                user_image_model.url = cloudinary_image.get('url')
+                user_image_model.format = cloudinary_image.get('format')
+                user_image_model.width = cloudinary_image.get('width')
+                user_image_model.height = cloudinary_image.get('height')
+
+                user_image_model.save()
+
+                user_model.avatar = user_image_model
+                user_model.save()
+
+                media_serializer = UserImageSerializer(instance=user_image_model)
+
+                return Response(data=media_serializer.data, status=HTTP_201_CREATED)
+            
+            return Response(data={'message': 'No image file'}, status=HTTP_400_BAD_REQUEST)
+            
+        return Response(data={'message': 'No public_id'}, status=HTTP_400_BAD_REQUEST)
 
     def delete(self, request: HttpRequest) -> Response:
         user_model = self.get_user()
@@ -95,7 +137,7 @@ class UserImageView(APIView, UserUtilities):
         if isinstance(user_model, get_user_model()): 
             if user_model.avatar is not None:
                 user_image_model = UserImageModel.objects.get(user=user_model)
-                UserImageModel.destroy_image(user_image_model.public_id)
+                self.destroy_image(user_image_model.public_id)
 
                 return Response(data={'message': 'Image deleted'}, status=HTTP_200_OK)
             
@@ -104,7 +146,7 @@ class UserImageView(APIView, UserUtilities):
         return Response(data={'message': 'User not found'}, status=HTTP_404_NOT_FOUND)
 
 
-class QuizImageView(APIView): 
+class QuizImageView(APIView, CloudinaryUtilities): 
     quiz_image_model = QuizImageModel
     quiz_image_serializer = QuizImageSerializer
 
@@ -116,7 +158,7 @@ class QuizImageView(APIView):
         
         if quiz_model.cover is None:
             image = request.data.get('image')
-            cloudinary_image = QuizImageModel.save_image(image) # public_id will be randomly generated
+            cloudinary_image = self.save_image(image) # public_id will be randomly generated
             quiz_image_model = QuizImageModel()
 
             quiz_image_model.asset_id = cloudinary_image.get('asset_id')
@@ -124,7 +166,7 @@ class QuizImageView(APIView):
             quiz_image_model.filename = cloudinary_image.get('original_filename')
             quiz_image_model.secure_url = cloudinary_image.get('secure_url')
             quiz_image_model.url = cloudinary_image.get('url')
-            quiz_image_model.type = cloudinary_image.get('format')
+            quiz_image_model.format = cloudinary_image.get('format')
             quiz_image_model.width = cloudinary_image.get('width')
             quiz_image_model.height = cloudinary_image.get('height')
 
@@ -157,7 +199,7 @@ class QuizImageView(APIView):
             return Response(data={'message': 'Quiz not found'}, status=HTTP_404_NOT_FOUND)
         
         image = request.data.get('image')
-        cloudinary_image = QuizImageModel.save_image(image) # public_id will be randomly generated
+        cloudinary_image = self.save_image(image) # public_id will be randomly generated
         
         quiz_image_model = QuizImageModel.objects.get(user=quiz_model)
 
@@ -166,7 +208,7 @@ class QuizImageView(APIView):
         quiz_image_model.filename = cloudinary_image.get('original_filename')
         quiz_image_model.secure_url = cloudinary_image.get('secure_url')
         quiz_image_model.url = cloudinary_image.get('url')
-        quiz_image_model.type = cloudinary_image.get('format')
+        quiz_image_model.format = cloudinary_image.get('format')
         quiz_image_model.width = cloudinary_image.get('width')
         quiz_image_model.height = cloudinary_image.get('height')
 
@@ -184,7 +226,7 @@ class QuizImageView(APIView):
 
         if quiz_model.cover is not None:
             quiz_image_model = QuizImageModel.objects.get(user=quiz_model)
-            QuizImageModel.destroy_image(quiz_image_model.public_id)
+            self.destroy_image(quiz_image_model.public_id)
 
             return Response(data={'message': 'Image deleted'}, status=HTTP_200_OK)
         
