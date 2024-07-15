@@ -26,6 +26,8 @@ class QuizView(APIView, QuizTools):
             except ObjectDoesNotExist as e:
                 # print('-x' * 35 + '-\n', e.__class__.__name__, ': ', e, '\n', '*' * 70, '\n', sep='') 
                 return Response(data={'message': 'Quiz not found'}, status=HTTP_404_NOT_FOUND)
+            if quiz_model.blocked:
+                return Response(data={'message': 'Blocked Quiz'}, status=HTTP_400_BAD_REQUEST)
             quiz_serializer = self.quiz_serializer(instance=quiz_model)
             return Response(data=quiz_serializer.data, status=HTTP_200_OK)
         
@@ -34,10 +36,8 @@ class QuizView(APIView, QuizTools):
         return Response(**data)
 
     def post(self, request: HttpRequest) -> Response:
-        body = request.data.dict().copy()
-
         try :
-            quiz = self.quiz_model(**body)
+            quiz = self.quiz_model(**request.data)
             quiz.save()
         except IntegrityError as e:
             # print('-x' * 35 + '-\n', e.__class__.__name__, ': ', e, '\n', '*' * 70, '\n', sep='') 
@@ -52,8 +52,9 @@ class QuizView(APIView, QuizTools):
             # print('-x' * 35 + '-\n', e.__class__.__name__, ': ', e, '\n', '*' * 70, '\n', sep='') 
             return Response(data={'message': 'Quiz not found'}, status=HTTP_404_NOT_FOUND)
 
-        quiz_subject = request.data.get('subject')
-        quiz_model.subject = quiz_subject
+        for field, value in request.data.items():
+            setattr(quiz_model, field, value)
+        
         quiz_model.save()
         quiz_serializer = self.quiz_serializer(instance=quiz_model)
 

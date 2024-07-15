@@ -15,7 +15,7 @@ class TotalScoreModel(models.Model):
     user = models.ForeignKey(to=get_user_model(), related_name='scores', on_delete=models.CASCADE, null=True) 
 
     def __str__(self) -> str: 
-        return f'TotalScoreModel id= {self.id}, Score: {self.get_score()} Quizes: {self.scores}' 
+        return f'TotalScoreModel id= {self.id}, Score: {self.get_score()} Quizzes: {self.scores}' 
     
     def get_score_percentage(self) -> float:
         if self.get_total_questions() > 0:

@@ -6,7 +6,7 @@ from django.utils.text import slugify
 from ..media_app.models import QuizImageModel
 
 
-DEBUG = settings.DEBUG
+QUIZ_MODERATION = settings.QUIZ_MODERATION
 
 
 class QuizModel(models.Model):
@@ -15,7 +15,8 @@ class QuizModel(models.Model):
     cover = models.ForeignKey(to=QuizImageModel, on_delete=models.SET_NULL,  blank=True, null=True)
     slug = models.SlugField(max_length=255, unique=True)
     theme = models.CharField(max_length=20)
-    is_private = models.BooleanField(default=False)
+    blocked = models.BooleanField(default=QUIZ_MODERATION) # True on production 
+    is_private = models.BooleanField(default=False) # Switched on/off on the user counterpart 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     

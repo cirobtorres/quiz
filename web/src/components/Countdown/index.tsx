@@ -2,7 +2,7 @@ import { CountdownCircleTimer } from "react-countdown-circle-timer";
 
 interface CountdownProps {
   duration: number;
-  whenFinish: () => void;
+  onComplete: () => void;
 }
 
 export default function Countdown(props: CountdownProps) {
@@ -21,9 +21,12 @@ export default function Countdown(props: CountdownProps) {
         size={140}
         strokeWidth={12}
         isPlaying
-        onComplete={() => props.whenFinish()}
+        onComplete={props.onComplete}
         colors={["#bce596", "#f7b801", "#ed827a", "#fc4747"]}
         colorsTime={[start, middle, end, 0]}
+        onUpdate={(remainingTime: number) => {
+          console.log(remainingTime);
+        }}
       >
         {({ remainingTime }) => (
           <span className="text-white text-6xl font-extrabold">

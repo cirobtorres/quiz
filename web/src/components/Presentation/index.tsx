@@ -10,7 +10,7 @@ export default function Presentation() {
       <div className="w-1/2 flex flex-col gap-4 mb-10">
         <div>
           <h2 className="text-4xl font-extrabold text-slate-800">
-            Cadastre-se para criar quizes totalmente personalizados e
+            Cadastre-se para criar quizzes totalmente personalizados e
             compartilhá-los com outras pessoas!
           </h2>
         </div>

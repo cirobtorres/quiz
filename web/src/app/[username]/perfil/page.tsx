@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import useUser from "../../../hooks/useUser";
+import { useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { RiArrowDropLeftLine } from "react-icons/ri";
+import useUser from "../../../hooks/useUser";
 import PasswordInput, {
   PasswordRules,
 } from "../../../components/Inputs/PasswordInput";
@@ -11,31 +12,20 @@ import { UsernameInputA } from "../../../components/Inputs/UsernameInputs";
 import { EmailInputA } from "../../../components/Inputs/EmailInputs";
 import { isValid } from "../../../functions";
 import ProgressCircle from "../../../components/ProgressCircle";
-import Link from "next/link";
 import Loading from "../../../components/Loading";
-import { redirect, useRouter } from "next/navigation";
 import User from "../../../models/User";
 import Breadcrums from "../../../components/Breadcrumbs";
+import QuizPagination from "../../../components/QuizPagination";
 
 export default function ProfilePage() {
-  const { user, loading } = useUser();
-  const router = useRouter();
-
-  useEffect(() => {
-    if (!loading && !user) {
-      redirect("/");
-    }
-  }, [loading, user, router]);
-
+  const { user } = useUser();
   return (
-    <div className="w-full flex flex-col h-full min-h-screen px-2 bg-slate-300">
-      <div className="py-1">
-        <Breadcrums />
-      </div>
-      <div className="flex gap-2">
-        <div className="w-full flex flex-col gap-2 mb-2">
-          <section className="w-full h-full flex gap-2">
-            <article className="w-full flex flex-col items-center gap-2 bg-slate-100 border border-white p-8 shadow-md rounded-xl">
+    <div className="w-full flex flex-col h-full min-h-screen px-1 bg-slate-300">
+      <Breadcrums />
+      <div className="flex gap-1 mb-1 break-fiendlist-into-column">
+        <div className="w-full flex flex-col gap-1">
+          <section className="w-full h-full flex gap-1 break-profile-into-column">
+            <article className="w-full flex flex-col items-center gap-2 bg-slate-100 border border-white p-8 shadow-md rounded-md">
               {user ? (
                 <UserProfileFolder user={user} />
               ) : (
@@ -44,10 +34,10 @@ export default function ProfilePage() {
                 </div>
               )}
             </article>
-            <article className="w-full bg-slate-100 border border-white p-8 shadow-md rounded-xl">
+            <article className="w-full bg-slate-100 border border-white p-8 shadow-md rounded-md">
               <div className="w-full mb-4">
                 <h3 className="text-slate-800 font-sans text-3xl font-extrabold uppercase">
-                  Seus Quiz
+                  Seus Quizzes
                 </h3>
               </div>
               <UserQuizSettingsFolder />
@@ -166,17 +156,21 @@ const UserProfileFolder = ({ user }: { user: User }) => {
 
 const UserScoreFolder = () => {
   return (
-    <div className="flex rounded-xl gap-2 p-8 w-full border border-white shadow-md bg-slate-100">
+    <div
+      className="flex rounded-md gap-2 p-8 w-full border border-white shadow-md bg-slate-100" /*break-inner-score-column*/
+    >
       <TotalScore />
-      <LastScore />
-      <LastScore />
+      <div className="flex gap-2">
+        <LastScore />
+        <LastScore />
+      </div>
     </div>
   );
 };
 
 const TotalScore = () => {
   return (
-    <article className="w-full min-w-[55%] flex flex-col">
+    <article className="w-full max-w-[55%] flex flex-col">
       <div className="w-full mb-4">
         <h3 className="text-slate-800 font-sans text-3xl font-extrabold uppercase">
           Pontuações
@@ -187,7 +181,7 @@ const TotalScore = () => {
           Pontuação Total
         </h3>
       </div>
-      <div className="flex gap-2">
+      <div className="flex break-inner-score-column gap-2">
         <ProgressCircle
           diameter={200}
           strokeWidth={15}
@@ -251,7 +245,7 @@ const TotalScore = () => {
 
 const LastScore = () => {
   return (
-    <article className="flex flex-col gap-2 p-8 w-full rounded-xl shadow-md border border-white bg-slate-100">
+    <article className="flex flex-col gap-2 p-8 w-full max-w-52 h-fit rounded-md shadow-md border border-white bg-slate-100">
       <div>
         <h3 className="text-slate-800 text-xl font-extrabold">Último Quiz</h3>
         <span className="text-slate-400 text-xs">
@@ -289,7 +283,7 @@ const ScoreTag = ({ subject, theme }: { subject: string; theme: string }) => {
 
 const FriendsList = () => {
   return (
-    <div className="min-w-[20%] p-8 mb-2 bg-slate-100 border border-white rounded-xl shadow-md">
+    <div className="min-w-[20%] p-8 bg-slate-100 border border-white rounded-md shadow-md">
       <div className="w-full mb-4">
         <h3 className="text-slate-800 font-sans text-3xl font-extrabold uppercase">
           Amigos
@@ -317,7 +311,7 @@ const UserQuizSettingsFolder = () => {
             <QuizListItem />
           </div>
         </div>
-        <Pagination />
+        <QuizPagination />
       </div>
     </section>
   );
@@ -344,36 +338,6 @@ const QuizListItem = ({ isPrivate = false }: { isPrivate?: boolean }) => {
           Atualizado ontem, 02-07-2024
         </span>
       </div>
-    </div>
-  );
-};
-
-const Pagination = () => {
-  return (
-    <div className="flex justify-center gap-2">
-      <button className="size-7 flex justify-center items-center text-xs shadow-md text-slate-800 rounded border border-white hover:bg-white">
-        <RiArrowDropLeftLine className="text-2xl" />
-      </button>
-      <button className="size-7 flex justify-center items-center text-xs shadow-md text-slate-800 rounded border border-white hover:bg-white">
-        1
-      </button>
-      <div className="size-7" />
-      <button className="size-7 flex justify-center items-center text-xs shadow-md text-slate-800 rounded border border-white hover:bg-white">
-        5
-      </button>
-      <button className="size-7 flex justify-center items-center text-xs shadow-md text-white rounded border border-white bg-blue-600 font-extrabold">
-        6
-      </button>
-      <button className="size-7 flex justify-center items-center text-xs shadow-md text-slate-800 rounded border border-white hover:bg-white">
-        7
-      </button>
-      <div className="size-7" />
-      <button className="size-7 flex justify-center items-center text-xs shadow-md text-slate-800 rounded border border-white hover:bg-white">
-        18
-      </button>
-      <button className="size-7 flex justify-center items-center text-xs shadow-md text-slate-800 rounded border border-white hover:bg-white">
-        <RiArrowDropLeftLine className="text-2xl rotate-180" />
-      </button>
     </div>
   );
 };

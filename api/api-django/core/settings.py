@@ -26,10 +26,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = os.getenv('DEBUG') == 'True'
+# QUIZ_MODERATION is a tool for moderators to control user-generated content on the website 
+# It allow administrators to moderate inappropriate content submitted by users 
+# If quiz.blocked == True, that quiz cannot be visualized by other users 
+# This attribute usage can be found on quiz models.py and its set as True by default for production 
+# This means that every quiz submited to the database must be moderated before it is public 
+QUIZ_MODERATION = DEBUG == False
 DATA_DIR = BASE_DIR.parent.parent / 'data' / 'web' if not DEBUG else BASE_DIR.parent.parent / 'web' / 'public' 
-
 ALLOWED_HOSTS = [h.strip() for h in os.getenv('ALLOWED_HOSTS', '').split(',') if h.strip()]
-
 AUTH_USER_MODEL = 'user.UserModel'
 
 cloudinary.config(

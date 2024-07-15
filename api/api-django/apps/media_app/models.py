@@ -1,5 +1,24 @@
 from cloudinary.models import CloudinaryField
+import cloudinary.uploader as cloudinary
+from cloudinary.utils import cloudinary_url
 from django.db import models
+
+
+class CloudinaryUtilities:
+    @staticmethod
+    def save_image(image, public_id = None): 
+        uploaded_image = cloudinary.upload(image, public_id=public_id)
+        return uploaded_image
+    
+    @staticmethod
+    def destroy_image(public_id):
+        response = cloudinary.destroy(public_id)
+        return response.get('result') == 'ok'
+    
+    @staticmethod
+    def return_optimized_image(image):
+        optimize_url, _ = cloudinary_url(image, fetch_format="auto", quality="auto")
+        return optimize_url
 
 
 class UserImageModel(models.Model):

@@ -53,7 +53,7 @@ export default function QuestionCard({
             {question.getText}
           </h1>
           <div className="absolute top-3/4 left-1/2 -translate-x-1/2 p-4 shadow-darker bg-slate-500 rounded-full">
-            <Countdown duration={30} whenFinish={skipFunction} />
+            <Countdown duration={30} onComplete={skipFunction} />
           </div>
         </div>
       </header>

@@ -30,7 +30,7 @@ class QuizTools:
         """
         if not self.quiz_model.objects.exists():
             populate_database()
-        queryset = self.quiz_model.objects.all()
+        queryset = self.quiz_model.objects.all().filter(blocked=False)
         if kwargs.get('order_by'):
             order_by = kwargs.get('order_by')
             if hasattr(order_by, '__iter__'):
@@ -106,15 +106,15 @@ class QuestionTools:
     question_model = QuestionModel
 
     def exists(self, **kwargs) -> bool:
-        return self.question_model.objects.filter(**kwargs).exists()
+        return self.question_model.objects.filter(**kwargs).filter(blocked=False).exists()
 
     def get_object(self, **kwargs) -> QuestionModel:
         return self.question_model.objects.get(**kwargs)
 
     def get_queryset(self, quiz: list[int] = None, size: int = None) -> QuerySet[QuestionModel]:
         if quiz:
-            return self.question_model.objects.filter(quiz__id__in=quiz).order_by('?')[:size or 10]
-        return self.question_model.objects.order_by('?')[:size or 10]
+            return self.question_model.objects.filter(quiz__id__in=quiz).filter(quiz__blocked=False).order_by('?')[:size or 10]
+        return self.question_model.objects.filter(quiz__blocked=False).order_by('?')[:size or 10]
 
 
 class AnswerTools:

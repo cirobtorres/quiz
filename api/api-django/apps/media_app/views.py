@@ -1,5 +1,3 @@
-import cloudinary.uploader as cloudinary
-from cloudinary.utils import cloudinary_url
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpRequest
@@ -8,27 +6,10 @@ from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK, HTTP_201_CREATED, HTTP_404_NOT_FOUND, HTTP_400_BAD_REQUEST
 from rest_framework.parsers import MultiPartParser, FormParser, JSONParser, FileUploadParser
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from .models import UserImageModel, QuizImageModel
+from .models import CloudinaryUtilities, UserImageModel, QuizImageModel
 from .serializers import UserImageSerializer, QuizImageSerializer
 from ..user.views import UserUtilities, UserPermissions
 from ..quiz.models import QuizModel
-
-
-class CloudinaryUtilities:
-    @staticmethod
-    def save_image(image, public_id = None): 
-        uploaded_image = cloudinary.upload(image, public_id=public_id)
-        return uploaded_image
-    
-    @staticmethod
-    def destroy_image(public_id):
-        response = cloudinary.destroy(public_id)
-        return response.get('result') == 'ok'
-    
-    @staticmethod
-    def return_optimized_image(image):
-        optimize_url, _ = cloudinary_url(image, fetch_format="auto", quality="auto")
-        return optimize_url
 
 
 class UserImageView(APIView, UserUtilities, CloudinaryUtilities):

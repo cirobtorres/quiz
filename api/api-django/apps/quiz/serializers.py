@@ -13,6 +13,7 @@ class QuizSerializer(ModelSerializer):
             'cover', 
             'slug', 
             'theme', 
+            'blocked', 
             'is_private', 
             'created_at', 
             'updated_at', 

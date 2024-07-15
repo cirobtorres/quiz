@@ -46,9 +46,9 @@ export default function AvatarNavBar({
           setImageModal={setImageModal}
         />
       )}
-      <div className="w-full max-w-[20%] h-full min-h-screen flex flex-col justify-center items-center mt-20 mb-auto">
+      <div className="w-full max-w-[20%] flex flex-col justify-center items-center mt-20 mb-auto">
         <button
-          className="relative rounded-full size-72 mb-4 overflow-hidden group"
+          className="relative rounded-full w-full max-w-72 box-border p-2 mb-4 overflow-hidden group"
           onClick={() => setImageModal(true)}
         >
           {user ? (
@@ -59,9 +59,10 @@ export default function AvatarNavBar({
                   "/images/user/avatar/1281x1281-user-icon.png"
                 }
                 alt={`Avatar de ${user.getUsername}`}
-                fill
                 sizes="(max-width: 768px) 100vw, 33vw"
-                className="absolute object-cover rounded-full pointer-events-none border-2 border-white bg-white group-hover:opacity-50 transition ease-in duration-300"
+                width={500}
+                height={500}
+                className="max-w-full h-auto rounded-full pointer-events-none border-2 border-white bg-white group-hover:opacity-50 transition ease-in duration-300"
               />
               <FaCamera
                 className={`
@@ -92,7 +93,7 @@ export default function AvatarNavBar({
                 />
                 <Link
                   href={item.href}
-                  className="block text-white text-xl w-full text-start px-10 py-2 border-r-0 rounded-l-full"
+                  className="block text-nowrap text-base text-white w-full text-start pl-10 py-2 rounded-l-full"
                   style={{
                     color: pathname.endsWith(item.href) ? "#1e293b" : "#fff",
                     fontWeight: pathname.endsWith(item.href) ? "900" : "500",
@@ -119,7 +120,7 @@ export default function AvatarNavBar({
           <Link
             href="/"
             onClick={handleSignOut}
-            className="text-white text-xl w-full text-start px-10 py-2"
+            className="block text-nowrap text-base text-white w-full text-start pl-10 py-2 rounded-l-full"
           >
             Sair
           </Link>
@@ -351,7 +352,7 @@ const ImageModal = ({
               <div className="relative mx-auto size-96 rounded-full overflow-hidden bg-white">
                 <input
                   type="file"
-                  className="absolute inset-0 cursor-pointer opacity-0 z-50"
+                  className="absolute inset-0 cursor-pointer rounded-full opacity-0 z-50"
                   onChange={imageInputOnChange}
                 />
                 <NextImage

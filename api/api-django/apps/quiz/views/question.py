@@ -5,9 +5,11 @@ from rest_framework.response import Response
 from rest_framework.status import (
     HTTP_200_OK, 
     HTTP_201_CREATED, 
+    HTTP_400_BAD_REQUEST,
     HTTP_404_NOT_FOUND
 )
 from .tools import QuestionTools
+from ..models import QuizModel
 
 
 class QuestionView(APIView, QuestionTools):
@@ -19,9 +21,9 @@ class QuestionView(APIView, QuestionTools):
         Returns a single question, if passed a primary key as an argument, or a list of questions if no primary key is given.
 
         Possible URLs:
-            - http://127.0.0.1:8000/api/quiz -> all quizes
-            - http://127.0.0.1:8000/api/quiz/question -> 10 random questions from all quizes
-            - http://127.0.0.1:8000/api/quiz/question?size=5 -> 5 random questions from all quizes
+            - http://127.0.0.1:8000/api/quiz -> all quizzes
+            - http://127.0.0.1:8000/api/quiz/question -> 10 random questions from all quizzes (10 is the default)
+            - http://127.0.0.1:8000/api/quiz/question?size=5 -> 5 random questions from all quizzes
             - http://127.0.0.1:8000/api/quiz/question?quiz=1 -> 10 random questions from quiz=1
             - http://127.0.0.1:8000/api/quiz/question?quiz=1&quiz=2 -> 10 random questions from quiz=[1, 2]
             - http://127.0.0.1:8000/api/quiz/question?quiz=1&quiz=2&size=5 -> 5 random questions from quiz=[1, 2]
@@ -33,6 +35,8 @@ class QuestionView(APIView, QuestionTools):
             except ObjectDoesNotExist as e:
                 # print('-x' * 35 + '-\n', e.__class__.__name__, ': ', e, '\n', '*' * 70, '\n', sep='') 
                 return Response(data={'message': 'Question not found'}, status=HTTP_404_NOT_FOUND)
+            if question_model.quiz.blocked:
+                return Response(data={'message': 'Blocked Quiz'}, status=HTTP_400_BAD_REQUEST)
             question_serializer = self.question_serializer(instance=question_model)
             return Response(data=question_serializer.data, status=HTTP_200_OK)
         
@@ -42,6 +46,10 @@ class QuestionView(APIView, QuestionTools):
             quiz_params = request.GET.getlist('quiz')
             size_params = request.GET.get('size')
 
+            for quiz in quiz_params:
+                if QuizModel.objects.get(pk=int(quiz)).blocked:
+                    return Response(data={'message': 'Blocked Quiz'}, status=HTTP_400_BAD_REQUEST)
+
             if quiz_params:
                 params.update({'quiz': [int(s) for s in quiz_params],})
             
@@ -49,7 +57,6 @@ class QuestionView(APIView, QuestionTools):
                 params.update({'size': int(size_params),})
 
         question_model = self.get_queryset(**params)
-
         question_serializer = self.question_serializer(instance=question_model, many=True)
 
         return Response(data=question_serializer.data, status=HTTP_200_OK)

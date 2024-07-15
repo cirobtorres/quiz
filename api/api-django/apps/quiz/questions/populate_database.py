@@ -7,7 +7,7 @@ from typing import List, Dict, Union, TypedDict, Iterable
 from django.utils.text import slugify
 
 from ..models import QuestionModel, AnswerModel, QuizModel
-from ...media_app.models import QuizImageModel
+from ...media_app.models import CloudinaryUtilities, QuizImageModel
 
 
 __doc__ = """This module contains functions to start an empty database with questions and answers."""
@@ -90,7 +90,7 @@ def save_image_to_path(instance, image_path):
         print(f'Image path does not exist: {image_path}')
 
 def save_image_to_cloudinary(path_to_image):
-    cloudinary_image = QuizImageModel.save_image(path_to_image)
+    cloudinary_image = CloudinaryUtilities.save_image(path_to_image)
     cover = QuizImageModel()
 
     cover.asset_id = cloudinary_image.get('asset_id')
