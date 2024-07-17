@@ -6,6 +6,8 @@ import { useEffect } from "react";
 import { redirect, useRouter } from "next/navigation";
 import useUser from "@/hooks/useUser";
 import Search from "@/components/Search";
+import Link from "next/link";
+import NightThemeSwitcher from "@/components/NightThemeSwitcher";
 
 const navItems = [
   {
@@ -53,14 +55,17 @@ export default function ProfileLayout({
 
 const Header = () => {
   return (
-    <div className="w-full flex z-50 py-2 shadow-md border-b border-white bg-slate-200">
-      <div className="w-full max-w-20 flex justify-center items-center mx-auto">
-        <h1 className="uppercase font-extrabold text-2xl text-slate-800">
-          Quiz
-        </h1>
+    <div className="w-full flex z-50 py-2 shadow-md border-b border-white dark:border-slate-600 bg-slate-200 dark:bg-slate-800">
+      <div className="flex-1 w-full max-w-20 flex justify-center items-center mx-auto">
+        <Link href="/" className="flex items-center">
+          <h1 className="uppercase font-extrabold text-4xl text-slate-800 dark:text-slate-200">
+            Quiz
+          </h1>
+        </Link>
       </div>
       <Search />
-      <div className="mx-auto">
+      <div className="flex-1 w-full max-w-[10%] flex items-center justify-between mx-auto">
+        <NightThemeSwitcher />
         <Avatar />
       </div>
     </div>

@@ -6,15 +6,15 @@ export default function QuizPagination() {
       <button
         className={`
           size-7 miniaturize-user-quiz-pagination flex justify-center items-center text-xs shadow-md rounded 
-          text-slate-800 bg-white border border-white hover:bg-slate-200
+          text-slate-800 dark:text-slate-200 bg-white dark:bg-slate-700 border border-white dark:border-slate-600 hover:bg-slate-200 dark:hover:bg-slate-600 
         `}
       >
-        <RiArrowDropLeftLine className="text-2xl" />
+        <RiArrowDropLeftLine className="text-slate-800 dark:text-slate-200 text-2xl" />
       </button>
       <button
         className={`
           size-7 miniaturize-user-quiz-pagination flex justify-center items-center text-xs shadow-md rounded 
-          text-slate-800 bg-white border border-white hover:bg-slate-200
+          text-slate-800 dark:text-slate-200 bg-white dark:bg-slate-700 border border-white dark:border-slate-600 hover:bg-slate-200 dark:hover:bg-slate-600 
         `}
       >
         1
@@ -23,7 +23,7 @@ export default function QuizPagination() {
       <button
         className={`
           size-7 miniaturize-user-quiz-pagination flex justify-center items-center text-xs shadow-md rounded 
-          text-slate-800 bg-white border border-white hover:bg-slate-200
+          text-slate-800 dark:text-slate-200 bg-white dark:bg-slate-700 border border-white dark:border-slate-600 hover:bg-slate-200 dark:hover:bg-slate-600 
         `}
       >
         5
@@ -39,7 +39,7 @@ export default function QuizPagination() {
       <button
         className={`
           size-7 miniaturize-user-quiz-pagination flex justify-center items-center text-xs shadow-md rounded 
-          text-slate-800 bg-white border border-white hover:bg-slate-200
+          text-slate-800 dark:text-slate-200 bg-white dark:bg-slate-700 border border-white dark:border-slate-600 hover:bg-slate-200 dark:hover:bg-slate-600 
         `}
       >
         7
@@ -48,7 +48,7 @@ export default function QuizPagination() {
       <button
         className={`
           size-7 miniaturize-user-quiz-pagination flex justify-center items-center text-xs shadow-md rounded 
-          text-slate-800 bg-white border border-white hover:bg-slate-200
+          text-slate-800 dark:text-slate-200 bg-white dark:bg-slate-700 border border-white dark:border-slate-600 hover:bg-slate-200 dark:hover:bg-slate-600 
         `}
       >
         18
@@ -56,10 +56,10 @@ export default function QuizPagination() {
       <button
         className={`
           size-7 miniaturize-user-quiz-pagination flex justify-center items-center text-xs shadow-md rounded 
-          text-slate-800 bg-white border border-white hover:bg-slate-200
+          text-slate-800 dark:text-slate-200 bg-white dark:bg-slate-700 border border-white dark:border-slate-600 hover:bg-slate-200 dark:hover:bg-slate-600 
         `}
       >
-        <RiArrowDropLeftLine className="text-2xl rotate-180" />
+        <RiArrowDropLeftLine className="text-slate-800 dark:text-slate-200 text-2xl rotate-180" />
       </button>
     </div>
   );

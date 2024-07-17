@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Body from "../components/Body";
 import { UserProvider } from "../contexts/userContext";
-import { ModalProvider } from "../contexts/modalContext";
 import { DarkModeProvider } from "../contexts/darkModeContext";
 import "../styles/globals.css";
 
@@ -21,11 +20,9 @@ export default function RootLayout({
   return (
     <html lang="pt">
       <DarkModeProvider>
-        <ModalProvider>
-          <UserProvider>
-            <Body fontFamily={inter.className}>{children}</Body>
-          </UserProvider>
-        </ModalProvider>
+        <UserProvider>
+          <Body fontFamily={inter.className}>{children}</Body>
+        </UserProvider>
       </DarkModeProvider>
     </html>
   );

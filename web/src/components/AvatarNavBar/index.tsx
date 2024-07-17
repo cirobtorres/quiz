@@ -18,7 +18,8 @@ import ReactCrop, {
   PixelCrop,
 } from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
-import { postUserImage, putUserImage } from "@/libs/userImage";
+import useTheme from "@/hooks/useTheme";
+import { postUserImage, putUserImage } from "@/libs/users";
 
 const ASPECT_RATIO = 1;
 const MIN_DIMENSION = 150;
@@ -28,6 +29,7 @@ export default function AvatarNavBar({
 }: {
   navItems: { title: string; href: string }[];
 }) {
+  const { theme } = useTheme();
   const { user, logout } = useUser();
   const [imageModal, setImageModal] = useState(false);
   const pathname = usePathname();
@@ -62,7 +64,7 @@ export default function AvatarNavBar({
                 sizes="(max-width: 768px) 100vw, 33vw"
                 width={500}
                 height={500}
-                className="max-w-full h-auto rounded-full pointer-events-none border-2 border-white bg-white group-hover:opacity-50 transition ease-in duration-300"
+                className="max-w-full h-auto rounded-full pointer-events-none border-2 border-white bg-white dark:bg-slate-900 group-hover:opacity-50 transition ease-in duration-300"
               />
               <FaCamera
                 className={`
@@ -87,7 +89,9 @@ export default function AvatarNavBar({
                   }`}
                   style={{
                     backgroundColor: pathname.endsWith(item.href)
-                      ? "#cbd5e1"
+                      ? theme === "dark"
+                        ? "#334155"
+                        : "#cbd5e1"
                       : "transparent",
                   }}
                 />
@@ -95,10 +99,16 @@ export default function AvatarNavBar({
                   href={item.href}
                   className="block text-nowrap text-base text-white w-full text-start pl-10 py-2 rounded-l-full"
                   style={{
-                    color: pathname.endsWith(item.href) ? "#1e293b" : "#fff",
+                    color: pathname.endsWith(item.href)
+                      ? theme === "dark"
+                        ? "white"
+                        : "#1e293b"
+                      : "#fff",
                     fontWeight: pathname.endsWith(item.href) ? "900" : "500",
                     backgroundColor: pathname.endsWith(item.href)
-                      ? "#cbd5e1"
+                      ? theme === "dark"
+                        ? "#334155"
+                        : "#cbd5e1"
                       : "#7e22ce",
                   }}
                 >
@@ -110,7 +120,9 @@ export default function AvatarNavBar({
                   }`}
                   style={{
                     backgroundColor: pathname.endsWith(item.href)
-                      ? "#cbd5e1"
+                      ? theme === "dark"
+                        ? "#334155"
+                        : "#cbd5e1"
                       : "transparent",
                   }}
                 />
@@ -321,13 +333,13 @@ const ImageModal = ({
           className={`
             flex flex-col gap-3 
             w-auto p-8 rounded-[2rem] 
-            border border-white shadow-xl bg-slate-200
+            border border-white dark:border-slate-600 shadow-xl bg-slate-200 dark:bg-slate-900
           `}
         >
           {!image && (
             <>
               <div className="w-[25rem] truncate flex justify-between items-center">
-                <span className="text-xl font-sans uppercase text-slate-800">
+                <span className="text-xl font-sans uppercase text-slate-800 dark:text-slate-400">
                   Foto de Perfil
                 </span>
                 <CloseModal disabled={loadingModal} closeFunc={setImageModal} />
@@ -336,20 +348,20 @@ const ImageModal = ({
                 <h3
                   className={`
                     w-full block 
-                    font-sans font-extrabold uppercase text-center text-3xl text-slate-800
-                  `} // group-[:not(:hover)]:truncate group-hover:animate-scroll-truncate-text
+                    font-sans font-extrabold uppercase text-center text-3xl text-slate-800 dark:text-slate-200
+                  `}
                 >
                   {user.getUsername}
                 </h3>
               </div>
               <div className="w-[25rem]">
-                <span className="text-slate-800">
+                <span className="text-slate-800 dark:text-slate-400">
                   Lorem ipsum dolor sit amet consectetur adipisicing elit.
                   Veniam ducimus, natus quod aliquid provident sint quo rem
                   explicabo dolore praesentium.
                 </span>
               </div>
-              <div className="relative mx-auto size-96 rounded-full overflow-hidden bg-white">
+              <div className="relative mx-auto size-96 rounded-full overflow-hidden bg-white dark:bg-slate-900">
                 <input
                   type="file"
                   className="absolute inset-0 cursor-pointer rounded-full opacity-0 z-50"
@@ -368,12 +380,12 @@ const ImageModal = ({
               </div>
               {imageError && (
                 <div className="mx-auto">
-                  <span className="text-red-500 text-sm">{imageError}</span>
+                  <span className="text-red-600 text-sm">{imageError}</span>
                 </div>
               )}
               {user.getAvatar && (
                 <div className="mx-auto">
-                  <span className="text-xs text-slate-600">
+                  <span className="text-xs text-slate-600 dark:text-slate-400">
                     Última troca em {user.getAvatar.getUpdatedAt}
                   </span>
                 </div>
@@ -389,9 +401,9 @@ const ImageModal = ({
                 >
                   <FaArrowRight
                     style={{ rotate: "180deg" }}
-                    className="opacity-0 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-1"
+                    className="text-slate-800 dark:text-slate-200 opacity-0 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-1"
                   />
-                  <span className="text-xl transition-all duration-200 group-hover:-translate-x-1">
+                  <span className="text-slate-800 dark:text-slate-200 text-xl transition-all duration-200 group-hover:-translate-x-1">
                     Voltar
                   </span>
                 </button>
@@ -406,7 +418,7 @@ const ImageModal = ({
                 keepSelection
                 aspect={ASPECT_RATIO} // Perfect circular
                 minWidth={MIN_DIMENSION}
-                className="rounded-xl overflow-hidden"
+                className="rounded-xl overflow-hidden border border-transparent dark:border-slate-600"
               >
                 <NextImage
                   ref={imageRef}
@@ -433,7 +445,7 @@ const ImageModal = ({
                 {loadingModal ? "Salvando" : "Salvar"}
               </button>
               <button
-                className="font-extrabold py-2 w-1/4 mx-auto rounded-xl text-slate-800 cursor-pointer"
+                className="font-extrabold py-2 w-1/4 mx-auto rounded-xl text-slate-800 dark:text-slate-500 cursor-pointer"
                 disabled={loadingModal}
               >
                 Remover
@@ -465,9 +477,9 @@ const CloseModal = ({
     <button
       onClick={() => closeFunc(false)}
       disabled={disabled}
-      className="cursor-pointer rounded-full overflow-hidden hover:bg-slate-300 group"
+      className="cursor-pointer rounded-full overflow-hidden hover:bg-slate-300 dark:hover:bg-slate-600 group"
     >
-      <IoIosClose className="text-slate-800 text-5xl group-hover:text-white" />
+      <IoIosClose className="text-slate-800 dark:text-slate-500 text-5xl group-hover:text-white dark:group-hover:text-slate-200" />
     </button>
   );
 };

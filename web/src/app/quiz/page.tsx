@@ -2,14 +2,14 @@
 
 import { useEffect, useRef, useState } from "react";
 import { redirect, useRouter } from "next/navigation";
-import getQuestions from "@/libs/getQuestions";
 import Loading from "@/components/Loading";
 import QuestionCard from "@/components/QuestionCard";
 import useUser from "@/hooks/useUser";
 import Question from "@/models/Question";
 import Skip from "@/components/Skip";
 import QuestionIndex from "@/components/QuestionIndex";
-import postScore from "@/libs/postScore";
+import { getQuestions } from "@/libs/quizzes";
+import { postScore } from "@/libs/scores";
 
 export default function QuizPage() {
   const { user, loading: userLoading } = useUser();

@@ -15,6 +15,7 @@ export default function Body({
 
   return (
     <body
+      id="body"
       className={`${theme} ${fontFamily} min-h-svh bg-gradient-to-tr from-slate-400 to-slate-200`}
     >
       <UpperWave />

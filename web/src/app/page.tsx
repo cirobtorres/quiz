@@ -2,11 +2,12 @@ import { FaStar } from "react-icons/fa";
 import Avatar from "@/components/Avatar";
 import QuizCard from "@/components/QuizCard";
 import Link from "next/link";
-import getQuiz from "@/libs/getQuiz";
 import { Suspense } from "react";
 import Loading from "@/components/Loading";
 import Presentation from "@/components/Presentation";
 import Quiz from "@/models/Quiz";
+import { getQuiz } from "@/libs/quizzes";
+import Search from "@/components/Search";
 
 export default async function HomePage() {
   return (
@@ -16,6 +17,7 @@ export default async function HomePage() {
         <Presentation />
         <QuickQuizCards />
         <Forum />
+        <SearchSection />
         <Suspense
           fallback={
             <div className="max-w-webpage mx-auto flex justify-center items-center">
@@ -138,17 +140,37 @@ const Forum = () => {
   );
 };
 
+const SearchSection = () => {
+  return (
+    <section className="w-full py-20 mb-20 bg-slate-300">
+      <article>
+        <div className="mb-10">
+          <h2 className="text-5xl text-center font-extrabold text-slate-800">
+            Quiz da comunidade!
+          </h2>
+        </div>
+        <div className="mb-10">
+          <Search />
+        </div>
+        <div className="max-w-webpage mx-auto">
+          <p className="text-xl">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto
+            qui facere fugit fuga amet doloribus ducimus esse est dolor
+            voluptatum dolore itaque harum aliquam voluptatem pariatur modi
+            mollitia, fugiat id!
+          </p>
+        </div>
+      </article>
+    </section>
+  );
+};
+
 const QuizCardGrid = async () => {
   // await new Promise((resolve) => setTimeout(resolve, 6000));
   const quizArray: QuizAPI = await getQuiz();
   return (
-    <section className="max-w-webpage mx-auto my-2">
-      <div className="mb-10">
-        <h2 className="text-5xl text-center font-extrabold text-slate-800">
-          Quiz da comunidade!
-        </h2>
-      </div>
-      <div className="grid grid-cols-4 gap-4">
+    <section className="mx-auto my-2">
+      <article className="mx-auto max-w-webpage grid grid-cols-4 gap-4">
         {quizArray.results.map((quiz) => {
           const quizModel = Quiz.create(quiz);
           return (
@@ -160,11 +182,10 @@ const QuizCardGrid = async () => {
               }}
               title={quizModel.getSubject}
               description={quizModel.getDescription}
-              theme={quizModel.getTheme}
             />
           );
         })}
-      </div>
+      </article>
     </section>
   );
 };

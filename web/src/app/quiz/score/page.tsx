@@ -3,10 +3,11 @@
 import Loading from "@/components/Loading";
 import { redirect } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
+import { FaStar } from "react-icons/fa";
 import useUser from "../../../hooks/useUser";
-import getScore from "../../../libs/getScore";
 import TotalScore from "@/models/Score";
 import Link from "next/link";
+import { getScore } from "@/libs/scores";
 
 export default function ScorePage() {
   const { user, loading } = useUser();
@@ -22,7 +23,22 @@ export default function ScorePage() {
           <Scores scoreId={user.getLastScoreId} />
         </Suspense>
       )}
-      <Link href="/" className="">
+      <div className="flex flex-col mb-8">
+        <p className="text-2xl text-white">Deixe um feedback para o criador</p>
+        <div className="flex justify-center gap-1">
+          <FaStar className="text-transparent stroke-[14] stroke-white text-5xl cursor-pointer" />
+          <FaStar className="text-transparent stroke-[14] stroke-white text-5xl cursor-pointer" />
+          <FaStar className="text-transparent stroke-[14] stroke-white text-5xl cursor-pointer" />
+          <FaStar className="text-transparent stroke-[14] stroke-white text-5xl cursor-pointer" />
+          <FaStar className="text-transparent stroke-[14] stroke-white text-5xl cursor-pointer" />
+        </div>
+        <p className="text-2xl text-white">(Opcional)</p>
+        <textarea />
+      </div>
+      <Link
+        href="/"
+        className="text-white text-3xl w-1/4 text-center px-8 py-4 rounded-2xl bg-blue-600"
+      >
         Voltar
       </Link>
     </main>
@@ -52,7 +68,8 @@ const Scores = ({ scoreId }: { scoreId: number }) => {
   const [score, setScore] = useState<TotalScore | null>(null);
 
   const getScoreData = async () => {
-    const scoreData = await getScore(scoreId);
+    // const scoreData = await getScore(scoreId);
+    const scoreData = await getScore(1);
     const score = TotalScore.create(scoreData);
     setScore(score);
   };
@@ -104,7 +121,7 @@ const ScoreCircle = ({
     <div className="flex flex-col items-center">
       <h2 className="text-slate-100 text-5xl font-extrabold">{text}</h2>
       <div
-        className="flex flex-col justify-center items-center size-80 rounded-full bg-blue-500"
+        className="flex flex-col justify-center items-center size-72 rounded-full bg-blue-500"
         style={{ backgroundColor: options?.circleColor }}
       >
         <span

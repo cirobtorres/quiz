@@ -3,12 +3,15 @@
 import { createContext, useEffect, useState } from "react";
 import { JwtPayload, jwtDecode } from "jwt-decode";
 import Cookies from "js-cookie";
-import getUserData from "../libs/getUserData";
-import refreshSession from "../libs/refreshSession";
-import loginUser, { logoutUser } from "../libs/loginUser";
-import registerUser from "../libs/registerUser";
 import User from "@/models/User";
-import { updateUser } from "../libs/updateUser";
+import {
+  getUserData,
+  loginUser,
+  logoutUser,
+  refreshSession,
+  registerUser,
+  updateUser,
+} from "@/libs/users";
 
 interface UserContextProps {
   user: User | null;

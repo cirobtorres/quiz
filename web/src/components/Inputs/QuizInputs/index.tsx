@@ -1,4 +1,5 @@
 import { randomizer } from "@/functions";
+import { useRef, useState } from "react";
 
 const placeholder = (() => {
   const array = [
@@ -57,14 +58,27 @@ export const QuestionInput = ({
   label: string;
   placeholder?: string;
 }) => {
+  const charsLimit = 115;
+  const [value, setValue] = useState("");
+  const [characters, setCaracters] = useState(255);
+  const handleOnChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const chars = event.target.value.length;
+    if (chars < charsLimit + 1) {
+      setCaracters(charsLimit - chars);
+      setValue(event.target.value);
+    }
+  };
+
   return (
     <div className={`flex w-full flex-col`}>
       <div className={"relative"}>
-        <input
+        <textarea
           id={id}
           name={id}
-          type="text"
           placeholder={placeholder}
+          value={value}
+          onChange={handleOnChange}
+          rows={4}
           autoComplete="new-password"
           className={`
             w-full rounded-xl p-4 text-slate-800 outline-none shadow-md
@@ -75,13 +89,21 @@ export const QuestionInput = ({
         <label
           htmlFor={id}
           className={`
-            absolute start-[10px] top-[14px] z-10 origin-[0] -translate-y-[1.1rem] scale-75 transform pointer-events-none px-2 text-emerald-600 text-lg duration-300 
-            peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-slate-800 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-[14px] 
-            peer-focus:-translate-y-[1.1rem] peer-focus:text-emerald-600 peer-focus:scale-75 peer-focus:px-2 rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4
+            absolute start-[10px] top-[14px] z-10 origin-[0] -translate-y-[1.1rem] scale-75 
+            transform pointer-events-none px-2 text-emerald-600 text-lg duration-300 
+            peer-placeholder-shown:text-slate-800 peer-placeholder-shown:scale-100 peer-focus:top-[14px] 
+            peer-focus:-translate-y-[1.1rem] peer-focus:text-emerald-600 peer-focus:scale-75 
+            peer-focus:px-2 rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4
+
+            peer-placeholder-shown:top-[30px] 
           `}
+          // peer-placeholder-shown:top-[InputTopPadding + PlaceholderFontSize = 16px + 18px]
         >
           {label}
         </label>
+        <p>
+          Caracteres: {characters} de {charsLimit}
+        </p>
       </div>
     </div>
   );

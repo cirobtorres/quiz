@@ -31,9 +31,9 @@ export default function PasswordInput({
   };
 
   const designA = [
-    `peer w-full rounded-xl p-4 text-slate-800 outline-none focus:ring-0 placeholder:text-transparent focus:placeholder:text-slate-400 active:placeholder:text-slate-400`,
-    `absolute right-3 top-1/2 -translate-y-1/2 text-xl text-slate-800 outline-none`,
-    `text-emerald-600 absolute start-[10px] top-[14px] z-10 origin-[0] -translate-y-[1.1rem] scale-75 transform pointer-events-none px-2 text-lg duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-slate-800 peer-placeholder-shown:scale-100 peer-focus:top-[14px] peer-focus:-translate-y-[1.1rem] peer-focus:text-emerald-600 peer-focus:scale-75 peer-focus:px-2 rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4`,
+    `peer w-full rounded-xl p-4 text-slate-800 dark:text-slate-200 border border-transparent dark:border-slate-600 bg-white dark:bg-slate-700 outline-none focus:ring-0 placeholder:text-transparent focus:placeholder:text-slate-400 dark:focus:placeholder:text-slate-500 active:placeholder:text-slate-400 dark:active:placeholder:text-slate-500`,
+    `absolute right-3 top-1/2 -translate-y-1/2 text-xl text-slate-800 dark:text-slate-500 outline-none`,
+    `text-emerald-600 dark:text-emerald-400 absolute start-[10px] top-[14px] z-10 origin-[0] -translate-y-[1.1rem] scale-75 transform pointer-events-none px-2 text-lg duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-slate-800 dark:peer-placeholder-shown:text-slate-400 peer-placeholder-shown:scale-100 peer-focus:top-[14px] peer-focus:-translate-y-[1.1rem] peer-focus:text-emerald-600 dark:peer-focus:text-emerald-400 peer-focus:scale-75 peer-focus:px-2 rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4`,
   ];
 
   const designB = [
@@ -65,9 +65,9 @@ export default function PasswordInput({
           onClick={handleTypeSwitch}
         >
           {type === "password" ? (
-            <IoEyeOffOutline className="text-slate-800" />
+            <IoEyeOffOutline className="text-slate-800 dark:text-slate-200" />
           ) : (
-            <IoEyeOutline className="text-slate-800" />
+            <IoEyeOutline className="text-slate-800 dark:text-slate-200" />
           )}
         </button>
         <label htmlFor={id} className={!options ? designA[2] : designB[2]}>

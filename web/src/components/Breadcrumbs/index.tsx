@@ -13,7 +13,10 @@ export default function Breadcrums() {
   return (
     <ul className="flex gap-1 items-center py-1">
       {pathname.map((path: string, index: number) => (
-        <li key={index} className="flex items-center">
+        <li
+          key={index}
+          className="flex items-center text-slate-800 dark:text-slate-200"
+        >
           {index !== 0 && <RiArrowDropRightLine className="text-3xl" />}
           <Link
             href={

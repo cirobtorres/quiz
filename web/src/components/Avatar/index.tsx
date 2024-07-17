@@ -7,9 +7,9 @@ import SignedOutAvatar from "./SignedOutAvatar";
 import Loading from "../Loading";
 
 export default function Avatar() {
-  const [isOpen, setIsOpen] = useState(false);
   const userAvatarSize = 3.5; // rem
   const { user, loading } = useUser();
+  const [isOpen, setIsOpen] = useState(false);
   const dropdown = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -19,7 +19,6 @@ export default function Avatar() {
         dropdown.current &&
         !dropdown.current.contains(event.target as Node)
       ) {
-        console.log(dropdown.current.contains(event.target as Node));
         setIsOpen(false);
       }
     }

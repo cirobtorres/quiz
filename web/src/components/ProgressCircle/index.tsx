@@ -29,8 +29,7 @@ export default function ProgressCircle({
             r={`${innerRadius}px`}
             strokeWidth={`${strokeWidth}px`}
             strokeDasharray={circunference}
-            stroke="#e2e8f0"
-            className="w-fit h-fit fill-none"
+            className="w-fit h-fit fill-none stroke-slate-200 dark:stroke-slate-600"
             style={{ strokeDashoffset: 0 }}
           ></circle>
           <circle
@@ -46,7 +45,7 @@ export default function ProgressCircle({
         </svg>
         <div className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 [&_h2]:text-xl [&_span]:text-sm [&_span]:font-normal">
           <h2
-            className="font-extrabold"
+            className="text-slate-800 dark:text-slate-200 font-extrabold"
             style={{ fontSize: style?.fontSize ? style.fontSize : 20 }}
           >
             {percentage}
