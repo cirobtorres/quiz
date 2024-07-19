@@ -20,7 +20,7 @@ export default function NightThemeSwitcher() {
   return (
     <label
       onClick={handleToggleTheme}
-      className="relative flex justify-center items-center rounded-full size-10 duration-700 bg-white dark:bg-slate-700 cursor-pointer"
+      className="relative flex flex-shrink-0 justify-center items-center rounded-full size-10 duration-700 bg-white dark:bg-slate-700 cursor-pointer"
     >
       <motion.div
         initial="light"

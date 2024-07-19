@@ -16,17 +16,8 @@ export default async function HomePage() {
       <main className="w-full flex flex-col justify-center mb-auto">
         <Presentation />
         <QuickQuizCards />
-        <Forum />
+        <ForumSection />
         <SearchSection />
-        <Suspense
-          fallback={
-            <div className="max-w-webpage mx-auto flex justify-center items-center">
-              <Loading />
-            </div>
-          }
-        >
-          <QuizCardGrid />
-        </Suspense>
       </main>
     </>
   );
@@ -119,49 +110,74 @@ const QuickQuizCards = () => {
   );
 };
 
-const Forum = () => {
+const ForumSection = () => {
   return (
     <section className="w-full py-20 mb-20 bg-slate-300">
-      <div className="w-full max-w-webpage mx-auto">
-        <div className="mb-10">
-          <h2 className="text-5xl text-center font-extrabold text-slate-800">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam
-            repellat porro est quas sunt, ullam nostrum totam doloribus
+      <article>
+        <div className="w-full max-w-xl mx-auto mb-10">
+          <h2 className="inline-grid">
+            <span
+              className="[grid-column-start:1] [grid-row-start:1] before:content-[attr(data-text)] text-5xl text-center font-extrabold blur-xl bg-gradient-to-r from-pink-500 via-cyan-500 to-lime-500 bg-clip-text text-transparent pointer-events-none"
+              data-text="Central de discussões da Comunidade"
+            />
+            <span className="[grid-column-start:1] [grid-row-start:1] text-5xl text-center font-extrabold bg-gradient-to-r from-pink-500 to-cyan-500 bg-clip-text text-transparent">
+              Central de discussões da Comunidade
+            </span>
           </h2>
         </div>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto
-          qui facere fugit fuga amet doloribus ducimus esse est dolor voluptatum
-          dolore itaque harum aliquam voluptatem pariatur modi mollitia, fugiat
-          id!
-        </p>
-      </div>
+        <div className="max-w-webpage mx-auto">
+          <p className="text-center text-xl">
+            Participe das discussões de nossa comunidade e compartilhe ideias e
+            quizzes com outros usuários.
+          </p>
+        </div>
+      </article>
+      <Forum />
     </section>
+  );
+};
+
+const Forum = () => {
+  return (
+    <article className="max-w-webpage mx-auto py-10 my-10 rounded-2xl bg-slate-500">
+      <div className="">
+        <h2></h2>
+      </div>
+    </article>
   );
 };
 
 const SearchSection = () => {
   return (
-    <section className="w-full py-20 mb-20 bg-slate-300">
-      <article>
-        <div className="mb-10">
-          <h2 className="text-5xl text-center font-extrabold text-slate-800">
-            Quiz da comunidade!
-          </h2>
-        </div>
-        <div className="mb-10">
-          <Search />
-        </div>
-        <div className="max-w-webpage mx-auto">
-          <p className="text-xl">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto
-            qui facere fugit fuga amet doloribus ducimus esse est dolor
-            voluptatum dolore itaque harum aliquam voluptatem pariatur modi
-            mollitia, fugiat id!
-          </p>
-        </div>
-      </article>
-    </section>
+    <>
+      <section className="w-full py-10">
+        <article className="max-w-webpage mx-auto">
+          <div className="mb-10">
+            <div className="mb-4">
+              <h2 className="text-5xl text-center font-extrabold text-slate-800">
+                Quizzes da comunidade!
+              </h2>
+            </div>
+            <p className="text-center text-xl">
+              Pesquise e jogue quizzes de outros usuários da comunidade. Filtre
+              por títulos, tags, criadores e mais!
+            </p>
+          </div>
+          <div className="mb-10">
+            <Search />
+          </div>
+        </article>
+      </section>
+      <Suspense
+        fallback={
+          <div className="max-w-webpage mx-auto flex justify-center items-center">
+            <Loading />
+          </div>
+        }
+      >
+        <QuizCardGrid />
+      </Suspense>
+    </>
   );
 };
 

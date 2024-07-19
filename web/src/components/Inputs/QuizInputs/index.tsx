@@ -29,17 +29,23 @@ export default function QuizInput({
           placeholder={placeholder}
           autoComplete="new-password"
           className={`
-            w-full rounded-xl p-4 text-slate-800 outline-none shadow-md
+            w-full rounded-xl p-4 outline-none shadow-md
             focus:ring-0 placeholder:text-transparent peer 
+            border border-transparent dark:border-slate-600 
+            text-slate-800 dark:text-slate-200 bg-white dark:bg-slate-700 
             focus:placeholder:text-slate-400 active:placeholder:text-slate-400 
+            dark:focus:placeholder:text-slate-500 dark:active:placeholder:text-slate-400 
           `}
         />
         <label
           htmlFor={id}
           className={`
-            absolute start-[10px] top-[14px] z-10 origin-[0] -translate-y-[1.1rem] scale-75 transform pointer-events-none px-2 text-emerald-600 text-lg duration-300 
-            peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-slate-800 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-[14px] 
-            peer-focus:-translate-y-[1.1rem] peer-focus:text-emerald-600 peer-focus:scale-75 peer-focus:px-2 rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4
+            absolute start-[10px] top-[14px] z-10 origin-[0] -translate-y-[1.1rem] scale-75 transform pointer-events-none px-2 text-lg duration-300 
+            peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-[14px] 
+            peer-focus:-translate-y-[1.1rem] peer-focus:scale-75 peer-focus:px-2 rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4
+            text-emerald-600 dark:text-emerald-400 
+            peer-focus:text-emerald-600 dark:peer-focus:text-emerald-400 
+            peer-placeholder-shown:text-slate-800 dark:peer-placeholder-shown:text-slate-400 
           `}
         >
           {label}
@@ -60,7 +66,7 @@ export const QuestionInput = ({
 }) => {
   const charsLimit = 115;
   const [value, setValue] = useState("");
-  const [characters, setCaracters] = useState(255);
+  const [characters, setCaracters] = useState(charsLimit);
   const handleOnChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     const chars = event.target.value.length;
     if (chars < charsLimit + 1) {

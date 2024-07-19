@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import useUser from "../../../hooks/useUser";
 import PasswordInput, {
   PasswordRules,
@@ -67,7 +67,7 @@ const FlashMessage = ({
 
   useEffect(() => {
     const element = document.getElementById("progress-bar");
-    const id = setInterval(frame, 50);
+    const id = setInterval(frame, 10);
     let width = 1;
     function frame() {
       if (width >= 100) {
@@ -82,14 +82,20 @@ const FlashMessage = ({
   }, []);
 
   return (
-    <div className="fixed top-20 right-40 flex flex-col">
-      <div className="flex items-center gap-4 px-8 py-3 text-3xl text-green-900 bg-green-500/70">
-        <SiVerizon />
-        <p>Dados atualizados!</p>
-        <IoIosClose onClick={handleCloseFlash} className="cursor-pointer" />
-      </div>
-      <div id="progress-bar" className="w-0 h-2 bg-green-800" />
-    </div>
+    <AnimatePresence>
+      <motion.div
+        key="flashRef"
+        className="fixed top-20 right-40 flex flex-col"
+        exit={{ opacity: 0, scale: 1.2 }}
+      >
+        <div className="flex items-center gap-4 px-8 py-3 text-3xl text-green-900 bg-green-500/70">
+          <SiVerizon />
+          <p>Dados atualizados!</p>
+          <IoIosClose onClick={handleCloseFlash} className="cursor-pointer" />
+        </div>
+        <div id="progress-bar" className="w-0 h-2 bg-green-800" />
+      </motion.div>
+    </AnimatePresence>
   );
 };
 
@@ -202,7 +208,7 @@ const UserScoreFolder = () => {
       className="flex rounded-xl gap-2 p-8 w-full border border-white dark:border-slate-600 shadow-md bg-slate-100 dark:bg-slate-800" /*break-inner-score-column*/
     >
       <TotalScore />
-      <div className="flex gap-2">
+      <div className="w-full flex gap-2">
         <LastScore />
         <LastScore />
       </div>
@@ -289,12 +295,12 @@ const TotalScore = () => {
 
 const LastScore = () => {
   return (
-    <article className="flex flex-col gap-2 p-8 w-full max-w-52 h-fit rounded-xl shadow-md border border-white dark:border-slate-600 bg-slate-100 dark:bg-slate-700">
-      <div>
+    <article className="flex flex-col p-8 gap-2 w-full max-w-56 h-full rounded-xl shadow-md border border-white dark:border-slate-600 bg-slate-100 dark:bg-slate-700">
+      <div className="">
         <h3 className="text-slate-800 dark:text-slate-200 text-xl font-extrabold">
           Último Quiz
         </h3>
-        <span className="text-slate-400 text-xs">
+        <span className="text-slate-400 text-[0.6rem] leading-[0.8rem]">
           ontem, 05 de julho de 2024
         </span>
       </div>
@@ -309,9 +315,12 @@ const LastScore = () => {
           Total de 6 acertos
         </span>
       </div>
-      <div className="flex flex-col gap-2">
+      <div className="flex gap-2 flex-wrap">
         <ScoreTag subject="História do Brasil" />
         <ScoreTag subject="Ciência" />
+        <ScoreTag subject="Português" />
+        <ScoreTag subject="Matemática Financeira" />
+        <ScoreTag subject="Geopolítica" />
       </div>
     </article>
   );
@@ -321,7 +330,7 @@ const ScoreTag = ({ subject }: { subject: string }) => {
   return (
     <Link
       href="#"
-      className="h-fit flex justify-center items-center text-white rounded-full shadow-md overflow-hidden bg-blue-500"
+      className="flex justify-center items-center text-white rounded-full shadow-md overflow-hidden bg-blue-500"
     >
       <span className="text-xs py-0.5 px-2 text-nowrap">{subject}</span>
     </Link>

@@ -55,7 +55,7 @@ export default function ProfileLayout({
 
 const Header = () => {
   return (
-    <div className="w-full flex z-50 py-2 shadow-md border-b border-white dark:border-slate-600 bg-slate-200 dark:bg-slate-800">
+    <div className="w-full flex z-50 py-2 px-10 gap-10 shadow-md border-b border-white dark:border-slate-600 bg-slate-200 dark:bg-slate-800">
       <div className="flex-1 w-full max-w-20 flex justify-center items-center mx-auto">
         <Link href="/" className="flex items-center">
           <h1 className="uppercase font-extrabold text-4xl text-slate-800 dark:text-slate-200">
@@ -64,7 +64,7 @@ const Header = () => {
         </Link>
       </div>
       <Search />
-      <div className="flex-1 w-full max-w-[10%] flex items-center justify-between mx-auto">
+      <div className="flex-1 w-full flex justify-center items-center gap-4 mx-auto">
         <NightThemeSwitcher />
         <Avatar />
       </div>

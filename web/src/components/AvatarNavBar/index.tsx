@@ -85,10 +85,10 @@ export default function AvatarNavBar({
               <div key={index} className="relative">
                 <div
                   className={`absolute right-0 -top-4 after:absolute after:content-[''] after:rounded-br-full after:w-full after:h-full ml-auto mr-0 size-4 ${
-                    pathname.endsWith(item.href) ? "after:bg-[#7e22ce]" : null
+                    pathname.includes(item.href) ? "after:bg-[#7e22ce]" : null
                   }`}
                   style={{
-                    backgroundColor: pathname.endsWith(item.href)
+                    backgroundColor: pathname.includes(item.href)
                       ? theme === "dark"
                         ? "#334155"
                         : "#cbd5e1"
@@ -96,16 +96,18 @@ export default function AvatarNavBar({
                   }}
                 />
                 <Link
-                  href={item.href}
+                  href={
+                    pathname.split("/").slice(0, 2).join("/") + "/" + item.href
+                  }
                   className="block text-nowrap text-base text-white w-full text-start pl-10 py-2 rounded-l-full"
                   style={{
-                    color: pathname.endsWith(item.href)
+                    color: pathname.includes(item.href)
                       ? theme === "dark"
                         ? "white"
                         : "#1e293b"
                       : "#fff",
-                    fontWeight: pathname.endsWith(item.href) ? "900" : "500",
-                    backgroundColor: pathname.endsWith(item.href)
+                    fontWeight: pathname.includes(item.href) ? "900" : "500",
+                    backgroundColor: pathname.includes(item.href)
                       ? theme === "dark"
                         ? "#334155"
                         : "#cbd5e1"
@@ -116,10 +118,10 @@ export default function AvatarNavBar({
                 </Link>
                 <div
                   className={`absolute right-0 -bottom-4 z-10  after:absolute after:content-[''] after:rounded-tr-full after:w-full after:h-full ml-auto mr-0 size-4 ${
-                    pathname.endsWith(item.href) ? "after:bg-[#7e22ce]" : null
+                    pathname.includes(item.href) ? "after:bg-[#7e22ce]" : null
                   }`}
                   style={{
-                    backgroundColor: pathname.endsWith(item.href)
+                    backgroundColor: pathname.includes(item.href)
                       ? theme === "dark"
                         ? "#334155"
                         : "#cbd5e1"
@@ -141,6 +143,7 @@ export default function AvatarNavBar({
     </>
   );
 }
+
 const modalVariants: Variants = {
   closed: { opacity: 0, scale: 0.9 },
   open: { opacity: 1, scale: 1 },
@@ -317,11 +320,11 @@ const ImageModal = ({
     user && (
       <div
         ref={modal}
-        className="flex justify-center items-center fixed inset-0 z-[999] [background:rgba(0,0,0,0.7)]"
+        className="flex justify-center items-center fixed inset-0 z-[999] bg-black/70"
         onClick={handleCloseModal}
       >
         {loadingModal && (
-          <div className="absolute flex justify-center items-center inset-0 z-[9999] [background:rgba(0,0,0,0.7)]">
+          <div className="absolute flex justify-center items-center inset-0 z-[9999] bg-black/70">
             <Loading />
           </div>
         )}
