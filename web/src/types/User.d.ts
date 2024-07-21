@@ -5,8 +5,6 @@ type UserProps = {
   avatar: MediaProps;
   settings: UserSettingsProps;
   scores: number[];
-  get_score_percentage: number;
-  get_last_score_id: number;
   is_active: boolean;
   last_login: string;
   created_at: string;

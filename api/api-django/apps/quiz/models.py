@@ -1,20 +1,20 @@
 from django.conf import settings
 from random import seed, shuffle
-from datetime import datetime
 from django.db import models
 from django.utils.text import slugify
-from ..media_app.models import QuizImageModel
+from ..media_app.models import QuizCoverModel
+from ..user.models import UserSettingsModel
 
 
 QUIZ_MODERATION = settings.QUIZ_MODERATION
 
 
 class QuizModel(models.Model):
+    user = models.ForeignKey(to=UserSettingsModel, related_name='quiz', on_delete=models.SET_NULL, blank=True, null=True)
     subject = models.CharField(max_length=65)
     description = models.CharField(max_length=155)
-    cover = models.ForeignKey(to=QuizImageModel, on_delete=models.SET_NULL,  blank=True, null=True)
+    cover = models.OneToOneField(to=QuizCoverModel, related_name='quiz', on_delete=models.SET_NULL,  blank=True, null=True)
     slug = models.SlugField(max_length=255, unique=True)
-    theme = models.CharField(max_length=20)
     blocked = models.BooleanField(default=QUIZ_MODERATION) # True on production 
     is_private = models.BooleanField(default=False) # Switched on/off on the user counterpart 
     created_at = models.DateTimeField(auto_now_add=True)

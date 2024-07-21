@@ -3,7 +3,6 @@
     "subject": "História do Brasil",
     "description": "Brasil colônia, Brasil império, curiosidades",
     "image_file_name": "history-scaled-1600x800.jpg",
-    "theme": "#422006",
     "slug": "historia-do-brasil"
   },
   "questions": [
@@ -134,22 +133,22 @@
       ]
     },
     {
-      "question_text": "Inconfidência Mineira",
+      "question_text": "Revolta separatista de caráter republicano, organizada pela elite socioeconômica da capitania mais rica do Brasil colonial, que estava contrariada com os altos impostos da política fiscal portuguesa",
       "answers": [
         {
-          "text": "",
+          "text": "Inconfidência Mineira",
           "is_correct": true
         },
         {
-          "text": "",
+          "text": "Conjuração Baiana",
           "is_correct": false
         },
         {
-          "text": "",
+          "text": "Revolução Pernambucana",
           "is_correct": false
         },
         {
-          "text": "",
+          "text": "Revolta dos Mascates",
           "is_correct": false
         }
       ]
@@ -197,7 +196,7 @@
       ]
     },
     {
-      "question_text": "Fundada em 1531 por Martim Afonso de Souza, a pedido da Coroa Portuguesa, qual a cidade mais antiga do Brasil, que completou 491 anos em 22 de janeiro de 2023?",
+      "question_text": "Fundada em 1531 por Martim Afonso de Souza, a pedido da Coroa Portuguesa, qual a cidade mais antiga do Brasil, que completou 491 anos em 22-01-2023?",
       "answers": [
         {
           "text": "São Vicente - SP",
@@ -239,64 +238,64 @@
       ]
     },
     {
-      "question_text": "Tratado de Tordesilhas",
+      "question_text": "Acordo internacional assinado em 7 de junho de 1494, celebrado entre o Reino de Portugal e a Coroa de Castela para dividir as terras recém-descobertas do então chamado 'Novo Mundo'",
       "answers": [
         {
-          "text": "",
+          "text": "Tratado de Tordesilhas",
           "is_correct": true
         },
         {
-          "text": "",
+          "text": "Tratado de Madri",
           "is_correct": false
         },
         {
-          "text": "",
+          "text": "Tratado de Alcáçovas",
           "is_correct": false
         },
         {
-          "text": "",
+          "text": "Tratado de Saragoça",
           "is_correct": false
         }
       ]
     },
     {
-      "question_text": "Política do Café com Leite, República Velha (1889-1930)",
+      "question_text": "Como ficou conhecido os acordos políticos que consistiam na alternância de poder entre duas oligarquias regionais do Brasil na República Velha, no período da República Oligárquica (1898 a 1930)?",
       "answers": [
         {
-          "text": "",
+          "text": "Política do Café com Leite",
           "is_correct": true
         },
         {
-          "text": "",
+          "text": "Poder Moderador",
           "is_correct": false
         },
         {
-          "text": "",
+          "text": "República da Espada",
           "is_correct": false
         },
         {
-          "text": "",
+          "text": "Coronelismo",
           "is_correct": false
         }
       ]
     },
     {
-      "question_text": "República da Espada",
+      "question_text": "Período inicial da Primeira República brasileira, caracterizada por dois governos militares que estendeu-se de 1889, com a Proclamação da República, até 1894, quando Prudente de Morais assume a presidência do país",
       "answers": [
         {
-          "text": "",
+          "text": "República da Espada",
           "is_correct": true
         },
         {
-          "text": "",
+          "text": "Política do Café com Leite",
           "is_correct": false
         },
         {
-          "text": "",
+          "text": "Segunda República",
           "is_correct": false
         },
         {
-          "text": "",
+          "text": "Ditadura Militar",
           "is_correct": false
         }
       ]
@@ -533,27 +532,6 @@
       ]
     },
     {
-      "question_text": "Vila Rica de Ouro Preto",
-      "answers": [
-        {
-          "text": "",
-          "is_correct": true
-        },
-        {
-          "text": "",
-          "is_correct": false
-        },
-        {
-          "text": "",
-          "is_correct": false
-        },
-        {
-          "text": "",
-          "is_correct": false
-        }
-      ]
-    },
-    {
       "question_text": "Período Joanino",
       "answers": [
         {
@@ -618,27 +596,6 @@
     },
     {
       "question_text": "Batalhas dos Guararapes",
-      "answers": [
-        {
-          "text": "",
-          "is_correct": true
-        },
-        {
-          "text": "",
-          "is_correct": false
-        },
-        {
-          "text": "",
-          "is_correct": false
-        },
-        {
-          "text": "",
-          "is_correct": false
-        }
-      ]
-    },
-    {
-      "question_text": "Plantation",
       "answers": [
         {
           "text": "",

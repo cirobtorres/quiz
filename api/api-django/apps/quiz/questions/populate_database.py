@@ -1,13 +1,17 @@
 import os
 import json
+from faker import Faker
 from django.core.files import File
+from django.contrib.auth import get_user_model
 from random import shuffle, seed
 from typing import List, Dict, Union, TypedDict, Iterable
 
 from django.utils.text import slugify
 
 from ..models import QuestionModel, AnswerModel, QuizModel
-from ...media_app.models import CloudinaryUtilities, QuizImageModel
+from ...score.models import UserScoreProfileModel
+from ...user.models import UserSettingsModel
+from ...media_app.models import CloudinaryUtilities, QuizCoverModel
 
 
 __doc__ = """This module contains functions to start an empty database with questions and answers."""
@@ -36,7 +40,6 @@ class Quiz(TypedDict):
     subject: str
     description: str
     image_path: str
-    theme: str
     slug: str
     questions: List[Question]
 
@@ -91,14 +94,14 @@ def save_image_to_path(instance, image_path):
 
 def save_image_to_cloudinary(path_to_image):
     cloudinary_image = CloudinaryUtilities.save_image(path_to_image)
-    cover = QuizImageModel()
+    cover = QuizCoverModel()
 
     cover.asset_id = cloudinary_image.get('asset_id')
     cover.public_id = cloudinary_image.get('public_id')
     cover.filename = cloudinary_image.get('original_filename')
     cover.secure_url = cloudinary_image.get('secure_url')
     cover.url = cloudinary_image.get('url')
-    cover.type = cloudinary_image.get('format')
+    cover.format = cloudinary_image.get('format')
     cover.width = cloudinary_image.get('width')
     cover.height = cloudinary_image.get('height')
 
@@ -141,7 +144,7 @@ def save_questions(quiz: int | Quiz, questions: Question | List[Question], **kwa
         save_question(questions)
 
 
-def save_quiz(data: Quiz, **kwargs) -> None:
+def save_quiz(user, data: Quiz, **kwargs) -> None:
     """
     Saves "questions" to the database by creating a "quiz" object when not yet saved. 
     "questions" must be of a "Question" type or an iterable (list or dict) of "Question" types. 
@@ -160,25 +163,49 @@ def save_quiz(data: Quiz, **kwargs) -> None:
         quiz = quiz_queryset.get()
         
     else:
-        quiz_image = quiz_dict.pop('image_file_name')
+        quiz_image_name = quiz_dict.pop('image_file_name')
         
-        if quiz_image:
+        if quiz_image_name:
             abs_path = 'api-django\\apps\\quiz\\questions\\quiz_images'
-            path_to_image = os.path.join(os.getcwd(), abs_path, quiz_image)
+            path_to_image = os.path.join(os.getcwd(), abs_path, quiz_image_name)
             quiz = QuizModel(**quiz_dict)
             
-            # Save to folder 
-            # save_image_to_path(quiz, path_to_image) 
-            # quiz.save() 
-            
-            # Save to cloudinary 
-            cover = save_image_to_cloudinary(path_to_image)
+            cover = save_image_to_cloudinary(path_to_image) # Save to cloudinary 
             quiz.cover = cover
             quiz.save()
+
+            user.settings.quiz.add(quiz)
+            user.save()
         else:
             print('No image path provided for quiz')
 
     save_questions(quiz, questions_list, **kwargs)
+
+
+def user_creaion(username: str, email: str):
+    user = get_user_model()(username=username, email=email, password="P@ssw0rd")
+    user.set_password(user.password)
+    user.save()
+
+    settings = UserSettingsModel(user=user)
+    settings.save()
+
+    scores = UserScoreProfileModel(user=user)
+    scores.save()
+
+    return user
+
+
+def loop_user_creation(iterations: int):
+    blacklist = ['johndoe']
+    while True:
+        username = Faker().user_name()
+        if (username not in blacklist) and (not len(username) < 4) and (not len(username) > 12):
+            email = username + "@email.com"
+            user_creaion(username, email)
+            blacklist.append(username)
+            if len(blacklist) - 1 == iterations:
+                break
 
 
 def populate_database(**kwargs) -> None:
@@ -198,6 +225,9 @@ def populate_database(**kwargs) -> None:
 
     dict_obj = convert_list_of_json_to_dict(paths)
 
+    user = user_creaion(username="johndoe", email="johndoe@email.com")
+    loop_user_creation(5)
+
     for item in dict_obj:
-        save_quiz(item)
+        save_quiz(user, item)
 

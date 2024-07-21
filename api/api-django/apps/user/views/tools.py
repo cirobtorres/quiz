@@ -1,35 +1,7 @@
-from datetime import *
-from typing import TypedDict, NewType, Dict, Any
 from django.contrib.auth import get_user_model
-from django.db.models import QuerySet
 from django.http import HttpRequest
-from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.permissions import BasePermission
-from rest_framework.status import (
-    HTTP_200_OK, 
-    HTTP_401_UNAUTHORIZED, 
-    HTTP_404_NOT_FOUND, 
-    HTTP_500_INTERNAL_SERVER_ERROR
-)
-from rest_framework.pagination import PageNumberPagination
 from rest_framework_simplejwt.tokens import AccessToken
-from ..models import UserSettingsModel
-from ..serializers import UserSerializer
-from ..validators import UserValidator
-from ...score.serializers import TotalScoreSerializer, PartialScoreSerializer
-from ...score.models import TotalScoreModel, PartialScoreModel
-
-
-class QuizUser(TypedDict):
-    id: int
-    username: str
-    password: str
-    avatar: Any
-    is_active: bool
-    is_staff: bool
-    last_login: bool
-    created_at: datetime
-    updated_at: datetime
 
 
 class UserPermissions(BasePermission): 
@@ -43,6 +15,7 @@ class UserPermissions(BasePermission):
             access_token.verify()
             return access_token
         except Exception as e:
+            # print('-x' * 35 + '-\n', e.__class__.__name__, ': ', e, '\n', '*' * 70, '\n', sep='') 
             return {}
     
     def extract_payload(self):
@@ -54,6 +27,7 @@ class UserPermissions(BasePermission):
             return user.payload
         
         except KeyError as e:
+            # print('-x' * 35 + '-\n', e.__class__.__name__, ': ', e, '\n', '*' * 70, '\n', sep='') 
             return None
     
     def has_permission(self, request: HttpRequest, view):
@@ -70,31 +44,19 @@ class UserPermissions(BasePermission):
 
 
 class UserUtilities(UserPermissions):
-    pagination_class = PageNumberPagination
-    user_serializer = UserSerializer
     user_model = get_user_model()
-    user_settings_model = UserSettingsModel
-    total_score_serializer = TotalScoreSerializer
-    partial_score_serializer = PartialScoreSerializer
-    total_score_model = TotalScoreModel
-    partial_score_model = PartialScoreModel
-    validator = UserValidator
 
     def exists(self, **kwargs) -> bool:
         return self.user_model.objects.filter(**kwargs).exists()
 
-    def get_object(self, **kwargs) -> QuizUser:
+    def get_object(self, **kwargs):
         """
-        Returns a single object
-
-        Raises an exception if an object is not found
+        Raises ObjectDoesNotExist exception if an object is not found
         """
         return self.user_model.objects.get(**kwargs)
 
-    def get_queryset(self, **kwargs) -> QuerySet[QuizUser | None]:
+    def get_queryset(self, **kwargs):
         """
-        Returns a QuerySet of QuizUsers or an empty QuerySet
-
         kwargs:
             - order_by
         
@@ -114,92 +76,11 @@ class UserUtilities(UserPermissions):
         return queryset
     
     def get_user(self):
+        """
+        Raises AttributeError if token is expired, doesn't exist or is invalid 
+        Raises ObjectDoesNotExist if no user is found 
+        """
         user_model = self.extract_payload()
-
-        try:
-            user_id = user_model.get('user_id')
-            return self.get_object(pk=user_id)
-        
-        except AttributeError as e:
-            return {
-                'invalid': {
-                    'data': {'message': 'Invalid token'}, 
-                    'status': HTTP_401_UNAUTHORIZED,
-                    'error': True, 
-                }
-            }
-        
-        except ObjectDoesNotExist as e:
-            return {
-                'invalid': {
-                    'data': {'message': 'User not found'}, 
-                    'status': HTTP_404_NOT_FOUND,
-                    'error': True, 
-                }
-            }
-    
-    def paginate(self, request: HttpRequest, queryset: QuerySet, **kwargs):
-        if(queryset.count()):
-            
-            page = request.query_params.get('page', 1)
-            page_size = request.query_params.get('page_size', 10)
-
-            paginator = self.pagination_class()
-            paginator.page_size = page_size
-
-            results = paginator.paginate_queryset(queryset, request)
-
-            # This method is not intended to be used with combined querysets (querysets of multiple models at once)
-            if isinstance(queryset.first(), self.user_model):
-                serializer = self.user_serializer(results, many=True)
-
-            elif isinstance(queryset.first(), self.total_score_model):
-                serializer = self.total_score_serializer(results, many=True)
-
-            else:
-                return {
-                    'data': {'message': 'Invalid model', 'error': True, }, 
-                    'status': HTTP_500_INTERNAL_SERVER_ERROR,
-                }
-        
-        else:
-            return {
-                'data': {
-                    'results': {},
-                    'paginator': {
-                        'current': 1,
-                        'first': 1,
-                        'last': 1,
-                        'page_size': 0,
-                        'total_pages': 1,
-                        'previous': None,
-                        'next': None,
-                    },
-                    'error': False,
-                }, 
-                'status': HTTP_200_OK,
-            }
-
-        return { 
-            'data': {
-                'results': serializer.data,
-                'paginator': {
-                    'current': int(page),
-                    'first': 1,
-                    'last': int(paginator.page.paginator.count),
-                    'page_size': int(paginator.page_size),
-                    'total_pages': paginator.page.paginator.num_pages,
-                    'previous': (
-                        paginator.get_previous_link()
-                        if paginator.get_previous_link() else None
-                    ),
-                    'next': (
-                        paginator.get_next_link()
-                        if paginator.get_next_link() else None
-                    ),
-                },
-                'error': False, 
-            },
-            'status': HTTP_200_OK
-        }
+        user_id = user_model.get('user_id')
+        return self.get_object(pk=user_id)
 

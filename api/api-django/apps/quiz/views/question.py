@@ -9,7 +9,8 @@ from rest_framework.status import (
     HTTP_404_NOT_FOUND
 )
 from .tools import QuestionTools
-from ..models import QuizModel
+from ..serializers import QuestionSerializer
+from ..models import QuizModel, QuestionModel
 
 
 class QuestionView(APIView, QuestionTools):
@@ -18,10 +19,7 @@ class QuestionView(APIView, QuestionTools):
 
     def get(self, request: HttpRequest, pk: str = None) -> Response:
         """
-        Returns a single question, if passed a primary key as an argument, or a list of questions if no primary key is given.
-
-        Possible URLs:
-            - http://127.0.0.1:8000/api/quiz -> all quizzes
+        Possible URLs mountage:
             - http://127.0.0.1:8000/api/quiz/question -> 10 random questions from all quizzes (10 is the default)
             - http://127.0.0.1:8000/api/quiz/question?size=5 -> 5 random questions from all quizzes
             - http://127.0.0.1:8000/api/quiz/question?quiz=1 -> 10 random questions from quiz=1
@@ -37,7 +35,7 @@ class QuestionView(APIView, QuestionTools):
                 return Response(data={'message': 'Question not found'}, status=HTTP_404_NOT_FOUND)
             if question_model.quiz.blocked:
                 return Response(data={'message': 'Blocked Quiz'}, status=HTTP_400_BAD_REQUEST)
-            question_serializer = self.question_serializer(instance=question_model)
+            question_serializer = QuestionSerializer(instance=question_model)
             return Response(data=question_serializer.data, status=HTTP_200_OK)
         
         params = {}
@@ -57,7 +55,7 @@ class QuestionView(APIView, QuestionTools):
                 params.update({'size': int(size_params),})
 
         question_model = self.get_queryset(**params)
-        question_serializer = self.question_serializer(instance=question_model, many=True)
+        question_serializer = QuestionSerializer(instance=question_model, many=True)
 
         return Response(data=question_serializer.data, status=HTTP_200_OK)
     
@@ -66,10 +64,10 @@ class QuestionView(APIView, QuestionTools):
         quiz_id = request.data.get('quiz_id')
         text = request.data.get('question_text')
 
-        question_model = self.question_model.objects.create(quiz_id=quiz_id, text=text)
+        question_model = QuestionModel.objects.create(quiz_id=quiz_id, text=text)
         question_model.save()
 
-        question_serializer = self.question_serializer(instance=question_model)
+        question_serializer = QuestionSerializer(instance=question_model)
 
         return Response(data=question_serializer.data, status=HTTP_201_CREATED)
 
@@ -85,7 +83,7 @@ class QuestionView(APIView, QuestionTools):
 
         question_model.save()
 
-        question_serializer = self.question_serializer(instance=question_model)
+        question_serializer = QuestionSerializer(instance=question_model)
         return Response(data=question_serializer.data, status=HTTP_200_OK)
     
     def delete(self, request: HttpRequest, pk: str = None) -> Response:

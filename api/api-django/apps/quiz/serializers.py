@@ -1,6 +1,6 @@
 from rest_framework.serializers import ModelSerializer, SerializerMethodField
 from .models import QuizModel, QuestionModel, AnswerModel
-from ..media_app.serializers import QuizImageSerializer
+from ..media_app.serializers import QuizCoverSerializer
 
 
 class QuizSerializer(ModelSerializer):
@@ -8,18 +8,18 @@ class QuizSerializer(ModelSerializer):
         model = QuizModel
         fields = (
             'id', 
+            'user',
             'subject', 
             'description', 
             'cover', 
             'slug', 
-            'theme', 
             'blocked', 
             'is_private', 
             'created_at', 
             'updated_at', 
         )
 
-    cover = QuizImageSerializer(required=False)
+    cover = QuizCoverSerializer(required=False)
 
 
 class QuestionSerializer(ModelSerializer):

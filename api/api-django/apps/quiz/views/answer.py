@@ -1,6 +1,4 @@
 from django.http import HttpRequest
-from django.utils.text import slugify
-from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.status import (
@@ -10,7 +8,8 @@ from rest_framework.status import (
     HTTP_404_NOT_FOUND 
 )
 from .tools import AnswerTools
-from ..models import AnswerModel
+from ..serializers import AnswerSerializer
+from ..models import QuestionModel, AnswerModel
 
 
 class AnswerView(APIView, AnswerTools):
@@ -24,7 +23,7 @@ class AnswerView(APIView, AnswerTools):
         """
         question_id = request.data.get('question_id')
 
-        question = self.question_model.objects.filter(pk=question_id)
+        question = QuestionModel.objects.filter(pk=question_id)
 
         if not question.exists():
             return Response(data={'message': 'Question does not exists'}, status=HTTP_404_NOT_FOUND)
@@ -48,15 +47,15 @@ class AnswerView(APIView, AnswerTools):
                 del answer['is_correct']
 
             if count == 1:
-                new_answer = self.answer_model.objects.create(question_id=question_id, is_correct=True, **answer)
+                new_answer = AnswerModel.objects.create(question_id=question_id, is_correct=True, **answer)
             else:
-                new_answer = self.answer_model.objects.create(question_id=question_id, is_correct=False, **answer)
+                new_answer = AnswerModel.objects.create(question_id=question_id, is_correct=False, **answer)
 
             new_answer.save()
 
         return Response(data={'message': 'Answers created'}, status=HTTP_201_CREATED)
 
-    def put(self, request: HttpRequest, pk: str = None) -> Response:
+    def put(self, request: HttpRequest) -> Response:
         question_id = request.data.get('question_id')
         answers = request.data.get('answers')
         
@@ -68,7 +67,7 @@ class AnswerView(APIView, AnswerTools):
         
         answer_model = AnswerModel.objects.filter(question_id=question_id)
 
-        answer_serializer = self.answer_serializer(instance=answer_model, many=True)
+        answer_serializer = AnswerSerializer(instance=answer_model, many=True)
 
         return Response(data=answer_serializer.data, status=HTTP_200_OK)
 

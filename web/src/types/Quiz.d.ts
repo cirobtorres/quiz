@@ -18,7 +18,6 @@ type QuizProps = {
   description: string;
   cover: MediaProps;
   slug: string;
-  theme: string;
   blocked: boolean;
   is_private: boolean;
   created_at: string;

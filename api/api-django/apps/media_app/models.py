@@ -1,3 +1,5 @@
+import base64
+from django.core.files.uploadedfile import InMemoryUploadedFile
 from cloudinary.models import CloudinaryField
 import cloudinary.uploader as cloudinary
 from cloudinary.utils import cloudinary_url
@@ -5,6 +7,13 @@ from django.db import models
 
 
 class CloudinaryUtilities:
+    @staticmethod
+    def convert_to_base64(file: InMemoryUploadedFile):
+        file_content = file.read() # Read file content in bytes
+        file_base64 = base64.b64encode(file_content).decode('utf-8') # Bytes -> base64
+        base64_str = f"data:{file.content_type};base64,{file_base64}" # Prefix for base64
+        return base64_str
+    
     @staticmethod
     def save_image(image, public_id = None): 
         uploaded_image = cloudinary.upload(image, public_id=public_id)
@@ -31,13 +40,12 @@ class UserImageModel(models.Model):
     width = models.CharField(max_length=255)
     height = models.CharField(max_length=255)
     updated_at = models.DateTimeField(auto_now=True)
-    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
-        return f'Image: {self.filename} - User: {self.user.id}'
+        return self.filename
 
 
-class QuizImageModel(models.Model):
+class QuizCoverModel(models.Model):
     asset_id = models.CharField(max_length=255, unique=True)
     public_id = models.CharField(max_length=255, unique=True)
     filename = models.CharField(max_length=255)
@@ -47,8 +55,7 @@ class QuizImageModel(models.Model):
     width = models.CharField(max_length=255)
     height = models.CharField(max_length=255)
     updated_at = models.DateTimeField(auto_now=True)
-    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
-        return f'Image: {self.filename} - Quiz: {self.quiz.slug}-{self.quiz.id}'
+        return self.filename
 

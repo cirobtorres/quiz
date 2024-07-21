@@ -1,4 +1,5 @@
 import MediaApp from "./MediaApp";
+import TotalScore from "./Score";
 import UserSettings from "./UserSettings";
 
 export default class User {
@@ -8,8 +9,6 @@ export default class User {
   private avatar?: MediaApp | null;
   private settings: UserSettings;
   private scores: number[];
-  private scorePercentage: number;
-  private lastScoreId: number;
   private isActive: boolean;
   private lastLogin: Date;
   private createdAt: Date;
@@ -22,8 +21,6 @@ export default class User {
     avatar: MediaProps | null = null,
     settings: UserSettingsProps,
     scores: number[],
-    scorePercentage: number,
-    lastScoreId: number,
     isActive: boolean,
     lastLogin: string,
     createdAt: string,
@@ -35,8 +32,6 @@ export default class User {
     this.avatar = avatar ? MediaApp.create(avatar) : null;
     this.settings = UserSettings.create(settings);
     this.scores = scores;
-    this.scorePercentage = scorePercentage;
-    this.lastScoreId = lastScoreId;
     this.isActive = isActive;
     this.lastLogin = new Date(lastLogin);
     this.createdAt = new Date(createdAt);
@@ -63,16 +58,8 @@ export default class User {
     return this.settings;
   }
 
-  get getScores() {
+  get getScore() {
     return this.scores;
-  }
-
-  get getScorePercentage() {
-    return this.scorePercentage;
-  }
-
-  get getLastScoreId() {
-    return this.lastScoreId;
   }
 
   get getIsActive() {
@@ -107,8 +94,6 @@ export default class User {
       obj.avatar,
       obj.settings,
       obj.scores,
-      obj.get_score_percentage,
-      obj.get_last_score_id,
       obj.is_active,
       obj.last_login,
       obj.created_at,

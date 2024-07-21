@@ -129,24 +129,18 @@ TEMPLATES = [
 WSGI_APPLICATION = 'core.wsgi.application'
 
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases 
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'quizdatabase',
+        'ENGINE': os.getenv('POSTGRES_DB_ENGINE', 'CHANGE-ME'),
+        'NAME': os.getenv('POSTGRES_DB', 'CHANGE-ME'),
+        'USER': os.getenv('POSTGRES_USER', 'postgres'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'CHANGE-ME'), # UTF-8 errors might be relationed to bad data, like wrong password 
+        'HOST': os.getenv('POSTGRES_HOST', 'CHANGE-ME'), # Change-me to localhost if running directly through the prompt
+        'PORT': os.getenv('POSTGRES_PORT', 5432)
     }
-    # 'default': {
-    #     'ENGINE': os.getenv('DB_ENGINE', 'CHANGE-ME'),
-    #     'NAME': os.getenv('POSTGRES_DB', 'CHANGE-ME'),
-    #     'USER': os.getenv('POSTGRES_USER', 'postgres'),
-    #     'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'CHANGE-ME'),
-    #     'HOST': os.getenv('POSTGRES_HOST', 'CHANGE-ME'), # Change-me to localhost if running directly through the prompt
-    #     'PORT': os.getenv('POSTGRES_PORT', 5432)
-    # }
 }
 
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -164,7 +158,6 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization 
 # https://docs.djangoproject.com/en/5.0/topics/i18n/ 
-
 LANGUAGE_CODE = 'pt-br'
 TIME_ZONE = 'America/Sao_Paulo'
 USE_I18N = True
@@ -172,7 +165,6 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images) 
 # https://docs.djangoproject.com/en/5.0/howto/static-files/ 
-
 MEDIA_ROOT = os.path.join(DATA_DIR, 'static', 'media') if not DEBUG else DATA_DIR # Path where django ImageField saves 
 MEDIA_URL = 'media/' if not DEBUG else 'images/' # URL path where django ImageField points towards to 
 
@@ -181,6 +173,5 @@ STATIC_URL = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field 
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 

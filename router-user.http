@@ -1,0 +1,158 @@
+### --------------------========== User ==========--------------------
+### List user
+GET http://127.0.0.1:8000/api/user/list
+Content-Type: application/json
+
+### Register user
+POST http://127.0.0.1:8000/api/user/register
+Content-Type: application/json
+
+{
+    "username": "marysue",
+    "email": "marysue@email.com",
+    "password": "P@ssw0rd"
+}
+
+### Login user
+POST http://127.0.0.1:8000/api/user/login-access
+Content-Type: application/json
+
+{
+    "email": "jyoung@email.com",
+    "password": "P@ssw0rd"
+}
+
+### Log out user
+POST http://127.0.0.1:8000/api/user/logout
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIxNTgwOTUzLCJpYXQiOjE3MjE1NzM2OTcsImp0aSI6IjI4NjM3ZmM4ODE0MTQ2NmI4Yzc1MDEyNTVjZGRhYzk3IiwidXNlcl9pZCI6Mn0.1hH_YSI2xd48mYnV11yjLcqHzymjaOovFWsE_YDnCs0
+
+### Refresh user 
+POST http://127.0.0.1:8000/api/user/login-refresh
+Content-Type: application/json
+
+{
+    "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyMjE3ODQ5NywiaWF0IjoxNzIxNTczNjk3LCJqdGkiOiJiYjZlZGUxM2M4NTE0MDMyODFiZTA3OGQ2ZWFjZGUzMiIsInVzZXJfaWQiOjJ9.zpx73pZpkXdNgReHm-fwXD_OrAkOAo1d1ew3OPYBNAU"
+}
+
+### Verify user 
+POST http://127.0.0.1:8000/api/user/token-verify
+Content-Type: application/json
+
+{ 
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIxNTgwOTUzLCJpYXQiOjE3MjE1NzM2OTcsImp0aSI6IjI4NjM3ZmM4ODE0MTQ2NmI4Yzc1MDEyNTVjZGRhYzk3IiwidXNlcl9pZCI6Mn0.1hH_YSI2xd48mYnV11yjLcqHzymjaOovFWsE_YDnCs0"
+} 
+
+### Get user data 
+GET http://127.0.0.1:8000/api/user/get-data
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIxNTgwOTUzLCJpYXQiOjE3MjE1NzM2OTcsImp0aSI6IjI4NjM3ZmM4ODE0MTQ2NmI4Yzc1MDEyNTVjZGRhYzk3IiwidXNlcl9pZCI6Mn0.1hH_YSI2xd48mYnV11yjLcqHzymjaOovFWsE_YDnCs0
+
+### Update user 
+PUT http://127.0.0.1:8000/api/user/update
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIxNTgwOTUzLCJpYXQiOjE3MjE1NzM2OTcsImp0aSI6IjI4NjM3ZmM4ODE0MTQ2NmI4Yzc1MDEyNTVjZGRhYzk3IiwidXNlcl9pZCI6Mn0.1hH_YSI2xd48mYnV11yjLcqHzymjaOovFWsE_YDnCs0
+
+{
+    "username": "elton",
+    "email": "eltonjohn@email.com",
+    "password": "P@ssw0rd123"
+}
+
+### Delete user
+DELETE http://127.0.0.1:8000/api/user/delete
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIxNTgwOTUzLCJpYXQiOjE3MjE1NzM2OTcsImp0aSI6IjI4NjM3ZmM4ODE0MTQ2NmI4Yzc1MDEyNTVjZGRhYzk3IiwidXNlcl9pZCI6Mn0.1hH_YSI2xd48mYnV11yjLcqHzymjaOovFWsE_YDnCs0
+
+### --------------------========== Media ==========--------------------
+### Get user avatar 
+GET http://127.0.0.1:8000/api/media-app/user-image
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIxNTgwOTUzLCJpYXQiOjE3MjE1NzM2OTcsImp0aSI6IjI4NjM3ZmM4ODE0MTQ2NmI4Yzc1MDEyNTVjZGRhYzk3IiwidXNlcl9pZCI6Mn0.1hH_YSI2xd48mYnV11yjLcqHzymjaOovFWsE_YDnCs0
+
+### Put user avatar 
+PUT http://127.0.0.1:8000/api/media-app/user-image
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIxNTgwOTUzLCJpYXQiOjE3MjE1NzM2OTcsImp0aSI6IjI4NjM3ZmM4ODE0MTQ2NmI4Yzc1MDEyNTVjZGRhYzk3IiwidXNlcl9pZCI6Mn0.1hH_YSI2xd48mYnV11yjLcqHzymjaOovFWsE_YDnCs0
+
+{
+    "image": "C:\\abs\\path\\filename.jpg",
+    "filename": "filename.jpg"
+}
+
+### Delete user avatar 
+DELETE http://127.0.0.1:8000/api/media-app/user-image
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIxNTgwOTUzLCJpYXQiOjE3MjE1NzM2OTcsImp0aSI6IjI4NjM3ZmM4ODE0MTQ2NmI4Yzc1MDEyNTVjZGRhYzk3IiwidXNlcl9pZCI6Mn0.1hH_YSI2xd48mYnV11yjLcqHzymjaOovFWsE_YDnCs0
+
+### =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=MEDIA-FORM-DATA=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=
+# While working with files and REST Client, DO NOT BREAK LINES between boudaries
+# Otherwise REST Client might append \r\n or \n to the end of the strings (breaklines) 
+# Keep the code EXACTLY like below
+### Post user avatar 
+POST http://127.0.0.1:8000/api/media-app/user-image
+Content-Type: multipart/form-data; boundary=myBoundary
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIxNTgwOTUzLCJpYXQiOjE3MjE1NzM2OTcsImp0aSI6IjI4NjM3ZmM4ODE0MTQ2NmI4Yzc1MDEyNTVjZGRhYzk3IiwidXNlcl9pZCI6Mn0.1hH_YSI2xd48mYnV11yjLcqHzymjaOovFWsE_YDnCs0
+
+--myBoundary
+Content-Disposition: form-data; name="filename"
+
+name-of-the-file.jpg
+--myBoundary
+Content-Disposition: form-data; name="image"; filename="filename.jpg"
+Content-Type: image/jpg
+
+< C:\\abs\\path\\filename.jpg
+--myBoundary--
+
+### =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=MEDIA-FORM-DATA=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=
+# While working with files and REST Client, DO NOT BREAK LINES between boudaries
+# Otherwise REST Client might append \r\n or \n to the end of the strings (breaklines) 
+# Keep the code EXACTLY like below
+### Put user avatar 
+PUT http://127.0.0.1:8000/api/media-app/user-image
+Content-Type: multipart/form-data; boundary=myBoundary
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIxNTgwOTUzLCJpYXQiOjE3MjE1NzM2OTcsImp0aSI6IjI4NjM3ZmM4ODE0MTQ2NmI4Yzc1MDEyNTVjZGRhYzk3IiwidXNlcl9pZCI6Mn0.1hH_YSI2xd48mYnV11yjLcqHzymjaOovFWsE_YDnCs0
+
+--myBoundary
+Content-Disposition: form-data; name="filename"
+
+name-of-the-file.jpg
+--myBoundary
+Content-Disposition: form-data; name="image"; filename="filename.jpg"
+Content-Type: image/jpg
+
+< C:\\abs\\path\\filename.jpg
+--myBoundary--
+
+### --------------------========== Score ==========--------------------
+### List scores
+GET http://127.0.0.1:8000/api/score
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIxNTgwOTUzLCJpYXQiOjE3MjE1NzM2OTcsImp0aSI6IjI4NjM3ZmM4ODE0MTQ2NmI4Yzc1MDEyNTVjZGRhYzk3IiwidXNlcl9pZCI6Mn0.1hH_YSI2xd48mYnV11yjLcqHzymjaOovFWsE_YDnCs0
+
+### Complete quiz
+POST http://127.0.0.1:8000/api/score
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIxNTgwOTUzLCJpYXQiOjE3MjE1NzM2OTcsImp0aSI6IjI4NjM3ZmM4ODE0MTQ2NmI4Yzc1MDEyNTVjZGRhYzk3IiwidXNlcl9pZCI6Mn0.1hH_YSI2xd48mYnV11yjLcqHzymjaOovFWsE_YDnCs0
+
+{
+    "score": [
+        {
+            "quiz_id": 1, 
+            "total_questions": 5, 
+            "correct_answers": 4
+        }, 
+        {
+            "quiz_id": 2, 
+            "total_questions": 4, 
+            "correct_answers": 4
+        }, 
+        {
+            "quiz_id": 3, 
+            "total_questions": 11, 
+            "correct_answers": 7
+        } 
+    ]
+}
+

@@ -1,6 +1,5 @@
 from django.http import HttpRequest
 from django.db.models import QuerySet
-from rest_framework.pagination import PageNumberPagination
 from rest_framework.status import HTTP_200_OK, HTTP_500_INTERNAL_SERVER_ERROR
 from ..serializers import  QuizSerializer, QuestionSerializer
 from ..models import QuestionModel
@@ -10,15 +9,10 @@ from ..models import QuizModel, QuestionModel, AnswerModel
 
 
 class QuizTools:
-    quiz_model = QuizModel 
-    quiz_serializer = QuizSerializer 
-    pagination_class = PageNumberPagination
-
     def get_queryset(self, **kwargs) -> QuerySet[QuizModel | None]:
         """
-        Returns a QuerySet of QuizModel or an empty QuerySet
-
         kwargs:
+            - user_id
             - order_by
         
         Ex: Sorting by a single field:
@@ -28,100 +22,35 @@ class QuizTools:
             >>> get_queryset(order_by=('id', 'subject', 'updated_at'))
             >>> get_queryset(order_by=['id', 'subject', 'updated_at'])
         """
-        if not self.quiz_model.objects.exists():
+        if not QuizModel.objects.exists():
             populate_database()
-        queryset = self.quiz_model.objects.all().filter(blocked=False)
-        if kwargs.get('order_by'):
-            order_by = kwargs.get('order_by')
+        user_id = kwargs.get('user_id', None)
+        order_by = kwargs.get('order_by', None)
+        if user_id:
+            queryset = QuizModel.objects.all().filter(user__id=user_id, blocked=False)
+        else:
+            queryset = QuizModel.objects.all().filter(blocked=False)
+        if order_by:
             if hasattr(order_by, '__iter__'):
                 return queryset.order_by(*tuple(order_by)) 
             return queryset.order_by(order_by) 
         return queryset
-    
-    def paginate(self, request: HttpRequest, queryset: QuerySet, **kwargs):
-        if(queryset.count()):
-            
-            page = request.query_params.get('page', 1)
-            page_size = request.query_params.get('page_size', 10)
-
-            paginator = self.pagination_class()
-            paginator.page_size = page_size
-
-            results = paginator.paginate_queryset(queryset, request)
-
-            # This method is not intended to be used with combined querysets (querysets of multiple models)
-            if isinstance(queryset.first(), self.quiz_model):
-                serializer = self.quiz_serializer(results, many=True)
-
-            else:
-                return {
-                    'data': {'message': 'Invalid model', 'error': True, }, 
-                    'status': HTTP_500_INTERNAL_SERVER_ERROR,
-                }
-        
-        else:
-            return {
-                'data': {
-                    'results': {},
-                    'paginator': {
-                        'current': 1,
-                        'first': 1,
-                        'last': 1,
-                        'page_size': 0,
-                        'total_pages': 1,
-                        'previous': None,
-                        'next': None,
-                    },
-                    'error': False,
-                }, 
-                'status': HTTP_200_OK,
-            }
-
-        return { 
-            'data': {
-                'results': serializer.data,
-                'paginator': {
-                    'current': int(page),
-                    'first': 1,
-                    'last': int(paginator.page.paginator.count),
-                    'page_size': int(paginator.page_size),
-                    'total_pages': paginator.page.paginator.num_pages,
-                    'previous': (
-                        paginator.get_previous_link()
-                        if paginator.get_previous_link() else None
-                    ),
-                    'next': (
-                        paginator.get_next_link()
-                        if paginator.get_next_link() else None
-                    ),
-                },
-                'error': False, 
-            },
-            'status': HTTP_200_OK
-        }
 
 
 class QuestionTools:
-    question_serializer = QuestionSerializer
-    question_model = QuestionModel
-
     def exists(self, **kwargs) -> bool:
-        return self.question_model.objects.filter(**kwargs).filter(blocked=False).exists()
+        return QuestionModel.objects.filter(**kwargs).filter(blocked=False).exists()
 
     def get_object(self, **kwargs) -> QuestionModel:
-        return self.question_model.objects.get(**kwargs)
+        return QuestionModel.objects.get(**kwargs)
 
     def get_queryset(self, quiz: list[int] = None, size: int = None) -> QuerySet[QuestionModel]:
         if quiz:
-            return self.question_model.objects.filter(quiz__id__in=quiz).filter(quiz__blocked=False).order_by('?')[:size or 10]
-        return self.question_model.objects.filter(quiz__blocked=False).order_by('?')[:size or 10]
+            return QuestionModel.objects.filter(quiz__id__in=quiz).filter(quiz__blocked=False).order_by('?')[:size or 10]
+        return QuestionModel.objects.filter(quiz__blocked=False).order_by('?')[:size or 10]
 
 
-class AnswerTools:
-    answer_serializer = AnswerSerializer
-    question_model = QuestionModel
-    answer_model = AnswerModel
-    
+class AnswerTools:    
     @staticmethod
     def more_than_one_correct(answers):
         correct = 0
@@ -134,6 +63,6 @@ class AnswerTools:
             raise ValueError
     
     def get_object(self, **kwargs):
-        return self.answer_model.objects.get(**kwargs)
+        return AnswerModel.objects.get(**kwargs)
 
 

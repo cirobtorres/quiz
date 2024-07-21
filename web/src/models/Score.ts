@@ -22,15 +22,19 @@ class PartialScore {
   get getId() {
     return this.id;
   }
+
   get getQuizId() {
     return this.quizId;
   }
+
   get getTotal() {
     return this.total;
   }
+
   get getCorrects() {
     return this.corrects;
   }
+
   get getCreatedAt() {
     return this.createdAt;
   }
@@ -48,19 +52,23 @@ class PartialScore {
 
 export default class TotalScore {
   private id: number;
-  private scores: PartialScoreProps[];
+  // private scores: PartialScoreProps[];
+  private scores: number[];
   private user: number;
   private scorePercentage: number;
   private totalQuestions: number;
   private correctAnswers: number;
+  private createdAt: Date;
 
   constructor(
     id: number,
-    scores: PartialScoreProps[],
+    // scores: PartialScoreProps[],
+    scores: number[],
     user: number,
     scorePercentage: number,
     totalQuestions: number,
-    correctAnswers: number
+    correctAnswers: number,
+    createdAt: string
   ) {
     this.id = id;
     this.scores = scores;
@@ -68,6 +76,7 @@ export default class TotalScore {
     this.scorePercentage = scorePercentage;
     this.totalQuestions = totalQuestions;
     this.correctAnswers = correctAnswers;
+    this.createdAt = new Date(createdAt);
   }
 
   get getId() {
@@ -94,6 +103,10 @@ export default class TotalScore {
     return this.correctAnswers;
   }
 
+  get getCreatedAt() {
+    return this.createdAt;
+  }
+
   static create(obj: TotalScoreProps) {
     return new TotalScore(
       obj.id,
@@ -101,7 +114,8 @@ export default class TotalScore {
       obj.user,
       obj.get_score_percentage,
       obj.get_total_questions,
-      obj.get_correct_answers
+      obj.get_correct_answers,
+      obj.created_at
     );
   }
 }

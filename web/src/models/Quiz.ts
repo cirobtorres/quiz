@@ -6,7 +6,6 @@ export default class Quiz {
   private description: string;
   private cover: MediaApp;
   private slug: string;
-  private theme: string;
   private blocked: boolean;
   private isPrivate: boolean;
   private createdAt: Date;
@@ -18,7 +17,6 @@ export default class Quiz {
     description: string,
     cover: MediaApp,
     slug: string,
-    theme: string,
     blocked: boolean,
     isPrivate: boolean,
     createdAt: string,
@@ -29,7 +27,6 @@ export default class Quiz {
     this.description = description;
     this.cover = cover;
     this.slug = slug;
-    this.theme = theme;
     this.blocked = blocked;
     this.isPrivate = isPrivate;
     this.createdAt = new Date(createdAt);
@@ -56,10 +53,6 @@ export default class Quiz {
     return this.slug;
   }
 
-  get getTheme() {
-    return this.theme;
-  }
-
   get getBlocked() {
     return this.blocked;
   }
@@ -83,7 +76,6 @@ export default class Quiz {
       obj.description,
       MediaApp.create(obj.cover),
       obj.slug,
-      obj.theme,
       obj.blocked,
       obj.is_private,
       obj.created_at,

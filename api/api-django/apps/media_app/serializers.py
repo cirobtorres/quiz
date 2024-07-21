@@ -1,5 +1,5 @@
 from rest_framework.serializers import ModelSerializer
-from .models import UserImageModel, QuizImageModel
+from .models import UserImageModel, QuizCoverModel
 
 
 class UserImageSerializer(ModelSerializer):
@@ -16,7 +16,6 @@ class UserImageSerializer(ModelSerializer):
             'width', 
             'height', 
             'updated_at', 
-            'created_at', 
         )
         read_only_fields = (
             'id', 
@@ -26,13 +25,12 @@ class UserImageSerializer(ModelSerializer):
             'url', 
             'format', 
             'updated_at', 
-            'created_at', 
         ) 
 
 
-class QuizImageSerializer(ModelSerializer):
+class QuizCoverSerializer(ModelSerializer):
     class Meta:
-        model = QuizImageModel
+        model = QuizCoverModel
         fields = (
             'id', 
             'asset_id', 
@@ -44,7 +42,6 @@ class QuizImageSerializer(ModelSerializer):
             'width', 
             'height', 
             'updated_at', 
-            'created_at', 
         )
         read_only_fields = (
             'id', 
@@ -54,6 +51,5 @@ class QuizImageSerializer(ModelSerializer):
             'url', 
             'format', 
             'updated_at', 
-            'created_at', 
         )
 

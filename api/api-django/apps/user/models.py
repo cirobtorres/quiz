@@ -1,16 +1,6 @@
-from cloudinary.uploader import upload as cloudinary_upload
-from cloudinary.utils import cloudinary_url
-from cloudinary.models import CloudinaryField
-from django.conf import settings
 from django.db import models
-from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
-from django.contrib.auth.hashers import make_password
-from ..quiz.models import QuizModel
 from ..media_app.models import UserImageModel
-
-
-DEBUG = settings.DEBUG
 
 
 class QuizUserManager(BaseUserManager):
@@ -40,16 +30,6 @@ class QuizUserManager(BaseUserManager):
         return self.create_user(username, email, password, **extra_fields)
 
 
-class UserSettingsModel(models.Model):
-    quiz = models.ManyToManyField(to=QuizModel)
-    quiz_size = models.PositiveIntegerField(default=10) # Number of questions per quiz
-    time_to_answer = models.PositiveIntegerField(default=30)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self) -> str:
-        return f'User: {self.user.username}'
-
-
 class UserModel(AbstractBaseUser, PermissionsMixin):
     objects = QuizUserManager()
 
@@ -58,8 +38,7 @@ class UserModel(AbstractBaseUser, PermissionsMixin):
 
     username = models.CharField(max_length=32, unique=True)
     email = models.EmailField(max_length=255, unique=True)
-    avatar = models.ForeignKey(to=UserImageModel, related_name='user', on_delete=models.CASCADE, blank=True, null=True)
-    settings = models.OneToOneField(to=UserSettingsModel, related_name='user', on_delete=models.CASCADE, null=True)
+    avatar = models.OneToOneField(to=UserImageModel, related_name='user', on_delete=models.SET_NULL, blank=True, null=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -67,20 +46,14 @@ class UserModel(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self) -> str: 
         return self.username 
-    
-    def get_score_percentage(self) -> float:
-        scores = self.scores.all()
-        all_time_quiz_completed = scores.count()
 
-        if all_time_quiz_completed > 0:
-            sum_all_scores = sum(score.get_score_percentage() for score in scores)
-            return round(sum_all_scores / all_time_quiz_completed, 1)
-        else:
-            return 0.0
-    
-    def get_last_score_id(self) -> int | None:
-        try:
-            return self.scores.latest('id').id
-        except ObjectDoesNotExist as e:
-            return None
+
+class UserSettingsModel(models.Model):
+    user = models.OneToOneField(to=UserModel, related_name='settings', on_delete=models.CASCADE, blank=True, null=True)
+    quiz_size = models.PositiveIntegerField(default=10) # Number of questions per quiz
+    time_to_answer = models.PositiveIntegerField(default=30)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self) -> str:
+        return f'User: {self.user.username}'
 

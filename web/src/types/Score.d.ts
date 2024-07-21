@@ -14,9 +14,11 @@ type PartialScoreProps = {
 
 type TotalScoreProps = {
   id: number;
-  scores: PartialScoreProps[];
+  // scores: PartialScoreProps[];
+  scores: number[];
   user: number;
   get_score_percentage: number;
   get_total_questions: number;
   get_correct_answers: number;
+  created_at: string;
 };

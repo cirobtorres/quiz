@@ -1,7 +1,8 @@
 from django.contrib.auth import get_user_model
-from rest_framework.serializers import ModelSerializer, SerializerMethodField
+from rest_framework.serializers import ModelSerializer
 from .models import UserSettingsModel
 from ..media_app.serializers import UserImageSerializer
+from ..score.serializers import UserScoreProfileSerializer
 
 
 class UserSettingsSerializer(ModelSerializer):
@@ -24,11 +25,9 @@ class UserSerializer(ModelSerializer):
             'id', 
             'email', 
             'username', 
-            'avatar', # One-to-Many
-            'settings', # One-to-Many
-            'scores', # Mant-to-many
-            'get_score_percentage', 
-            'get_last_score_id', 
+            'avatar', # OnetoMany
+            'settings', # OnetoMany
+            'scores', # Manytomany
             'is_active', 
             'last_login', 
             'created_at', 
@@ -37,8 +36,6 @@ class UserSerializer(ModelSerializer):
         read_only_fields = (
             'id', 
             'avatar', 
-            'get_score_percentage', 
-            'get_last_score_id', 
             'last_login', 
             'created_at', 
             'updated_at', 
@@ -46,11 +43,7 @@ class UserSerializer(ModelSerializer):
     
     avatar = UserImageSerializer(required=False)
     settings = UserSettingsSerializer(required=False)
-    
-    get_last_score_id = SerializerMethodField()
-
-    def get_last_score_id(self, instance):
-        return instance.get_last_score_id()
+    scores = UserScoreProfileSerializer(required=False)
 
 
 class UserListSerializer(ModelSerializer):

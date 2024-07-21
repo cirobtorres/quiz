@@ -1,0 +1,210 @@
+### --------------------========== Quiz ==========--------------------
+### Read all quiz
+GET http://127.0.0.1:8000/api/quiz
+
+### Read a single quiz
+GET http://127.0.0.1:8000/api/quiz/6
+
+### Read user quizzes only
+GET http://127.0.0.1:8000/api/quiz/user-quiz
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIxNTgwOTUzLCJpYXQiOjE3MjE1NzM2OTcsImp0aSI6IjI4NjM3ZmM4ODE0MTQ2NmI4Yzc1MDEyNTVjZGRhYzk3IiwidXNlcl9pZCI6Mn0.1hH_YSI2xd48mYnV11yjLcqHzymjaOovFWsE_YDnCs0
+
+### Read user quizzes only
+GET http://127.0.0.1:8000/api/quiz/user-quiz/6
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIxNTgwOTUzLCJpYXQiOjE3MjE1NzM2OTcsImp0aSI6IjI4NjM3ZmM4ODE0MTQ2NmI4Yzc1MDEyNTVjZGRhYzk3IiwidXNlcl9pZCI6Mn0.1hH_YSI2xd48mYnV11yjLcqHzymjaOovFWsE_YDnCs0
+
+### Create quiz - No description
+POST http://127.0.0.1:8000/api/quiz/user-quiz/
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIxNTgwOTUzLCJpYXQiOjE3MjE1NzM2OTcsImp0aSI6IjI4NjM3ZmM4ODE0MTQ2NmI4Yzc1MDEyNTVjZGRhYzk3IiwidXNlcl9pZCI6Mn0.1hH_YSI2xd48mYnV11yjLcqHzymjaOovFWsE_YDnCs0
+
+{
+    "subject": "Example Quiz 1"
+}
+
+### Create quiz 
+POST http://127.0.0.1:8000/api/quiz/user-quiz/
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIxNTgwOTUzLCJpYXQiOjE3MjE1NzM2OTcsImp0aSI6IjI4NjM3ZmM4ODE0MTQ2NmI4Yzc1MDEyNTVjZGRhYzk3IiwidXNlcl9pZCI6Mn0.1hH_YSI2xd48mYnV11yjLcqHzymjaOovFWsE_YDnCs0
+
+{
+    "subject": "Example Quiz 2",
+    "description": "La la la la"
+}
+
+### Update quiz
+PUT http://127.0.0.1:8000/api/quiz/user-quiz/6
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIxNTgwOTUzLCJpYXQiOjE3MjE1NzM2OTcsImp0aSI6IjI4NjM3ZmM4ODE0MTQ2NmI4Yzc1MDEyNTVjZGRhYzk3IiwidXNlcl9pZCI6Mn0.1hH_YSI2xd48mYnV11yjLcqHzymjaOovFWsE_YDnCs0
+
+{
+    "subject": "Hello",
+    "description": "Bla bla bla",
+    "blocked": false
+}
+
+### Update quiz cover
+PUT http://127.0.0.1:8000/api/media-app/quiz-cover/6
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIxNTgwOTUzLCJpYXQiOjE3MjE1NzM2OTcsImp0aSI6IjI4NjM3ZmM4ODE0MTQ2NmI4Yzc1MDEyNTVjZGRhYzk3IiwidXNlcl9pZCI6Mn0.1hH_YSI2xd48mYnV11yjLcqHzymjaOovFWsE_YDnCs0
+
+{
+    "cover": "C:\\abs\\path\\filename.jpg",
+    "filename": "filename.jpg"
+}
+
+### Delete quiz
+DELETE http://127.0.0.1:8000/api/quiz/user-quiz/4
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIxNTgwOTUzLCJpYXQiOjE3MjE1NzM2OTcsImp0aSI6IjI4NjM3ZmM4ODE0MTQ2NmI4Yzc1MDEyNTVjZGRhYzk3IiwidXNlcl9pZCI6Mn0.1hH_YSI2xd48mYnV11yjLcqHzymjaOovFWsE_YDnCs0
+
+### Delete quiz cover
+DELETE http://127.0.0.1:8000/api/media-app/quiz-cover/4
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIxNTgwOTUzLCJpYXQiOjE3MjE1NzM2OTcsImp0aSI6IjI4NjM3ZmM4ODE0MTQ2NmI4Yzc1MDEyNTVjZGRhYzk3IiwidXNlcl9pZCI6Mn0.1hH_YSI2xd48mYnV11yjLcqHzymjaOovFWsE_YDnCs0
+
+### /*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/MEDIA-FORM-DATA/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/
+### Create quiz - NO description
+# While working with files and REST Client, DO NOT BREAK LINES between boudaries
+# Otherwise REST Client might append \r\n or \n to the end of the strings (breaklines) 
+# Keep the code EXACTLY like below
+# No quotes on URL 
+POST http://127.0.0.1:8000/api/quiz/user-quiz/
+Content-Type: multipart/form-data; boundary=myBoundary
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIxNTgwOTUzLCJpYXQiOjE3MjE1NzM2OTcsImp0aSI6IjI4NjM3ZmM4ODE0MTQ2NmI4Yzc1MDEyNTVjZGRhYzk3IiwidXNlcl9pZCI6Mn0.1hH_YSI2xd48mYnV11yjLcqHzymjaOovFWsE_YDnCs0
+--myBoundary
+Content-Disposition: form-data; name="subject"
+
+QuizName Whatever 1
+--myBoundary
+Content-Disposition: form-data; name="filename"
+
+name-of-the-file.jpg
+--myBoundary
+Content-Disposition: form-data; name="cover"; filename="filename.jpg"
+Content-Type: image/jpg
+
+< C:\\abs\\path\\filename.jpg
+--myBoundary--
+
+### /*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/MEDIA-FORM-DATA/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/
+# While working with files and REST Client, DO NOT BREAK LINES between boudaries
+# Otherwise REST Client might append \r\n or \n to the end of the strings (breaklines) 
+# Keep the code EXACTLY like below
+### Create quiz 
+POST http://127.0.0.1:8000/api/quiz/user-quiz/
+Content-Type: multipart/form-data; boundary=myBoundary
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIxNTgwOTUzLCJpYXQiOjE3MjE1NzM2OTcsImp0aSI6IjI4NjM3ZmM4ODE0MTQ2NmI4Yzc1MDEyNTVjZGRhYzk3IiwidXNlcl9pZCI6Mn0.1hH_YSI2xd48mYnV11yjLcqHzymjaOovFWsE_YDnCs0
+
+--myBoundary
+Content-Disposition: form-data; name="subject"
+
+QuizName Whatever 2
+--myBoundary
+Content-Disposition: form-data; name="description"
+
+loremLorem ipsum dolor sit amet, consectetur adipiscing elit
+--myBoundary
+Content-Disposition: form-data; name="filename"
+
+name-of-the-file.jpg
+--myBoundary
+Content-Disposition: form-data; name="cover"; filename="filename.jpg"
+Content-Type: image/jpg
+
+< C:\\abs\\path\\filename.jpg
+--myBoundary--
+
+### --------------------========== Question ==========--------------------
+### Read 10 random questions (any quiz)
+GET http://127.0.0.1:8000/api/quiz/question
+
+### Read 2 random questions (any quiz)
+GET http://127.0.0.1:8000/api/quiz/question?size=2
+
+### Read 10 random questions from quiz_id=2
+GET http://127.0.0.1:8000/api/quiz/question?quiz=2
+
+### Read 10 random questions from specific quiz list ids (id=1, id=2)
+GET http://127.0.0.1:8000/api/quiz/question?quiz=1&quiz=2
+
+### Read 2 random questions from specific quiz list ids (id=1, id=2)
+GET http://127.0.0.1:8000/api/quiz/question?quiz=1&quiz=2&size=2
+
+### Read 3 random questions
+GET http://127.0.0.1:8000/api/quiz/question?size=3
+
+### Read specific question
+GET http://127.0.0.1:8000/api/quiz/question/62
+
+### Create question
+POST http://127.0.0.1:8000/api/quiz/question
+Content-Type: application/json
+
+{
+    "quiz_id": 3,
+    "question_text": "Essa questão é um teste"
+}
+
+### Update question
+PUT http://127.0.0.1:8000/api/quiz/question/62
+Content-Type: application/json
+
+{
+    "question_text": "Esse é outro teste"
+}
+
+### Delete question
+DELETE http://127.0.0.1:8000/api/quiz/question/62
+
+### --------------------========== Answer ==========--------------------
+### Create set of answers
+POST http://127.0.0.1:8000/api/quiz/answer
+Content-Type: application/json
+
+{
+    "question_id": 62,
+    "answers": [
+        {
+            "text": "Alternativa 1"
+        },
+        {
+            "text": "Alternativa 2"
+        },
+        {
+            "text": "Alternativa 3"
+        },
+        {
+            "text": "Alternativa 4"
+        }
+    ]
+}
+
+### Update answer
+PUT http://127.0.0.1:8000/api/quiz/answer
+Content-Type: application/json
+
+{
+    "question_id": 62,
+    "answers": [
+        {
+            "pk": 245,
+            "text": "Nova alternativa 1"
+        },
+        {
+            "pk": 246,
+            "text": "Nova alternativa 2"
+        },
+        {
+            "pk": 247,
+            "text": "Nova alternativa 3"
+        },
+        {
+            "pk": 248,
+            "text": "Nova alternativa 4"
+        }
+    ]
+}
+

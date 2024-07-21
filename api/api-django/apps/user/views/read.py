@@ -1,8 +1,9 @@
 from django.http import HttpRequest
+from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth import authenticate, login, logout
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST, HTTP_401_UNAUTHORIZED
+from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST, HTTP_401_UNAUTHORIZED, HTTP_404_NOT_FOUND
 from rest_framework.parsers import MultiPartParser
 from rest_framework.pagination import PageNumberPagination
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -10,7 +11,7 @@ from rest_framework_simplejwt.exceptions import AuthenticationFailed, TokenError
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.tokens import RefreshToken
 from .tools import UserUtilities, UserPermissions
-from ..serializers import UserListSerializer
+from ..serializers import UserListSerializer, UserSerializer
 
 
 class UserLoginView(TokenObtainPairView):
@@ -59,7 +60,15 @@ class UserDataView(APIView, UserUtilities):
     http_method_names = ['get',]
 
     def get(self, request: HttpRequest) -> Response:
-        user_model = self.get_user()
+        try:
+            user_model = self.get_user()
+        except AttributeError as e:
+            # print('-x' * 35 + '-\n', e.__class__.__name__, ': ', e, '\n', '*' * 70, '\n', sep='') 
+            return Response(data={'message': 'Invalid token'}, status=HTTP_401_UNAUTHORIZED)
+        
+        except ObjectDoesNotExist as e:
+            # print('-x' * 35 + '-\n', e.__class__.__name__, ': ', e, '\n', '*' * 70, '\n', sep='') 
+            return Response(data={'message': 'User not found'}, status=HTTP_404_NOT_FOUND)
 
         try:
             not_valid = user_model.get('invalid')
@@ -68,7 +77,7 @@ class UserDataView(APIView, UserUtilities):
         
         except AttributeError as e:
             # print('-x' * 35 + '-\n', e.__class__.__name__, ': ', e, '\n', '*' * 70, '\n', sep='') 
-            user_serializer = self.user_serializer(instance=user_model)
+            user_serializer = UserSerializer(instance=user_model)
 
         return Response(data=user_serializer.data, status=HTTP_200_OK)
 
@@ -77,11 +86,7 @@ class UserListView(APIView, UserUtilities):
     pagination_class = PageNumberPagination
     http_method_names = ['get']
 
-    def get(self, request: HttpRequest, **kwargs) -> Response:
-        # user_queryset = self.get_queryset(order_by=('-id', 'username'))
-        # data = self.paginate(request, user_queryset, **kwargs)
-        # return Response(**data)
-    
+    def get(self, request: HttpRequest, **kwargs) -> Response:    
         user_queryset = self.get_queryset(order_by=('-id', 'username'))
             
         page = request.query_params.get('page', 1)
@@ -94,7 +99,8 @@ class UserListView(APIView, UserUtilities):
 
         serializer = UserListSerializer(results, many=True)
 
-        return Response(data={
+        return Response(
+            data={
                 'results': serializer.data,
                 'paginator': {
                     'current': int(page),
@@ -111,7 +117,6 @@ class UserListView(APIView, UserUtilities):
                         if paginator.get_next_link() else None
                     ),
                 },
-                'error': False, 
             }, 
             status=HTTP_200_OK
         )
