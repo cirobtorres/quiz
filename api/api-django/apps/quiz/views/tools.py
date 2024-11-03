@@ -3,7 +3,7 @@ from django.db.models import QuerySet
 from rest_framework.status import HTTP_200_OK, HTTP_500_INTERNAL_SERVER_ERROR
 from ..serializers import  QuizSerializer, QuestionSerializer
 from ..models import QuestionModel
-from ..questions.populate_database import populate_database
+# from ..questions.populate_database import populate_database
 from ..serializers import AnswerSerializer
 from ..models import QuizModel, QuestionModel, AnswerModel
 
@@ -22,8 +22,8 @@ class QuizTools:
             >>> get_queryset(order_by=('id', 'subject', 'updated_at'))
             >>> get_queryset(order_by=['id', 'subject', 'updated_at'])
         """
-        if not QuizModel.objects.exists():
-            populate_database()
+        # if not QuizModel.objects.exists():
+        #     populate_database()
         user_id = kwargs.get('user_id', None)
         order_by = kwargs.get('order_by', None)
         if user_id:

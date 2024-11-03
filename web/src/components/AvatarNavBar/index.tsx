@@ -23,6 +23,7 @@ import { postUserImage, putUserImage } from "@/libs/users";
 
 const ASPECT_RATIO = 1;
 const MIN_DIMENSION = 150;
+const MAX_DIMENSION = 300;
 
 export default function AvatarNavBar({
   navItems,
@@ -421,6 +422,7 @@ const ImageModal = ({
                 keepSelection
                 aspect={ASPECT_RATIO} // Perfect circular
                 minWidth={MIN_DIMENSION}
+                maxWidth={MAX_DIMENSION}
                 className="rounded-xl overflow-hidden border border-transparent dark:border-slate-600"
               >
                 <NextImage

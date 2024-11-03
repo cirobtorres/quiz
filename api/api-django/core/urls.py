@@ -16,8 +16,6 @@ Including another URLconf
 """
 from django.conf import settings
 from django.urls import path, re_path, include
-from apps.quiz.models import QuizModel
-from apps.quiz.questions.populate_database import populate_database
 
 urlpatterns = [
     re_path(route=r'api/user/?', view=include('apps.user.urls')),
@@ -38,7 +36,4 @@ if settings.DEBUG:
         path(route='api-admin/', view=admin.site.urls),
         path(route='api-auth/', view=include('rest_framework.urls')),
     ]
-
-# if not QuizModel.objects.exists(): # One time start-up after migration
-#     populate_database() 
 

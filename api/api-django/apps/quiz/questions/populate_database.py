@@ -166,7 +166,7 @@ def save_quiz(user, data: Quiz, **kwargs) -> None:
         quiz_image_name = quiz_dict.pop('image_file_name')
         
         if quiz_image_name:
-            abs_path = 'api-django\\apps\\quiz\\questions\\quiz_images'
+            abs_path = 'apps\\quiz\\questions\\quiz_images'
             path_to_image = os.path.join(os.getcwd(), abs_path, quiz_image_name)
             quiz = QuizModel(**quiz_dict)
             
@@ -225,9 +225,11 @@ def populate_database(**kwargs) -> None:
 
     dict_obj = convert_list_of_json_to_dict(paths)
 
-    user = user_creaion(username="johndoe", email="johndoe@email.com")
+    johndoe = get_user_model().objects.filter(username="johndoe")
+    user = johndoe.first() if johndoe.exists() else user_creaion(username="johndoe", email="johndoe@email.com")
     loop_user_creation(5)
 
     for item in dict_obj:
         save_quiz(user, item)
+        pass
 
